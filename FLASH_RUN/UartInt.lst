@@ -1,0 +1,233 @@
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 2
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"UartInt.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.uputInt,"ax",%progbits
+  16              		.align	1
+  17              		.p2align 2,,3
+  18              		.global	uputInt
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	uputInt:
+  25              	.LFB29:
+  26              		.file 1 "UartInt.c"
+   1:UartInt.c     **** #include "UartInt.h"
+   2:UartInt.c     **** 
+   3:UartInt.c     **** 
+   4:UartInt.c     **** //This code tekes in a 32bit Signed Integer and output, the value to the UART as a string of char.
+   5:UartInt.c     **** 
+   6:UartInt.c     **** void uputInt(S32 a,USART_TypeDef* USARTx)
+   7:UartInt.c     **** {
+  27              		.loc 1 7 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 8
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+   8:UartInt.c     ****     volatile S8 index = 0;
+  32              		.loc 1 8 0
+  33 0000 0023     		movs	r3, #0
+   7:UartInt.c     ****     volatile S8 index = 0;
+  34              		.loc 1 7 0
+  35 0002 70B5     		push	{r4, r5, r6, lr}
+  36              		.cfi_def_cfa_offset 16
+  37              		.cfi_offset 4, -16
+  38              		.cfi_offset 5, -12
+  39              		.cfi_offset 6, -8
+  40              		.cfi_offset 14, -4
+   9:UartInt.c     ****     volatile U8 isNegative = 0;
+  10:UartInt.c     **** 
+  11:UartInt.c     ****    if (a < 0)
+  41              		.loc 1 11 0
+  42 0004 0028     		cmp	r0, #0
+   7:UartInt.c     ****     volatile S8 index = 0;
+  43              		.loc 1 7 0
+  44 0006 82B0     		sub	sp, sp, #8
+  45              		.cfi_def_cfa_offset 24
+   8:UartInt.c     ****     volatile U8 isNegative = 0;
+  46              		.loc 1 8 0
+  47 0008 8DF80630 		strb	r3, [sp, #6]
+   7:UartInt.c     ****     volatile S8 index = 0;
+  48              		.loc 1 7 0
+  49 000c 0C46     		mov	r4, r1
+   9:UartInt.c     ****     volatile U8 isNegative = 0;
+  50              		.loc 1 9 0
+  51 000e 8DF80730 		strb	r3, [sp, #7]
+  52              		.loc 1 11 0
+  53 0012 03DA     		bge	.L2
+  12:UartInt.c     ****     {
+  13:UartInt.c     ****         isNegative = 1;
+  54              		.loc 1 13 0
+  55 0014 0123     		movs	r3, #1
+  14:UartInt.c     ****         a = -1*a;
+  56              		.loc 1 14 0
+  57 0016 4042     		negs	r0, r0
+  58              	.LVL1:
+  13:UartInt.c     ****         a = -1*a;
+  59              		.loc 1 13 0
+  60 0018 8DF80730 		strb	r3, [sp, #7]
+  61              	.L2:
+  15:UartInt.c     ****     }
+  16:UartInt.c     **** 
+  17:UartInt.c     ****     while(a >= 10)
+  62              		.loc 1 17 0
+  63 001c 0928     		cmp	r0, #9
+  64 001e 224D     		ldr	r5, .L17
+  65 0020 15DD     		ble	.L3
+  18:UartInt.c     ****     {
+  19:UartInt.c     ****         *(int_buffer + index) = ((a%10) + ascii_num_offset );
+  66              		.loc 1 19 0
+  67 0022 224E     		ldr	r6, .L17+4
+  68              	.LVL2:
+  69              	.L4:
+  70 0024 A6FB0023 		umull	r2, r3, r6, r0
+  71 0028 DB08     		lsrs	r3, r3, #3
+  72 002a 03EB8302 		add	r2, r3, r3, lsl #2
+  73 002e A0EB4202 		sub	r2, r0, r2, lsl #1
+  20:UartInt.c     ****          index++;
+  21:UartInt.c     ****          a = a/10;
+  74              		.loc 1 21 0
+  75 0032 1846     		mov	r0, r3
+  76              	.LVL3:
+  19:UartInt.c     ****          index++;
+  77              		.loc 1 19 0
+  78 0034 9DF80610 		ldrb	r1, [sp, #6]	@ zero_extendqisi2
+  20:UartInt.c     ****          index++;
+  79              		.loc 1 20 0
+  80 0038 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+  19:UartInt.c     ****          index++;
+  81              		.loc 1 19 0
+  82 003c 3032     		adds	r2, r2, #48
+  20:UartInt.c     ****          index++;
+  83              		.loc 1 20 0
+  84 003e 0133     		adds	r3, r3, #1
+  19:UartInt.c     ****          index++;
+  85              		.loc 1 19 0
+  86 0040 49B2     		sxtb	r1, r1
+  20:UartInt.c     ****          index++;
+  87              		.loc 1 20 0
+  88 0042 5BB2     		sxtb	r3, r3
+  17:UartInt.c     ****     {
+  89              		.loc 1 17 0
+  90 0044 0928     		cmp	r0, #9
+  19:UartInt.c     ****          index++;
+  91              		.loc 1 19 0
+  92 0046 6A54     		strb	r2, [r5, r1]
+  20:UartInt.c     ****          index++;
+  93              		.loc 1 20 0
+  94 0048 8DF80630 		strb	r3, [sp, #6]
+  17:UartInt.c     ****     {
+  95              		.loc 1 17 0
+  96 004c EADC     		bgt	.L4
+  97              	.L3:
+  22:UartInt.c     ****     }
+  23:UartInt.c     ****     
+  24:UartInt.c     ****     *(int_buffer + index) = ((a) + ascii_num_offset );
+  98              		.loc 1 24 0
+  99 004e 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+  25:UartInt.c     ****     
+  26:UartInt.c     ****     if(isNegative)
+ 100              		.loc 1 26 0
+ 101 0052 9DF80720 		ldrb	r2, [sp, #7]	@ zero_extendqisi2
+  24:UartInt.c     ****     
+ 102              		.loc 1 24 0
+ 103 0056 3030     		adds	r0, r0, #48
+ 104              	.LVL4:
+ 105 0058 5BB2     		sxtb	r3, r3
+ 106 005a E854     		strb	r0, [r5, r3]
+ 107              		.loc 1 26 0
+ 108 005c 52B1     		cbz	r2, .L5
+  27:UartInt.c     ****     {
+  28:UartInt.c     ****         index++;
+  29:UartInt.c     ****         *(int_buffer + index) = ascii_minus;
+ 109              		.loc 1 29 0
+ 110 005e 2D22     		movs	r2, #45
+  28:UartInt.c     ****         *(int_buffer + index) = ascii_minus;
+ 111              		.loc 1 28 0
+ 112 0060 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 113 0064 0133     		adds	r3, r3, #1
+ 114 0066 5BB2     		sxtb	r3, r3
+ 115 0068 8DF80630 		strb	r3, [sp, #6]
+ 116              		.loc 1 29 0
+ 117 006c 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 118 0070 5BB2     		sxtb	r3, r3
+ 119 0072 EA54     		strb	r2, [r5, r3]
+ 120              	.L5:
+  30:UartInt.c     ****     }    
+  31:UartInt.c     ****     for(index; index >= 0; index--) 
+ 121              		.loc 1 31 0
+ 122 0074 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 123 0078 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 124 007c 1A06     		lsls	r2, r3, #24
+ 125 007e 10D4     		bmi	.L1
+ 126 0080 0B4E     		ldr	r6, .L17+8
+ 127              	.LVL5:
+ 128              	.L7:
+  32:UartInt.c     ****     {
+  33:UartInt.c     ****         UartPutc(int_buffer[index],USARTx);
+ 129              		.loc 1 33 0 discriminator 3
+ 130 0082 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 131 0086 2146     		mov	r1, r4
+ 132 0088 5BB2     		sxtb	r3, r3
+ 133 008a E85C     		ldrb	r0, [r5, r3]	@ zero_extendqisi2
+ 134 008c B047     		blx	r6
+ 135              	.LVL6:
+  31:UartInt.c     ****     {
+ 136              		.loc 1 31 0 discriminator 3
+ 137 008e 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 138 0092 013B     		subs	r3, r3, #1
+ 139 0094 5BB2     		sxtb	r3, r3
+ 140 0096 8DF80630 		strb	r3, [sp, #6]
+ 141 009a 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 142 009e 1B06     		lsls	r3, r3, #24
+ 143 00a0 EFD5     		bpl	.L7
+ 144              	.L1:
+  34:UartInt.c     ****     }
+  35:UartInt.c     ****     
+  36:UartInt.c     **** 
+  37:UartInt.c     **** }...
+ 145              		.loc 1 37 0
+ 146 00a2 02B0     		add	sp, sp, #8
+ 147              		.cfi_def_cfa_offset 16
+ 148              		@ sp needed
+ 149 00a4 70BD     		pop	{r4, r5, r6, pc}
+ 150              	.LVL7:
+ 151              	.L18:
+ 152 00a6 00BF     		.align	2
+ 153              	.L17:
+ 154 00a8 00000000 		.word	int_buffer
+ 155 00ac CDCCCCCC 		.word	-858993459
+ 156 00b0 00000000 		.word	UartPutc
+ 157              		.cfi_endproc
+ 158              	.LFE29:
+ 160              		.comm	int_buffer,32,4
+ 161              		.text
+ 162              	.Letext0:
+ 163              		.file 2 "Common.h"
+ 164              		.file 3 "/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default
+ 165              		.file 4 "/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 166              		.file 5 "./Libraries/CMSIS/CM3/CoreSupport/core_cm3.h"
+ 167              		.file 6 "./Libraries/CMSIS/CM3/CoreSupport/system_stm32f10x.h"
+ 168              		.file 7 "./Libraries/CMSIS/CM3/CoreSupport/stm32f10x.h"
+ 169              		.file 8 "Board.h"
+ 170              		.file 9 "UartInt.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 UartInt.c
+     /tmp/cc4D02PP.s:16     .text.uputInt:0000000000000000 $t
+     /tmp/cc4D02PP.s:24     .text.uputInt:0000000000000000 uputInt
+     /tmp/cc4D02PP.s:154    .text.uputInt:00000000000000a8 $d
+                            *COM*:0000000000000020 int_buffer
+
+UNDEFINED SYMBOLS
+UartPutc

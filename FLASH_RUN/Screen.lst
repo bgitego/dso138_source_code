@@ -1,0 +1,2609 @@
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 2
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"Screen.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.SetWindow,"ax",%progbits
+  16              		.align	1
+  17              		.p2align 2,,3
+  18              		.global	SetWindow
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	SetWindow:
+  25              	.LFB30:
+  26              		.file 1 "Screen.c"
+   1:Screen.c      **** //////////////////////////////////////////////////////////////////////////////
+   2:Screen.c      **** //
+   3:Screen.c      **** // 	Filename:	Screen.c
+   4:Screen.c      **** //	Version:		
+   5:Screen.c      **** //	Data:		
+   6:Screen.c      **** //
+   7:Screen.c      **** //	Author:		Liu, Zemin
+   8:Screen.c      **** //	Company:	JYE Tech Ltd.
+   9:Screen.c      **** //	Web:		www.jyetech.com
+  10:Screen.c      **** //
+  11:Screen.c      **** //-----------------------------------------------------------------------------
+  12:Screen.c      **** //
+  13:Screen.c      **** // 	Target: 		STM32F103C8
+  14:Screen.c      **** // 	Tool chain: 	CodeSourcery G++
+  15:Screen.c      **** //
+  16:Screen.c      **** //-----------------------------------------------------------------------------
+  17:Screen.c      **** //	Required files:
+  18:Screen.c      **** //
+  19:Screen.c      **** //-----------------------------------------------------------------------------
+  20:Screen.c      **** //	Notes:
+  21:Screen.c      **** //
+  22:Screen.c      **** //
+  23:Screen.c      **** //-----------------------------------------------------------------------------
+  24:Screen.c      **** //	Revision History:
+  25:Screen.c      **** //
+  26:Screen.c      **** ///////////////////////////////////////////////////////////////////////////////
+  27:Screen.c      **** //
+  28:Screen.c      **** //-----------------------------------------------------------------------------
+  29:Screen.c      **** // 	Includes
+  30:Screen.c      **** //-----------------------------------------------------------------------------
+  31:Screen.c      **** 
+  32:Screen.c      **** #include	"Common.h"
+  33:Screen.c      **** #include	"Board.h"
+  34:Screen.c      **** #include	"Screen.h"
+  35:Screen.c      **** 
+  36:Screen.c      **** // ==========================================================
+  37:Screen.c      **** //	File Scope Variables
+  38:Screen.c      **** // ==========================================================
+  39:Screen.c      **** //
+  40:Screen.c      **** 
+  41:Screen.c      **** #define	ASC8X16_Use_Display_Char_Only
+  42:Screen.c      **** const U8 Font_ASC8X16[256*16] = {
+  43:Screen.c      **** #ifndef ASC8X16_Use_Display_Char_Only
+  44:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+  45:Screen.c      ****         0x00,0x00,0x7E,0x81,0xA5,0x81,0x81,0xBD,0x99,0x81,0x81,0x7E,0x00,0x00,0x00,0x00,       //0x
+  46:Screen.c      ****         0x00,0x00,0x7E,0xFF,0xDB,0xFF,0xFF,0xC3,0xE7,0xFF,0xFF,0x7E,0x00,0x00,0x00,0x00,       //0x
+  47:Screen.c      ****         0x00,0x00,0x00,0x00,0x6C,0xFE,0xFE,0xFE,0xFE,0x7C,0x38,0x10,0x00,0x00,0x00,0x00,       //0x
+  48:Screen.c      ****         0x00,0x00,0x00,0x00,0x10,0x38,0x7C,0xFE,0x7C,0x38,0x10,0x00,0x00,0x00,0x00,0x00,       //0x
+  49:Screen.c      ****         0x00,0x00,0x00,0x18,0x3C,0x3C,0xE7,0xE7,0xE7,0x18,0x18,0x3C,0x00,0x00,0x00,0x00,       //0x
+  50:Screen.c      ****         0x00,0x00,0x00,0x18,0x3C,0x7E,0xFF,0xFF,0x7E,0x18,0x18,0x3C,0x00,0x00,0x00,0x00,       //0x
+  51:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x18,0x3C,0x3C,0x18,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+  52:Screen.c      ****         0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xE7,0xC3,0xC3,0xE7,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,       //0x
+  53:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x3C,0x66,0x42,0x42,0x66,0x3C,0x00,0x00,0x00,0x00,0x00,       //0x
+  54:Screen.c      ****         0xFF,0xFF,0xFF,0xFF,0xFF,0xC3,0x99,0xBD,0xBD,0x99,0xC3,0xFF,0xFF,0xFF,0xFF,0xFF,       //0x
+  55:Screen.c      ****         0x00,0x00,0x1E,0x0E,0x1A,0x32,0x78,0xCC,0xCC,0xCC,0xCC,0x78,0x00,0x00,0x00,0x00,       //0x
+  56:Screen.c      ****         0x00,0x00,0x3C,0x66,0x66,0x66,0x66,0x3C,0x18,0x7E,0x18,0x18,0x00,0x00,0x00,0x00,       //0x
+  57:Screen.c      ****         0x00,0x00,0x3F,0x33,0x3F,0x30,0x30,0x30,0x30,0x70,0xF0,0xE0,0x00,0x00,0x00,0x00,       //0x
+  58:Screen.c      ****         0x00,0x00,0x7F,0x63,0x7F,0x63,0x63,0x63,0x63,0x67,0xE7,0xE6,0xC0,0x00,0x00,0x00,       //0x
+  59:Screen.c      ****         0x00,0x00,0x00,0x18,0x18,0xDB,0x3C,0xE7,0x3C,0xDB,0x18,0x18,0x00,0x00,0x00,0x00,       //0x
+  60:Screen.c      ****         0x00,0x80,0xC0,0xE0,0xF0,0xF8,0xFE,0xF8,0xF0,0xE0,0xC0,0x80,0x00,0x00,0x00,0x00,       //0x
+  61:Screen.c      ****         0x00,0x02,0x06,0x0E,0x1E,0x3E,0xFE,0x3E,0x1E,0x0E,0x06,0x02,0x00,0x00,0x00,0x00,       //0x
+  62:Screen.c      ****         0x00,0x00,0x18,0x3C,0x7E,0x18,0x18,0x18,0x7E,0x3C,0x18,0x00,0x00,0x00,0x00,0x00,       //0x
+  63:Screen.c      ****         0x00,0x00,0x66,0x66,0x66,0x66,0x66,0x66,0x66,0x00,0x66,0x66,0x00,0x00,0x00,0x00,       //0x
+  64:Screen.c      ****         0x00,0x00,0x7F,0xDB,0xDB,0xDB,0x7B,0x1B,0x1B,0x1B,0x1B,0x1B,0x00,0x00,0x00,0x00,       //0x
+  65:Screen.c      ****         0x00,0x7C,0xC6,0x60,0x38,0x6C,0xC6,0xC6,0x6C,0x38,0x0C,0xC6,0x7C,0x00,0x00,0x00,       //0x
+  66:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFE,0xFE,0xFE,0xFE,0x00,0x00,0x00,0x00,       //0x
+  67:Screen.c      ****         0x00,0x00,0x18,0x3C,0x7E,0x18,0x18,0x18,0x7E,0x3C,0x18,0x7E,0x00,0x00,0x00,0x00,       //0x
+  68:Screen.c      ****         0x00,0x00,0x18,0x3C,0x7E,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x00,0x00,0x00,0x00,       //0x
+  69:Screen.c      ****         0x00,0x00,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x7E,0x3C,0x18,0x00,0x00,0x00,0x00,       //0x
+  70:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x18,0x0C,0xFE,0x0C,0x18,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+  71:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x30,0x60,0xFE,0x60,0x30,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+  72:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0xC0,0xC0,0xC0,0xFE,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+  73:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x28,0x6C,0xFE,0x6C,0x28,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+  74:Screen.c      ****         0x00,0x00,0x00,0x00,0x10,0x38,0x38,0x7C,0x7C,0xFE,0xFE,0x00,0x00,0x00,0x00,0x00,       //0x
+  75:Screen.c      ****         0x00,0x00,0x00,0x00,0xFE,0xFE,0x7C,0x7C,0x38,0x38,0x10,0x00,0x00,0x00,0x00,0x00,       //0x
+  76:Screen.c      **** #endif
+  77:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+  78:Screen.c      ****         0x00,0x00,0x18,0x3C,0x3C,0x3C,0x18,0x18,0x18,0x00,0x18,0x18,0x00,0x00,0x00,0x00,       //0x
+  79:Screen.c      ****         0x00,0x66,0x66,0x66,0x24,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+  80:Screen.c      ****         0x00,0x00,0x00,0x6C,0x6C,0xFE,0x6C,0x6C,0x6C,0xFE,0x6C,0x6C,0x00,0x00,0x00,0x00,       //0x
+  81:Screen.c      ****         0x18,0x18,0x7C,0xC6,0xC2,0xC0,0x7C,0x06,0x06,0x86,0xC6,0x7C,0x18,0x18,0x00,0x00,       //0x
+  82:Screen.c      ****         0x00,0x00,0x00,0x00,0xC2,0xC6,0x0C,0x18,0x30,0x60,0xC6,0x86,0x00,0x00,0x00,0x00,       //0x
+  83:Screen.c      ****         0x00,0x00,0x38,0x6C,0x6C,0x38,0x76,0xDC,0xCC,0xCC,0xCC,0x76,0x00,0x00,0x00,0x00,       //0x
+  84:Screen.c      ****         0x00,0x30,0x30,0x30,0x60,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+  85:Screen.c      ****         0x00,0x00,0x0C,0x18,0x30,0x30,0x30,0x30,0x30,0x30,0x18,0x0C,0x00,0x00,0x00,0x00,       //0x
+  86:Screen.c      ****         0x00,0x00,0x30,0x18,0x0C,0x0C,0x0C,0x0C,0x0C,0x0C,0x18,0x30,0x00,0x00,0x00,0x00,       //0x
+  87:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x66,0x3C,0xFF,0x3C,0x66,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+  88:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x18,0x18,0x7E,0x18,0x18,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+  89:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x18,0x18,0x18,0x30,0x00,0x00,0x00,       //0x
+  90:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFE,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+  91:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x18,0x18,0x00,0x00,0x00,0x00,       //0x
+  92:Screen.c      ****         0x00,0x00,0x00,0x00,0x02,0x06,0x0C,0x18,0x30,0x60,0xC0,0x80,0x00,0x00,0x00,0x00,       //0x
+  93:Screen.c      ****         0x00,0x00,0x38,0x6C,0xC6,0xC6,0xD6,0xD6,0xC6,0xC6,0x6C,0x38,0x00,0x00,0x00,0x00,       //0x
+  94:Screen.c      ****         0x00,0x00,0x18,0x38,0x78,0x18,0x18,0x18,0x18,0x18,0x18,0x7E,0x00,0x00,0x00,0x00,       //0x
+  95:Screen.c      ****         0x00,0x00,0x7C,0xC6,0x06,0x0C,0x18,0x30,0x60,0xC0,0xC6,0xFE,0x00,0x00,0x00,0x00,       //0x
+  96:Screen.c      ****         0x00,0x00,0x7C,0xC6,0x06,0x06,0x3C,0x06,0x06,0x06,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+  97:Screen.c      ****         0x00,0x00,0x0C,0x1C,0x3C,0x6C,0xCC,0xFE,0x0C,0x0C,0x0C,0x1E,0x00,0x00,0x00,0x00,       //0x
+  98:Screen.c      ****         0x00,0x00,0xFE,0xC0,0xC0,0xC0,0xFC,0x06,0x06,0x06,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+  99:Screen.c      ****         0x00,0x00,0x38,0x60,0xC0,0xC0,0xFC,0xC6,0xC6,0xC6,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 100:Screen.c      ****         0x00,0x00,0xFE,0xC6,0x06,0x06,0x0C,0x18,0x30,0x30,0x30,0x30,0x00,0x00,0x00,0x00,       //0x
+ 101:Screen.c      ****         0x00,0x00,0x7C,0xC6,0xC6,0xC6,0x7C,0xC6,0xC6,0xC6,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 102:Screen.c      ****         0x00,0x00,0x7C,0xC6,0xC6,0xC6,0x7E,0x06,0x06,0x06,0x0C,0x78,0x00,0x00,0x00,0x00,       //0x
+ 103:Screen.c      ****         0x00,0x00,0x00,0x00,0x18,0x18,0x00,0x00,0x00,0x18,0x18,0x00,0x00,0x00,0x00,0x00,       //0x
+ 104:Screen.c      ****         0x00,0x00,0x00,0x00,0x18,0x18,0x00,0x00,0x00,0x18,0x18,0x30,0x00,0x00,0x00,0x00,       //0x
+ 105:Screen.c      ****         0x00,0x00,0x00,0x06,0x0C,0x18,0x30,0x60,0x30,0x18,0x0C,0x06,0x00,0x00,0x00,0x00,       //0x
+ 106:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x7E,0x00,0x00,0x7E,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 107:Screen.c      ****         0x00,0x00,0x00,0x60,0x30,0x18,0x0C,0x06,0x0C,0x18,0x30,0x60,0x00,0x00,0x00,0x00,       //0x
+ 108:Screen.c      ****         0x00,0x00,0x7C,0xC6,0xC6,0x0C,0x18,0x18,0x18,0x00,0x18,0x18,0x00,0x00,0x00,0x00,       //0x
+ 109:Screen.c      ****         0x00,0x00,0x00,0x7C,0xC6,0xC6,0xDE,0xDE,0xDE,0xDC,0xC0,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 110:Screen.c      ****         0x00,0x00,0x10,0x38,0x6C,0xC6,0xC6,0xFE,0xC6,0xC6,0xC6,0xC6,0x00,0x00,0x00,0x00,       //0x
+ 111:Screen.c      ****         0x00,0x00,0xFC,0x66,0x66,0x66,0x7C,0x66,0x66,0x66,0x66,0xFC,0x00,0x00,0x00,0x00,       //0x
+ 112:Screen.c      ****         0x00,0x00,0x3C,0x66,0xC2,0xC0,0xC0,0xC0,0xC0,0xC2,0x66,0x3C,0x00,0x00,0x00,0x00,       //0x
+ 113:Screen.c      ****         0x00,0x00,0xF8,0x6C,0x66,0x66,0x66,0x66,0x66,0x66,0x6C,0xF8,0x00,0x00,0x00,0x00,       //0x
+ 114:Screen.c      ****         0x00,0x00,0xFE,0x66,0x62,0x68,0x78,0x68,0x60,0x62,0x66,0xFE,0x00,0x00,0x00,0x00,       //0x
+ 115:Screen.c      ****         0x00,0x00,0xFE,0x66,0x62,0x68,0x78,0x68,0x60,0x60,0x60,0xF0,0x00,0x00,0x00,0x00,       //0x
+ 116:Screen.c      ****         0x00,0x00,0x3C,0x66,0xC2,0xC0,0xC0,0xDE,0xC6,0xC6,0x66,0x3A,0x00,0x00,0x00,0x00,       //0x
+ 117:Screen.c      ****         0x00,0x00,0xC6,0xC6,0xC6,0xC6,0xFE,0xC6,0xC6,0xC6,0xC6,0xC6,0x00,0x00,0x00,0x00,       //0x
+ 118:Screen.c      ****         0x00,0x00,0x3C,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x3C,0x00,0x00,0x00,0x00,       //0x
+ 119:Screen.c      ****         0x00,0x00,0x1E,0x0C,0x0C,0x0C,0x0C,0x0C,0xCC,0xCC,0xCC,0x78,0x00,0x00,0x00,0x00,       //0x
+ 120:Screen.c      ****         0x00,0x00,0xE6,0x66,0x66,0x6C,0x78,0x78,0x6C,0x66,0x66,0xE6,0x00,0x00,0x00,0x00,       //0x
+ 121:Screen.c      ****         0x00,0x00,0xF0,0x60,0x60,0x60,0x60,0x60,0x60,0x62,0x66,0xFE,0x00,0x00,0x00,0x00,       //0x
+ 122:Screen.c      ****         0x00,0x00,0xC6,0xEE,0xFE,0xFE,0xD6,0xC6,0xC6,0xC6,0xC6,0xC6,0x00,0x00,0x00,0x00,       //0x
+ 123:Screen.c      ****         0x00,0x00,0xC6,0xE6,0xF6,0xFE,0xDE,0xCE,0xC6,0xC6,0xC6,0xC6,0x00,0x00,0x00,0x00,       //0x
+ 124:Screen.c      ****         0x00,0x00,0x7C,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 125:Screen.c      ****         0x00,0x00,0xFC,0x66,0x66,0x66,0x7C,0x60,0x60,0x60,0x60,0xF0,0x00,0x00,0x00,0x00,       //0x
+ 126:Screen.c      ****         0x00,0x00,0x7C,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0xD6,0xDE,0x7C,0x0C,0x0E,0x00,0x00,       //0x
+ 127:Screen.c      ****         0x00,0x00,0xFC,0x66,0x66,0x66,0x7C,0x6C,0x66,0x66,0x66,0xE6,0x00,0x00,0x00,0x00,       //0x
+ 128:Screen.c      ****         0x00,0x00,0x7C,0xC6,0xC6,0x60,0x38,0x0C,0x06,0xC6,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 129:Screen.c      ****         0x00,0x00,0x7E,0x7E,0x5A,0x18,0x18,0x18,0x18,0x18,0x18,0x3C,0x00,0x00,0x00,0x00,       //0x
+ 130:Screen.c      ****         0x00,0x00,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 131:Screen.c      ****         0x00,0x00,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0x6C,0x38,0x10,0x00,0x00,0x00,0x00,       //0x
+ 132:Screen.c      ****         0x00,0x00,0xC6,0xC6,0xC6,0xC6,0xD6,0xD6,0xD6,0xFE,0xEE,0x6C,0x00,0x00,0x00,0x00,       //0x
+ 133:Screen.c      ****         0x00,0x00,0xC6,0xC6,0x6C,0x7C,0x38,0x38,0x7C,0x6C,0xC6,0xC6,0x00,0x00,0x00,0x00,       //0x
+ 134:Screen.c      ****         0x00,0x00,0x66,0x66,0x66,0x66,0x3C,0x18,0x18,0x18,0x18,0x3C,0x00,0x00,0x00,0x00,       //0x
+ 135:Screen.c      ****         0x00,0x00,0xFE,0xC6,0x86,0x0C,0x18,0x30,0x60,0xC2,0xC6,0xFE,0x00,0x00,0x00,0x00,       //0x
+ 136:Screen.c      ****         0x00,0x00,0x3C,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x3C,0x00,0x00,0x00,0x00,       //0x
+ 137:Screen.c      ****         0x00,0x00,0x00,0x80,0xC0,0xE0,0x70,0x38,0x1C,0x0E,0x06,0x02,0x00,0x00,0x00,0x00,       //0x
+ 138:Screen.c      ****         0x00,0x00,0x3C,0x0C,0x0C,0x0C,0x0C,0x0C,0x0C,0x0C,0x0C,0x3C,0x00,0x00,0x00,0x00,       //0x
+ 139:Screen.c      ****         0x10,0x38,0x6C,0xC6,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 140:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0x00,0x00,       //0x
+ 141:Screen.c      ****         0x30,0x30,0x18,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 142:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x78,0x0C,0x7C,0xCC,0xCC,0xCC,0x76,0x00,0x00,0x00,0x00,       //0x
+ 143:Screen.c      ****         0x00,0x00,0xE0,0x60,0x60,0x78,0x6C,0x66,0x66,0x66,0x66,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 144:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x7C,0xC6,0xC0,0xC0,0xC0,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 145:Screen.c      ****         0x00,0x00,0x1C,0x0C,0x0C,0x3C,0x6C,0xCC,0xCC,0xCC,0xCC,0x76,0x00,0x00,0x00,0x00,       //0x
+ 146:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x7C,0xC6,0xFE,0xC0,0xC0,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 147:Screen.c      ****         0x00,0x00,0x38,0x6C,0x64,0x60,0xF0,0x60,0x60,0x60,0x60,0xF0,0x00,0x00,0x00,0x00,       //0x
+ 148:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x76,0xCC,0xCC,0xCC,0xCC,0xCC,0x7C,0x0C,0xCC,0x78,0x00,       //0x
+ 149:Screen.c      ****         0x00,0x00,0xE0,0x60,0x60,0x6C,0x76,0x66,0x66,0x66,0x66,0xE6,0x00,0x00,0x00,0x00,       //0x
+ 150:Screen.c      ****         0x00,0x00,0x18,0x18,0x00,0x38,0x18,0x18,0x18,0x18,0x18,0x3C,0x00,0x00,0x00,0x00,       //0x
+ 151:Screen.c      ****         0x00,0x00,0x06,0x06,0x00,0x0E,0x06,0x06,0x06,0x06,0x06,0x06,0x66,0x66,0x3C,0x00,       //0x
+ 152:Screen.c      ****         0x00,0x00,0xE0,0x60,0x60,0x66,0x6C,0x78,0x78,0x6C,0x66,0xE6,0x00,0x00,0x00,0x00,       //0x
+ 153:Screen.c      ****         0x00,0x00,0x38,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x3C,0x00,0x00,0x00,0x00,       //0x
+ 154:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xEC,0xFE,0xD6,0xD6,0xD6,0xD6,0xC6,0x00,0x00,0x00,0x00,       //0x
+ 155:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xDC,0x66,0x66,0x66,0x66,0x66,0x66,0x00,0x00,0x00,0x00,       //0x
+ 156:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x7C,0xC6,0xC6,0xC6,0xC6,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 157:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xDC,0x66,0x66,0x66,0x66,0x66,0x7C,0x60,0x60,0xF0,0x00,       //0x
+ 158:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x76,0xCC,0xCC,0xCC,0xCC,0xCC,0x7C,0x0C,0x0C,0x1E,0x00,       //0x
+ 159:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xDC,0x76,0x66,0x60,0x60,0x60,0xF0,0x00,0x00,0x00,0x00,       //0x
+ 160:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x7C,0xC6,0x60,0x38,0x0C,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 161:Screen.c      ****         0x00,0x00,0x10,0x30,0x30,0xFC,0x30,0x30,0x30,0x30,0x36,0x1C,0x00,0x00,0x00,0x00,       //0x
+ 162:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0x76,0x00,0x00,0x00,0x00,       //0x
+ 163:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x66,0x66,0x66,0x66,0x66,0x3C,0x18,0x00,0x00,0x00,0x00,       //0x
+ 164:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xC6,0xC6,0xD6,0xD6,0xD6,0xFE,0x6C,0x00,0x00,0x00,0x00,       //0x
+ 165:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xC6,0x6C,0x38,0x38,0x38,0x6C,0xC6,0x00,0x00,0x00,0x00,       //0x
+ 166:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0x7E,0x06,0x0C,0xF8,0x00,       //0x
+ 167:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xFE,0xCC,0x18,0x30,0x60,0xC6,0xFE,0x00,0x00,0x00,0x00,       //0x
+ 168:Screen.c      ****         0x00,0x00,0x0E,0x18,0x18,0x18,0x70,0x18,0x18,0x18,0x18,0x0E,0x00,0x00,0x00,0x00,       //0x
+ 169:Screen.c      ****         0x00,0x00,0x18,0x18,0x18,0x18,0x00,0x18,0x18,0x18,0x18,0x18,0x00,0x00,0x00,0x00,       //0x
+ 170:Screen.c      ****         0x00,0x00,0x70,0x18,0x18,0x18,0x0E,0x18,0x18,0x18,0x18,0x70,0x00,0x00,0x00,0x00,       //0x
+ 171:Screen.c      ****         0x00,0x00,0x76,0xDC,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 172:Screen.c      **** //        0x00,0x00,0x00,0x00,0x10,0x38,0x6C,0xC6,0xC6,0xC6,0xFE,0x00,0x00,0x00,0x00,0x00,       //
+ 173:Screen.c      **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x66,0x66,0x66,0x66,0x66,0x7E,0x62,0x60,0x60,0xC0,
+ 174:Screen.c      **** //	0x00,0x00,0x00,0x00,0x66,0x66,0x66,0x66,0x66,0x7C,0x60,0x60,0xC0,0x00,0x00,0x00,       //0xE6		-
+ 175:Screen.c      **** #ifdef ASC8X16_USE_EXTEND_CHARACTER_SET
+ 176:Screen.c      ****         0x00,0x00,0x3C,0x66,0xC2,0xC0,0xC0,0xC0,0xC2,0x66,0x3C,0x0C,0x06,0x7C,0x00,0x00,       //0x
+ 177:Screen.c      ****         0x00,0x00,0xCC,0x00,0x00,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0x76,0x00,0x00,0x00,0x00,       //0x
+ 178:Screen.c      ****         0x00,0x0C,0x18,0x30,0x00,0x7C,0xC6,0xFE,0xC0,0xC0,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 179:Screen.c      ****         0x00,0x10,0x38,0x6C,0x00,0x78,0x0C,0x7C,0xCC,0xCC,0xCC,0x76,0x00,0x00,0x00,0x00,       //0x
+ 180:Screen.c      ****         0x00,0x00,0xCC,0x00,0x00,0x78,0x0C,0x7C,0xCC,0xCC,0xCC,0x76,0x00,0x00,0x00,0x00,       //0x
+ 181:Screen.c      ****         0x00,0x60,0x30,0x18,0x00,0x78,0x0C,0x7C,0xCC,0xCC,0xCC,0x76,0x00,0x00,0x00,0x00,       //0x
+ 182:Screen.c      ****         0x00,0x38,0x6C,0x38,0x00,0x78,0x0C,0x7C,0xCC,0xCC,0xCC,0x76,0x00,0x00,0x00,0x00,       //0x
+ 183:Screen.c      ****         0x00,0x00,0x00,0x00,0x3C,0x66,0x60,0x60,0x66,0x3C,0x0C,0x06,0x3C,0x00,0x00,0x00,       //0x
+ 184:Screen.c      ****         0x00,0x10,0x38,0x6C,0x00,0x7C,0xC6,0xFE,0xC0,0xC0,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 185:Screen.c      ****         0x00,0x00,0xC6,0x00,0x00,0x7C,0xC6,0xFE,0xC0,0xC0,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 186:Screen.c      ****         0x00,0x60,0x30,0x18,0x00,0x7C,0xC6,0xFE,0xC0,0xC0,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 187:Screen.c      ****         0x00,0x00,0x66,0x00,0x00,0x38,0x18,0x18,0x18,0x18,0x18,0x3C,0x00,0x00,0x00,0x00,       //0x
+ 188:Screen.c      ****         0x00,0x18,0x3C,0x66,0x00,0x38,0x18,0x18,0x18,0x18,0x18,0x3C,0x00,0x00,0x00,0x00,       //0x
+ 189:Screen.c      ****         0x00,0x60,0x30,0x18,0x00,0x38,0x18,0x18,0x18,0x18,0x18,0x3C,0x00,0x00,0x00,0x00,       //0x
+ 190:Screen.c      ****         0x00,0xC6,0x00,0x10,0x38,0x6C,0xC6,0xC6,0xFE,0xC6,0xC6,0xC6,0x00,0x00,0x00,0x00,       //0x
+ 191:Screen.c      ****         0x38,0x6C,0x38,0x00,0x38,0x6C,0xC6,0xC6,0xFE,0xC6,0xC6,0xC6,0x00,0x00,0x00,0x00,       //0x
+ 192:Screen.c      ****         0x18,0x30,0x60,0x00,0xFE,0x66,0x60,0x7C,0x60,0x60,0x66,0xFE,0x00,0x00,0x00,0x00,       //0x
+ 193:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xCC,0x76,0x36,0x7E,0xD8,0xD8,0x6E,0x00,0x00,0x00,0x00,       //0x
+ 194:Screen.c      ****         0x00,0x00,0x3E,0x6C,0xCC,0xCC,0xFE,0xCC,0xCC,0xCC,0xCC,0xCE,0x00,0x00,0x00,0x00,       //0x
+ 195:Screen.c      ****         0x00,0x10,0x38,0x6C,0x00,0x7C,0xC6,0xC6,0xC6,0xC6,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 196:Screen.c      ****         0x00,0x00,0xC6,0x00,0x00,0x7C,0xC6,0xC6,0xC6,0xC6,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 197:Screen.c      ****         0x00,0x60,0x30,0x18,0x00,0x7C,0xC6,0xC6,0xC6,0xC6,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 198:Screen.c      ****         0x00,0x30,0x78,0xCC,0x00,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0x76,0x00,0x00,0x00,0x00,       //0x
+ 199:Screen.c      ****         0x00,0x60,0x30,0x18,0x00,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0x76,0x00,0x00,0x00,0x00,       //0x
+ 200:Screen.c      ****         0x00,0x00,0xC6,0x00,0x00,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0x7E,0x06,0x0C,0x78,0x00,       //0x
+ 201:Screen.c      ****         0x00,0xC6,0x00,0x7C,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 202:Screen.c      ****         0x00,0xC6,0x00,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 203:Screen.c      ****         0x00,0x18,0x18,0x3C,0x66,0x60,0x60,0x60,0x66,0x3C,0x18,0x18,0x00,0x00,0x00,0x00,       //0x
+ 204:Screen.c      ****         0x00,0x38,0x6C,0x64,0x60,0xF0,0x60,0x60,0x60,0x60,0xE6,0xFC,0x00,0x00,0x00,0x00,       //0x
+ 205:Screen.c      ****         0x00,0x00,0x66,0x66,0x3C,0x18,0x7E,0x18,0x7E,0x18,0x18,0x18,0x00,0x00,0x00,0x00,       //0x
+ 206:Screen.c      ****         0x00,0xF8,0xCC,0xCC,0xF8,0xC4,0xCC,0xDE,0xCC,0xCC,0xCC,0xC6,0x00,0x00,0x00,0x00,       //0x
+ 207:Screen.c      ****         0x00,0x0E,0x1B,0x18,0x18,0x18,0x7E,0x18,0x18,0x18,0x18,0x18,0xD8,0x70,0x00,0x00,       //0x
+ 208:Screen.c      ****         0x00,0x18,0x30,0x60,0x00,0x78,0x0C,0x7C,0xCC,0xCC,0xCC,0x76,0x00,0x00,0x00,0x00,       //0x
+ 209:Screen.c      ****         0x00,0x0C,0x18,0x30,0x00,0x38,0x18,0x18,0x18,0x18,0x18,0x3C,0x00,0x00,0x00,0x00,       //0x
+ 210:Screen.c      ****         0x00,0x18,0x30,0x60,0x00,0x7C,0xC6,0xC6,0xC6,0xC6,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 211:Screen.c      ****         0x00,0x18,0x30,0x60,0x00,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0x76,0x00,0x00,0x00,0x00,       //0x
+ 212:Screen.c      ****         0x00,0x00,0x76,0xDC,0x00,0xDC,0x66,0x66,0x66,0x66,0x66,0x66,0x00,0x00,0x00,0x00,       //0x
+ 213:Screen.c      ****         0x76,0xDC,0x00,0xC6,0xE6,0xF6,0xFE,0xDE,0xCE,0xC6,0xC6,0xC6,0x00,0x00,0x00,0x00,       //0x
+ 214:Screen.c      ****         0x00,0x3C,0x6C,0x6C,0x3E,0x00,0x7E,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 215:Screen.c      ****         0x00,0x38,0x6C,0x6C,0x38,0x00,0x7C,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 216:Screen.c      ****         0x00,0x00,0x30,0x30,0x00,0x30,0x30,0x60,0xC0,0xC6,0xC6,0x7C,0x00,0x00,0x00,0x00,       //0x
+ 217:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0xFE,0xC0,0xC0,0xC0,0xC0,0x00,0x00,0x00,0x00,0x00,       //0x
+ 218:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0xFE,0x06,0x06,0x06,0x06,0x00,0x00,0x00,0x00,0x00,       //0x
+ 219:Screen.c      ****         0x00,0xC0,0xC0,0xC2,0xC6,0xCC,0x18,0x30,0x60,0xDC,0x86,0x0C,0x18,0x3E,0x00,0x00,       //0x
+ 220:Screen.c      ****         0x00,0xC0,0xC0,0xC2,0xC6,0xCC,0x18,0x30,0x66,0xCE,0x9E,0x3E,0x06,0x06,0x00,0x00,       //0x
+ 221:Screen.c      ****         0x00,0x00,0x18,0x18,0x00,0x18,0x18,0x18,0x3C,0x3C,0x3C,0x18,0x00,0x00,0x00,0x00,       //0x
+ 222:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x36,0x6C,0xD8,0x6C,0x36,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 223:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xD8,0x6C,0x36,0x6C,0xD8,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 224:Screen.c      ****         0x11,0x44,0x11,0x44,0x11,0x44,0x11,0x44,0x11,0x44,0x11,0x44,0x11,0x44,0x11,0x44,       //0x
+ 225:Screen.c      ****         0x55,0xAA,0x55,0xAA,0x55,0xAA,0x55,0xAA,0x55,0xAA,0x55,0xAA,0x55,0xAA,0x55,0xAA,       //0x
+ 226:Screen.c      ****         0xDD,0x77,0xDD,0x77,0xDD,0x77,0xDD,0x77,0xDD,0x77,0xDD,0x77,0xDD,0x77,0xDD,0x77,       //0x
+ 227:Screen.c      ****         0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,       //0x
+ 228:Screen.c      ****         0x18,0x18,0x18,0x18,0x18,0x18,0x18,0xF8,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,       //0x
+ 229:Screen.c      ****         0x18,0x18,0x18,0x18,0x18,0xF8,0x18,0xF8,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,       //0x
+ 230:Screen.c      ****         0x36,0x36,0x36,0x36,0x36,0x36,0x36,0xF6,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,       //0x
+ 231:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFE,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,       //0x
+ 232:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xF8,0x18,0xF8,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,       //0x
+ 233:Screen.c      ****         0x36,0x36,0x36,0x36,0x36,0xF6,0x06,0xF6,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,       //0x
+ 234:Screen.c      ****         0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,       //0x
+ 235:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xFE,0x06,0xF6,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,       //0x
+ 236:Screen.c      ****         0x36,0x36,0x36,0x36,0x36,0xF6,0x06,0xFE,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 237:Screen.c      ****         0x36,0x36,0x36,0x36,0x36,0x36,0x36,0xFE,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 238:Screen.c      ****         0x18,0x18,0x18,0x18,0x18,0xF8,0x18,0xF8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 239:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xF8,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,       //0x
+ 240:Screen.c      ****         0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x1F,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 241:Screen.c      ****         0x18,0x18,0x18,0x18,0x18,0x18,0x18,0xFF,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 242:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,       //0x
+ 243:Screen.c      ****         0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x1F,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,       //0x
+ 244:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 245:Screen.c      ****         0x18,0x18,0x18,0x18,0x18,0x18,0x18,0xFF,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,       //0x
+ 246:Screen.c      ****         0x18,0x18,0x18,0x18,0x18,0x1F,0x18,0x1F,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,       //0x
+ 247:Screen.c      ****         0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x37,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,       //0x
+ 248:Screen.c      ****         0x36,0x36,0x36,0x36,0x36,0x37,0x30,0x3F,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 249:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x3F,0x30,0x37,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,       //0x
+ 250:Screen.c      ****         0x36,0x36,0x36,0x36,0x36,0xF7,0x00,0xFF,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 251:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xFF,0x00,0xF7,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,       //0x
+ 252:Screen.c      ****         0x36,0x36,0x36,0x36,0x36,0x37,0x30,0x37,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,       //0x
+ 253:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xFF,0x00,0xFF,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 254:Screen.c      ****         0x36,0x36,0x36,0x36,0x36,0xF7,0x00,0xF7,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,       //0x
+ 255:Screen.c      ****         0x18,0x18,0x18,0x18,0x18,0xFF,0x00,0xFF,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 256:Screen.c      ****         0x36,0x36,0x36,0x36,0x36,0x36,0x36,0xFF,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 257:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0xFF,0x00,0xFF,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,       //0x
+ 258:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,       //0x
+ 259:Screen.c      ****         0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x3F,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 260:Screen.c      ****         0x18,0x18,0x18,0x18,0x18,0x1F,0x18,0x1F,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 261:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x1F,0x18,0x1F,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,       //0x
+ 262:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x3F,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,       //0x
+ 263:Screen.c      ****         0x36,0x36,0x36,0x36,0x36,0x36,0x36,0xFF,0x36,0x36,0x36,0x36,0x36,0x36,0x36,0x36,       //0x
+ 264:Screen.c      ****         0x18,0x18,0x18,0x18,0x18,0xFF,0x18,0xFF,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,       //0x
+ 265:Screen.c      ****         0x18,0x18,0x18,0x18,0x18,0x18,0x18,0xF8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 266:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x1F,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,       //0x
+ 267:Screen.c      ****         0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,       //0x
+ 268:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,       //0x
+ 269:Screen.c      ****         0xF0,0xF0,0xF0,0xF0,0xF0,0xF0,0xF0,0xF0,0xF0,0xF0,0xF0,0xF0,0xF0,0xF0,0xF0,0xF0,       //0x
+ 270:Screen.c      ****         0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,       //0x
+ 271:Screen.c      ****         0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 272:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x76,0xDC,0xD8,0xD8,0xD8,0xDC,0x76,0x00,0x00,0x00,0x00,       //0x
+ 273:Screen.c      ****         0x00,0x00,0x78,0xCC,0xCC,0xCC,0xD8,0xCC,0xC6,0xC6,0xC6,0xCC,0x00,0x00,0x00,0x00,       //0x
+ 274:Screen.c      ****         0x00,0x00,0xFE,0xC6,0xC6,0xC0,0xC0,0xC0,0xC0,0xC0,0xC0,0xC0,0x00,0x00,0x00,0x00,       //0x
+ 275:Screen.c      ****         0x00,0x00,0x00,0x00,0xFE,0x6C,0x6C,0x6C,0x6C,0x6C,0x6C,0x6C,0x00,0x00,0x00,0x00,       //0x
+ 276:Screen.c      ****         0x00,0x00,0x00,0xFE,0xC6,0x60,0x30,0x18,0x30,0x60,0xC6,0xFE,0x00,0x00,0x00,0x00,       //0x
+ 277:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x7E,0xD8,0xD8,0xD8,0xD8,0xD8,0x70,0x00,0x00,0x00,0x00,       //0x
+ 278:Screen.c      ****         0x00,0x00,0x00,0x00,0x66,0x66,0x66,0x66,0x66,0x7C,0x60,0x60,0xC0,0x00,0x00,0x00,       //0x
+ 279:Screen.c      ****         0x00,0x00,0x00,0x00,0x76,0xDC,0x18,0x18,0x18,0x18,0x18,0x18,0x00,0x00,0x00,0x00,       //0x
+ 280:Screen.c      ****         0x00,0x00,0x00,0x7E,0x18,0x3C,0x66,0x66,0x66,0x3C,0x18,0x7E,0x00,0x00,0x00,0x00,       //0x
+ 281:Screen.c      ****         0x00,0x00,0x00,0x38,0x6C,0xC6,0xC6,0xFE,0xC6,0xC6,0x6C,0x38,0x00,0x00,0x00,0x00,       //0x
+ 282:Screen.c      ****         0x00,0x00,0x38,0x6C,0xC6,0xC6,0xC6,0x6C,0x6C,0x6C,0x6C,0xEE,0x00,0x00,0x00,0x00,       //0x
+ 283:Screen.c      ****         0x00,0x00,0x1E,0x30,0x18,0x0C,0x3E,0x66,0x66,0x66,0x66,0x3C,0x00,0x00,0x00,0x00,       //0x
+ 284:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x7E,0xDB,0xDB,0xDB,0x7E,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 285:Screen.c      ****         0x00,0x00,0x00,0x03,0x06,0x7E,0xDB,0xDB,0xF3,0x7E,0x60,0xC0,0x00,0x00,0x00,0x00,       //0x
+ 286:Screen.c      ****         0x00,0x00,0x1C,0x30,0x60,0x60,0x7C,0x60,0x60,0x60,0x30,0x1C,0x00,0x00,0x00,0x00,       //0x
+ 287:Screen.c      ****         0x00,0x00,0x00,0x7C,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0xC6,0x00,0x00,0x00,0x00,       //0x
+ 288:Screen.c      ****         0x00,0x00,0x00,0x00,0xFE,0x00,0x00,0xFE,0x00,0x00,0xFE,0x00,0x00,0x00,0x00,0x00,       //0x
+ 289:Screen.c      ****         0x00,0x00,0x00,0x00,0x18,0x18,0x7E,0x18,0x18,0x00,0x00,0xFF,0x00,0x00,0x00,0x00,       //0x
+ 290:Screen.c      ****         0x00,0x00,0x00,0x30,0x18,0x0C,0x06,0x0C,0x18,0x30,0x00,0x7E,0x00,0x00,0x00,0x00,       //0x
+ 291:Screen.c      ****         0x00,0x00,0x00,0x0C,0x18,0x30,0x60,0x30,0x18,0x0C,0x00,0x7E,0x00,0x00,0x00,0x00,       //0x
+ 292:Screen.c      ****         0x00,0x00,0x0E,0x1B,0x1B,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,       //0x
+ 293:Screen.c      ****         0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,0xD8,0xD8,0xD8,0x70,0x00,0x00,0x00,0x00,       //0x
+ 294:Screen.c      ****         0x00,0x00,0x00,0x00,0x18,0x18,0x00,0x7E,0x00,0x18,0x18,0x00,0x00,0x00,0x00,0x00,       //0x
+ 295:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x76,0xDC,0x00,0x76,0xDC,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 296:Screen.c      ****         0x00,0x38,0x6C,0x6C,0x38,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 297:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x18,0x18,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 298:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x18,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 299:Screen.c      ****         0x00,0x0F,0x0C,0x0C,0x0C,0x0C,0x0C,0xEC,0x6C,0x6C,0x3C,0x1C,0x00,0x00,0x00,0x00,       //0x
+ 300:Screen.c      ****         0x00,0xD8,0x6C,0x6C,0x6C,0x6C,0x6C,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 301:Screen.c      ****         0x00,0x70,0xD8,0x30,0x60,0xC8,0xF8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,       //0x
+ 302:Screen.c      ****         0x00,0x00,0x00,0x00,0x7C,0x7C,0x7C,0x7C,0x7C,0x7C,0x7C,0x00,0x00,0x00,0x00,0x00,       //0x
+ 303:Screen.c      ****         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00        //0x
+ 304:Screen.c      **** #endif
+ 305:Screen.c      **** };
+ 306:Screen.c      **** 
+ 307:Screen.c      **** FONT ASC8X16 = {
+ 308:Screen.c      **** 	Font_ASC8X16,
+ 309:Screen.c      **** 	8,
+ 310:Screen.c      **** 	16,
+ 311:Screen.c      **** 	8,
+ 312:Screen.c      **** 	16,
+ 313:Screen.c      **** 	0x20
+ 314:Screen.c      **** 	};
+ 315:Screen.c      **** 
+ 316:Screen.c      **** // ===== Function Definitions ==================
+ 317:Screen.c      **** //
+ 318:Screen.c      **** // ==========================================
+ 319:Screen.c      **** // Clear screen
+ 320:Screen.c      **** void	ClrScreen(void)
+ 321:Screen.c      **** {
+ 322:Screen.c      ****  FillRect(ScreenX0, ScreenY0, ScreenXsize, ScreenYsize, clBlack);
+ 323:Screen.c      **** }
+ 324:Screen.c      **** 
+ 325:Screen.c      **** void	SetWindow(U16 x, U16 xsize, U16 y, U16 ysize)
+ 326:Screen.c      **** {
+  27              		.loc 1 326 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+  32 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  33              		.cfi_def_cfa_offset 32
+  34              		.cfi_offset 4, -32
+  35              		.cfi_offset 5, -28
+  36              		.cfi_offset 6, -24
+  37              		.cfi_offset 7, -20
+  38              		.cfi_offset 8, -16
+  39              		.cfi_offset 9, -12
+  40              		.cfi_offset 10, -8
+  41              		.cfi_offset 14, -4
+  42              		.loc 1 326 0
+  43 0004 8846     		mov	r8, r1
+  44 0006 0646     		mov	r6, r0
+  45 0008 1546     		mov	r5, r2
+  46 000a 1F46     		mov	r7, r3
+ 327:Screen.c      ****  write_comm(0x2A);
+  47              		.loc 1 327 0
+  48 000c DFF84490 		ldr	r9, .L4+4
+  49 0010 2A20     		movs	r0, #42
+  50              	.LVL1:
+ 328:Screen.c      **** 
+ 329:Screen.c      ****  write_data(x >> 8);
+  51              		.loc 1 329 0
+  52 0012 0F4C     		ldr	r4, .L4
+ 327:Screen.c      ****  write_comm(0x2A);
+  53              		.loc 1 327 0
+  54 0014 C847     		blx	r9
+  55              	.LVL2:
+ 330:Screen.c      ****  write_data(x);
+ 331:Screen.c      ****  x = x + xsize - 1;
+  56              		.loc 1 331 0
+  57 0016 08F1FF38 		add	r8, r8, #-1
+ 329:Screen.c      ****  write_data(x);
+  58              		.loc 1 329 0
+  59 001a 300A     		lsrs	r0, r6, #8
+  60 001c A047     		blx	r4
+  61              	.LVL3:
+ 330:Screen.c      ****  write_data(x);
+  62              		.loc 1 330 0
+  63 001e F0B2     		uxtb	r0, r6
+  64              		.loc 1 331 0
+  65 0020 4644     		add	r6, r6, r8
+  66 0022 B6B2     		uxth	r6, r6
+ 330:Screen.c      ****  write_data(x);
+  67              		.loc 1 330 0
+  68 0024 A047     		blx	r4
+  69              	.LVL4:
+ 332:Screen.c      ****  write_data(x >> 8);
+  70              		.loc 1 332 0
+  71 0026 300A     		lsrs	r0, r6, #8
+  72 0028 A047     		blx	r4
+  73              	.LVL5:
+ 333:Screen.c      ****  write_data(x);
+  74              		.loc 1 333 0
+  75 002a F0B2     		uxtb	r0, r6
+  76 002c A047     		blx	r4
+  77              	.LVL6:
+ 334:Screen.c      **** 
+ 335:Screen.c      ****  
+ 336:Screen.c      ****  write_comm(0x2B);
+  78              		.loc 1 336 0
+  79 002e 2B20     		movs	r0, #43
+  80 0030 C847     		blx	r9
+  81              	.LVL7:
+ 337:Screen.c      ****  write_data(y >> 8);
+ 338:Screen.c      ****  write_data(y);
+ 339:Screen.c      ****  y = y + ysize - 1;
+  82              		.loc 1 339 0
+  83 0032 013F     		subs	r7, r7, #1
+ 337:Screen.c      ****  write_data(y >> 8);
+  84              		.loc 1 337 0
+  85 0034 280A     		lsrs	r0, r5, #8
+  86 0036 A047     		blx	r4
+  87              	.LVL8:
+ 338:Screen.c      ****  y = y + ysize - 1;
+  88              		.loc 1 338 0
+  89 0038 E8B2     		uxtb	r0, r5
+  90              		.loc 1 339 0
+  91 003a 3D44     		add	r5, r5, r7
+  92 003c ADB2     		uxth	r5, r5
+ 338:Screen.c      ****  y = y + ysize - 1;
+  93              		.loc 1 338 0
+  94 003e A047     		blx	r4
+  95              	.LVL9:
+ 340:Screen.c      ****  write_data(y >> 8);
+  96              		.loc 1 340 0
+  97 0040 280A     		lsrs	r0, r5, #8
+  98 0042 A047     		blx	r4
+  99              	.LVL10:
+ 341:Screen.c      ****  write_data(y);
+ 100              		.loc 1 341 0
+ 101 0044 E8B2     		uxtb	r0, r5
+ 102 0046 2346     		mov	r3, r4
+ 342:Screen.c      **** }
+ 103              		.loc 1 342 0
+ 104 0048 BDE8F047 		pop	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 105              		.cfi_restore 14
+ 106              		.cfi_restore 10
+ 107              		.cfi_restore 9
+ 108              		.cfi_restore 8
+ 109              		.cfi_restore 7
+ 110              		.cfi_restore 6
+ 111              		.cfi_restore 5
+ 112              		.cfi_restore 4
+ 113              		.cfi_def_cfa_offset 0
+ 114              	.LVL11:
+ 341:Screen.c      ****  write_data(y);
+ 115              		.loc 1 341 0
+ 116 004c 1847     		bx	r3	@ indirect register sibling call
+ 117              	.LVL12:
+ 118              	.L5:
+ 119 004e 00BF     		.align	2
+ 120              	.L4:
+ 121 0050 00000000 		.word	write_data
+ 122 0054 00000000 		.word	write_comm
+ 123              		.cfi_endproc
+ 124              	.LFE30:
+ 126              		.section	.text.FillRect,"ax",%progbits
+ 127              		.align	1
+ 128              		.p2align 2,,3
+ 129              		.global	FillRect
+ 130              		.syntax unified
+ 131              		.thumb
+ 132              		.thumb_func
+ 133              		.fpu softvfp
+ 135              	FillRect:
+ 136              	.LFB31:
+ 343:Screen.c      **** 
+ 344:Screen.c      **** 
+ 345:Screen.c      **** 
+ 346:Screen.c      **** // ==========================================
+ 347:Screen.c      **** // Fill rectangle area with given color
+ 348:Screen.c      **** void FillRect(S16 x, S16 y, S16 xsize, S16 ysize, U16 color)
+ 349:Screen.c      **** {
+ 137              		.loc 1 349 0
+ 138              		.cfi_startproc
+ 139              		@ args = 4, pretend = 0, frame = 0
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141              	.LVL13:
+ 142 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 143              		.cfi_def_cfa_offset 24
+ 144              		.cfi_offset 4, -24
+ 145              		.cfi_offset 5, -20
+ 146              		.cfi_offset 6, -16
+ 147              		.cfi_offset 7, -12
+ 148              		.cfi_offset 8, -8
+ 149              		.cfi_offset 14, -4
+ 150              		.loc 1 349 0
+ 151 0004 1746     		mov	r7, r2
+ 152 0006 9846     		mov	r8, r3
+ 350:Screen.c      ****  U32 tmp; 
+ 351:Screen.c      **** 
+ 352:Screen.c      ****  SetWindow(x, xsize, y, ysize);
+ 153              		.loc 1 352 0
+ 154 0008 8AB2     		uxth	r2, r1
+ 155              	.LVL14:
+ 156 000a 80B2     		uxth	r0, r0
+ 157 000c B9B2     		uxth	r1, r7
+ 158              	.LVL15:
+ 159 000e 9BB2     		uxth	r3, r3
+ 160 0010 194D     		ldr	r5, .L14
+ 349:Screen.c      ****  U32 tmp; 
+ 161              		.loc 1 349 0
+ 162 0012 BDF81840 		ldrh	r4, [sp, #24]
+ 163              		.loc 1 352 0
+ 164 0016 A847     		blx	r5
+ 165              	.LVL16:
+ 353:Screen.c      ****  
+ 354:Screen.c      **** // Delay(200);
+ 355:Screen.c      **** 
+ 356:Screen.c      ****  SetToLow(TFT_nCS_Port, (1 << TFT_nCS_Bit));
+ 357:Screen.c      **** 
+ 358:Screen.c      ****  SetToLow(TFT_RS_Port, (1 << TFT_RS_Bit));
+ 166              		.loc 1 358 0
+ 167 0018 4FF48041 		mov	r1, #16384
+ 356:Screen.c      **** 
+ 168              		.loc 1 356 0
+ 169 001c 4FF40053 		mov	r3, #8192
+ 359:Screen.c      **** // Delay(2);
+ 360:Screen.c      **** 
+ 361:Screen.c      ****  TFT_Port = (TFT_Port & 0xFF00) | 0x2C;
+ 362:Screen.c      ****  SetToLow(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 170              		.loc 1 362 0
+ 171 0020 4FF40045 		mov	r5, #32768
+ 356:Screen.c      **** 
+ 172              		.loc 1 356 0
+ 173 0024 1548     		ldr	r0, .L14+4
+ 361:Screen.c      ****  SetToLow(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 174              		.loc 1 361 0
+ 175 0026 164E     		ldr	r6, .L14+8
+ 356:Screen.c      **** 
+ 176              		.loc 1 356 0
+ 177 0028 4361     		str	r3, [r0, #20]
+ 358:Screen.c      **** // Delay(2);
+ 178              		.loc 1 358 0
+ 179 002a 4161     		str	r1, [r0, #20]
+ 361:Screen.c      ****  SetToLow(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 180              		.loc 1 361 0
+ 181 002c F268     		ldr	r2, [r6, #12]
+ 363:Screen.c      ****  SetToHigh(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 364:Screen.c      **** 
+ 365:Screen.c      ****  tmp = (U32)xsize * (U32)ysize;
+ 182              		.loc 1 365 0
+ 183 002e 08FB07F7 		mul	r7, r8, r7
+ 184              	.LVL17:
+ 361:Screen.c      ****  SetToLow(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 185              		.loc 1 361 0
+ 186 0032 02F47F42 		and	r2, r2, #65280
+ 187 0036 42F02C02 		orr	r2, r2, #44
+ 188 003a F260     		str	r2, [r6, #12]
+ 362:Screen.c      ****  SetToHigh(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 189              		.loc 1 362 0
+ 190 003c 4561     		str	r5, [r0, #20]
+ 363:Screen.c      ****  SetToHigh(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 191              		.loc 1 363 0
+ 192 003e 0561     		str	r5, [r0, #16]
+ 366:Screen.c      ****  // Set up to access Index Register (RS == 1)
+ 367:Screen.c      ****  SetToHigh(TFT_RS_Port, (1 << TFT_RS_Bit));
+ 193              		.loc 1 367 0
+ 194 0040 0161     		str	r1, [r0, #16]
+ 368:Screen.c      **** 
+ 369:Screen.c      ****  while(tmp) {
+ 195              		.loc 1 369 0
+ 196 0042 97B1     		cbz	r7, .L7
+ 370:Screen.c      **** 	TFT_Port = (TFT_Port & 0xFF00) | (color >> 8);
+ 197              		.loc 1 370 0
+ 198 0044 220A     		lsrs	r2, r4, #8
+ 199              	.L8:
+ 200              	.LVL18:
+ 201 0046 F168     		ldr	r1, [r6, #12]
+ 369:Screen.c      **** 	TFT_Port = (TFT_Port & 0xFF00) | (color >> 8);
+ 202              		.loc 1 369 0
+ 203 0048 013F     		subs	r7, r7, #1
+ 204              	.LVL19:
+ 205              		.loc 1 370 0
+ 206 004a 01F47F41 		and	r1, r1, #65280
+ 207 004e 41EA0201 		orr	r1, r1, r2
+ 208 0052 F160     		str	r1, [r6, #12]
+ 371:Screen.c      ****  	SetToLow(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 209              		.loc 1 371 0
+ 210 0054 4561     		str	r5, [r0, #20]
+ 372:Screen.c      ****  	SetToHigh(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 211              		.loc 1 372 0
+ 212 0056 0561     		str	r5, [r0, #16]
+ 373:Screen.c      ****  	TFT_Port = (TFT_Port & 0xFF00) | color;
+ 213              		.loc 1 373 0
+ 214 0058 F168     		ldr	r1, [r6, #12]
+ 215 005a 01F47F41 		and	r1, r1, #65280
+ 216 005e 41EA0401 		orr	r1, r1, r4
+ 217 0062 F160     		str	r1, [r6, #12]
+ 374:Screen.c      ****  	SetToLow(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 218              		.loc 1 374 0
+ 219 0064 4561     		str	r5, [r0, #20]
+ 375:Screen.c      ****  	SetToHigh(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 220              		.loc 1 375 0
+ 221 0066 0561     		str	r5, [r0, #16]
+ 369:Screen.c      **** 	TFT_Port = (TFT_Port & 0xFF00) | (color >> 8);
+ 222              		.loc 1 369 0
+ 223 0068 EDD1     		bne	.L8
+ 224              	.L7:
+ 376:Screen.c      **** 	tmp--;
+ 377:Screen.c      ****  	}
+ 378:Screen.c      **** 
+ 379:Screen.c      ****  // Set TFT_nCS high
+ 380:Screen.c      ****  SetToHigh(TFT_nCS_Port, (1 << TFT_nCS_Bit)); 
+ 225              		.loc 1 380 0
+ 226 006a 4FF40052 		mov	r2, #8192
+ 227 006e 034B     		ldr	r3, .L14+4
+ 228 0070 1A61     		str	r2, [r3, #16]
+ 381:Screen.c      **** }
+ 229              		.loc 1 381 0
+ 230 0072 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 231              	.LVL20:
+ 232              	.L15:
+ 233 0076 00BF     		.align	2
+ 234              	.L14:
+ 235 0078 00000000 		.word	SetWindow
+ 236 007c 00100140 		.word	1073811456
+ 237 0080 000C0140 		.word	1073810432
+ 238              		.cfi_endproc
+ 239              	.LFE31:
+ 241              		.section	.text.ClrScreen,"ax",%progbits
+ 242              		.align	1
+ 243              		.p2align 2,,3
+ 244              		.global	ClrScreen
+ 245              		.syntax unified
+ 246              		.thumb
+ 247              		.thumb_func
+ 248              		.fpu softvfp
+ 250              	ClrScreen:
+ 251              	.LFB29:
+ 321:Screen.c      ****  FillRect(ScreenX0, ScreenY0, ScreenXsize, ScreenYsize, clBlack);
+ 252              		.loc 1 321 0
+ 253              		.cfi_startproc
+ 254              		@ args = 0, pretend = 0, frame = 0
+ 255              		@ frame_needed = 0, uses_anonymous_args = 0
+ 322:Screen.c      **** }
+ 256              		.loc 1 322 0
+ 257 0000 0021     		movs	r1, #0
+ 321:Screen.c      ****  FillRect(ScreenX0, ScreenY0, ScreenXsize, ScreenYsize, clBlack);
+ 258              		.loc 1 321 0
+ 259 0002 10B5     		push	{r4, lr}
+ 260              		.cfi_def_cfa_offset 8
+ 261              		.cfi_offset 4, -8
+ 262              		.cfi_offset 14, -4
+ 263 0004 82B0     		sub	sp, sp, #8
+ 264              		.cfi_def_cfa_offset 16
+ 322:Screen.c      **** }
+ 265              		.loc 1 322 0
+ 266 0006 F023     		movs	r3, #240
+ 267 0008 0091     		str	r1, [sp]
+ 268 000a 0846     		mov	r0, r1
+ 269 000c 4FF4A072 		mov	r2, #320
+ 270 0010 014C     		ldr	r4, .L18
+ 271 0012 A047     		blx	r4
+ 272              	.LVL21:
+ 323:Screen.c      **** 
+ 273              		.loc 1 323 0
+ 274 0014 02B0     		add	sp, sp, #8
+ 275              		.cfi_def_cfa_offset 8
+ 276              		@ sp needed
+ 277 0016 10BD     		pop	{r4, pc}
+ 278              	.L19:
+ 279              		.align	2
+ 280              	.L18:
+ 281 0018 00000000 		.word	FillRect
+ 282              		.cfi_endproc
+ 283              	.LFE29:
+ 285              		.section	.text.PutcGenic,"ax",%progbits
+ 286              		.align	1
+ 287              		.p2align 2,,3
+ 288              		.global	PutcGenic
+ 289              		.syntax unified
+ 290              		.thumb
+ 291              		.thumb_func
+ 292              		.fpu softvfp
+ 294              	PutcGenic:
+ 295              	.LFB32:
+ 382:Screen.c      **** 
+ 383:Screen.c      **** // Put at (x, y) a 15X16 character [ch] with [f_color] and [b_color]
+ 384:Screen.c      **** //
+ 385:Screen.c      **** void	PutcGenic(U16 x, U16 y, U8 ch, U16 fgcolor, U16 bgcolor, FONT *font)
+ 386:Screen.c      **** {
+ 296              		.loc 1 386 0
+ 297              		.cfi_startproc
+ 298              		@ args = 8, pretend = 0, frame = 0
+ 299              		@ frame_needed = 0, uses_anonymous_args = 0
+ 300              	.LVL22:
+ 301 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 302              		.cfi_def_cfa_offset 32
+ 303              		.cfi_offset 3, -32
+ 304              		.cfi_offset 4, -28
+ 305              		.cfi_offset 5, -24
+ 306              		.cfi_offset 6, -20
+ 307              		.cfi_offset 7, -16
+ 308              		.cfi_offset 8, -12
+ 309              		.cfi_offset 9, -8
+ 310              		.cfi_offset 14, -4
+ 311              		.loc 1 386 0
+ 312 0004 099E     		ldr	r6, [sp, #36]
+ 313 0006 1C46     		mov	r4, r3
+ 387:Screen.c      ****  U8 tmp, tmp2;
+ 388:Screen.c      ****  U16 tmp1, tmp3;
+ 389:Screen.c      ****  U8 *ptmp;
+ 390:Screen.c      **** 
+ 391:Screen.c      ****  // Font address
+ 392:Screen.c      ****  ptmp = (U8 *)font->Array 	+ (ch - font->IndexOfs) * ((font->Xsize + 7)/8) * font->Ysize;
+ 314              		.loc 1 392 0
+ 315 0008 3779     		ldrb	r7, [r6, #4]	@ zero_extendqisi2
+ 316 000a 96F80880 		ldrb	r8, [r6, #8]	@ zero_extendqisi2
+ 317 000e 07F1070C 		add	ip, r7, #7
+ 318 0012 A2EB0808 		sub	r8, r2, r8
+ 319 0016 4FEAEC0C 		asr	ip, ip, #3
+ 320 001a 0CFB08FC 		mul	ip, ip, r8
+ 321 001e 96F80580 		ldrb	r8, [r6, #5]	@ zero_extendqisi2
+ 322 0022 3568     		ldr	r5, [r6]
+ 393:Screen.c      **** 
+ 394:Screen.c      ****  SetWindow(x, font->Xsize, y, font->Ysize);
+ 323              		.loc 1 394 0
+ 324 0024 0A46     		mov	r2, r1
+ 325              	.LVL23:
+ 326 0026 4346     		mov	r3, r8
+ 327              	.LVL24:
+ 328 0028 3946     		mov	r1, r7
+ 329              	.LVL25:
+ 330 002a 284F     		ldr	r7, .L32
+ 392:Screen.c      **** 
+ 331              		.loc 1 392 0
+ 332 002c 08FB0C58 		mla	r8, r8, ip, r5
+ 333              	.LVL26:
+ 386:Screen.c      ****  U8 tmp, tmp2;
+ 334              		.loc 1 386 0
+ 335 0030 BDF82050 		ldrh	r5, [sp, #32]
+ 336              	.LVL27:
+ 337              		.loc 1 394 0
+ 338 0034 B847     		blx	r7
+ 339              	.LVL28:
+ 395:Screen.c      **** 
+ 396:Screen.c      ****  SetToLow(TFT_nCS_Port, (1 << TFT_nCS_Bit));
+ 397:Screen.c      **** 
+ 398:Screen.c      ****  SetToLow(TFT_RS_Port, (1 << TFT_RS_Bit));
+ 340              		.loc 1 398 0
+ 341 0036 4FF48041 		mov	r1, #16384
+ 396:Screen.c      **** 
+ 342              		.loc 1 396 0
+ 343 003a 4FF40053 		mov	r3, #8192
+ 399:Screen.c      **** // Delay(2);
+ 400:Screen.c      **** 
+ 401:Screen.c      ****  TFT_Port = (TFT_Port & 0xFF00) | 0x2C;
+ 402:Screen.c      ****  SetToLow(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 344              		.loc 1 402 0
+ 345 003e 4FF40042 		mov	r2, #32768
+ 396:Screen.c      **** 
+ 346              		.loc 1 396 0
+ 347 0042 2348     		ldr	r0, .L32+4
+ 401:Screen.c      ****  SetToLow(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 348              		.loc 1 401 0
+ 349 0044 234F     		ldr	r7, .L32+8
+ 396:Screen.c      **** 
+ 350              		.loc 1 396 0
+ 351 0046 4361     		str	r3, [r0, #20]
+ 398:Screen.c      **** // Delay(2);
+ 352              		.loc 1 398 0
+ 353 0048 4161     		str	r1, [r0, #20]
+ 401:Screen.c      ****  SetToLow(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 354              		.loc 1 401 0
+ 355 004a FB68     		ldr	r3, [r7, #12]
+ 356 004c 03F47F43 		and	r3, r3, #65280
+ 357 0050 43F02C03 		orr	r3, r3, #44
+ 358 0054 FB60     		str	r3, [r7, #12]
+ 359              		.loc 1 402 0
+ 360 0056 4261     		str	r2, [r0, #20]
+ 403:Screen.c      ****  SetToHigh(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 361              		.loc 1 403 0
+ 362 0058 0261     		str	r2, [r0, #16]
+ 404:Screen.c      **** 
+ 405:Screen.c      ****  SetToHigh(TFT_RS_Port, (1 << TFT_RS_Bit));
+ 363              		.loc 1 405 0
+ 364 005a 0161     		str	r1, [r0, #16]
+ 406:Screen.c      **** 
+ 407:Screen.c      ****  tmp1 = (font->Xsize * font->Ysize)/8;
+ 365              		.loc 1 407 0
+ 366 005c 3179     		ldrb	r1, [r6, #4]	@ zero_extendqisi2
+ 367 005e 7379     		ldrb	r3, [r6, #5]	@ zero_extendqisi2
+ 368 0060 03FB01F3 		mul	r3, r3, r1
+ 369 0064 DB10     		asrs	r3, r3, #3
+ 370              	.LVL29:
+ 408:Screen.c      ****  while(tmp1) {
+ 371              		.loc 1 408 0
+ 372 0066 53B3     		cbz	r3, .L21
+ 409:Screen.c      ****  	tmp = *ptmp;
+ 410:Screen.c      **** 	tmp2 = 8;
+ 411:Screen.c      **** 	while(tmp2) {
+ 412:Screen.c      **** 		tmp3 = (tmp & 0x80) ? fgcolor : bgcolor;
+ 413:Screen.c      **** 
+ 414:Screen.c      ****  		TFT_Port = (TFT_Port & 0xFF00) | (tmp3 >> 8);
+ 415:Screen.c      ****  		SetToLow(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 373              		.loc 1 415 0
+ 374 0068 1646     		mov	r6, r2
+ 375 006a 99B2     		uxth	r1, r3
+ 376 006c 01F1FF3E 		add	lr, r1, #-1
+ 377 0070 1FFA8EFE 		uxth	lr, lr
+ 378 0074 C644     		add	lr, lr, r8
+ 379 0076 08F1FF3C 		add	ip, r8, #-1
+ 380              	.LVL30:
+ 381              	.L24:
+ 409:Screen.c      ****  	tmp = *ptmp;
+ 382              		.loc 1 409 0
+ 383 007a 4FF00809 		mov	r9, #8
+ 384 007e 1CF8011F 		ldrb	r1, [ip, #1]!	@ zero_extendqisi2
+ 385              	.LVL31:
+ 386              	.L23:
+ 412:Screen.c      **** 
+ 387              		.loc 1 412 0
+ 388 0082 11F0800F 		tst	r1, #128
+ 389 0086 14BF     		ite	ne
+ 390 0088 A046     		movne	r8, r4
+ 391 008a A846     		moveq	r8, r5
+ 392              	.LVL32:
+ 414:Screen.c      ****  		SetToLow(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 393              		.loc 1 414 0
+ 394 008c FA68     		ldr	r2, [r7, #12]
+ 395 008e 09F1FF39 		add	r9, r9, #-1
+ 396              	.LVL33:
+ 397 0092 02F47F42 		and	r2, r2, #65280
+ 398 0096 42EA1822 		orr	r2, r2, r8, lsr #8
+ 399 009a FA60     		str	r2, [r7, #12]
+ 400              		.loc 1 415 0
+ 401 009c 4661     		str	r6, [r0, #20]
+ 416:Screen.c      ****  		SetToHigh(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 402              		.loc 1 416 0
+ 403 009e 0661     		str	r6, [r0, #16]
+ 417:Screen.c      ****  		TFT_Port = (TFT_Port & 0xFF00) | tmp3;
+ 404              		.loc 1 417 0
+ 405 00a0 FB68     		ldr	r3, [r7, #12]
+ 418:Screen.c      ****  		SetToLow(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 419:Screen.c      ****  		SetToHigh(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 420:Screen.c      **** 
+ 421:Screen.c      **** 		tmp <<= 1;
+ 406              		.loc 1 421 0
+ 407 00a2 4900     		lsls	r1, r1, #1
+ 408              	.LVL34:
+ 417:Screen.c      ****  		TFT_Port = (TFT_Port & 0xFF00) | tmp3;
+ 409              		.loc 1 417 0
+ 410 00a4 03F47F43 		and	r3, r3, #65280
+ 411 00a8 43EA0803 		orr	r3, r3, r8
+ 411:Screen.c      **** 		tmp3 = (tmp & 0x80) ? fgcolor : bgcolor;
+ 412              		.loc 1 411 0
+ 413 00ac 19F0FF09 		ands	r9, r9, #255
+ 417:Screen.c      ****  		TFT_Port = (TFT_Port & 0xFF00) | tmp3;
+ 414              		.loc 1 417 0
+ 415 00b0 FB60     		str	r3, [r7, #12]
+ 416              		.loc 1 421 0
+ 417 00b2 C9B2     		uxtb	r1, r1
+ 418              	.LVL35:
+ 418:Screen.c      ****  		SetToLow(TFT_nWR_Port, (1 << TFT_nWR_Bit));
+ 419              		.loc 1 418 0
+ 420 00b4 4661     		str	r6, [r0, #20]
+ 419:Screen.c      **** 
+ 421              		.loc 1 419 0
+ 422 00b6 0661     		str	r6, [r0, #16]
+ 411:Screen.c      **** 		tmp3 = (tmp & 0x80) ? fgcolor : bgcolor;
+ 423              		.loc 1 411 0
+ 424 00b8 E3D1     		bne	.L23
+ 425              	.LVL36:
+ 408:Screen.c      ****  	tmp = *ptmp;
+ 426              		.loc 1 408 0
+ 427 00ba F445     		cmp	ip, lr
+ 428 00bc DDD1     		bne	.L24
+ 429              	.LVL37:
+ 430              	.L21:
+ 422:Screen.c      **** 		tmp2--;
+ 423:Screen.c      **** 		}
+ 424:Screen.c      **** 	ptmp++;
+ 425:Screen.c      **** 	tmp1--;	
+ 426:Screen.c      ****  	}
+ 427:Screen.c      **** 
+ 428:Screen.c      ****  SetToHigh(TFT_nCS_Port, (1 << TFT_nCS_Bit)); 
+ 431              		.loc 1 428 0
+ 432 00be 4FF40052 		mov	r2, #8192
+ 433 00c2 034B     		ldr	r3, .L32+4
+ 434 00c4 1A61     		str	r2, [r3, #16]
+ 429:Screen.c      **** 
+ 430:Screen.c      **** }
+ 435              		.loc 1 430 0
+ 436 00c6 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 437              	.LVL38:
+ 438              	.L33:
+ 439 00ca 00BF     		.align	2
+ 440              	.L32:
+ 441 00cc 00000000 		.word	SetWindow
+ 442 00d0 00100140 		.word	1073811456
+ 443 00d4 000C0140 		.word	1073810432
+ 444              		.cfi_endproc
+ 445              	.LFE32:
+ 447              		.section	.text.PutsGenic,"ax",%progbits
+ 448              		.align	1
+ 449              		.p2align 2,,3
+ 450              		.global	PutsGenic
+ 451              		.syntax unified
+ 452              		.thumb
+ 453              		.thumb_func
+ 454              		.fpu softvfp
+ 456              	PutsGenic:
+ 457              	.LFB33:
+ 431:Screen.c      **** 
+ 432:Screen.c      **** void	PutsGenic(U16 x, U16 y, U8 *str, U16 fgcolor, U16 bgcolor, FONT *font)
+ 433:Screen.c      **** {
+ 458              		.loc 1 433 0
+ 459              		.cfi_startproc
+ 460              		@ args = 8, pretend = 0, frame = 0
+ 461              		@ frame_needed = 0, uses_anonymous_args = 0
+ 462              	.LVL39:
+ 463 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 464              		.cfi_def_cfa_offset 32
+ 465              		.cfi_offset 4, -32
+ 466              		.cfi_offset 5, -28
+ 467              		.cfi_offset 6, -24
+ 468              		.cfi_offset 7, -20
+ 469              		.cfi_offset 8, -16
+ 470              		.cfi_offset 9, -12
+ 471              		.cfi_offset 10, -8
+ 472              		.cfi_offset 14, -4
+ 473 0004 0446     		mov	r4, r0
+ 474 0006 0F46     		mov	r7, r1
+ 475 0008 1646     		mov	r6, r2
+ 476 000a 9A46     		mov	r10, r3
+ 477 000c 82B0     		sub	sp, sp, #8
+ 478              		.cfi_def_cfa_offset 40
+ 479              		.loc 1 433 0
+ 480 000e BDF82890 		ldrh	r9, [sp, #40]
+ 481 0012 0B9D     		ldr	r5, [sp, #44]
+ 434:Screen.c      ****  U8 tmp;
+ 435:Screen.c      ****  
+ 436:Screen.c      ****  while((tmp = *str++)) {
+ 437:Screen.c      **** 	PutcGenic(x, y, tmp, fgcolor, bgcolor, font);
+ 482              		.loc 1 437 0
+ 483 0014 DFF83480 		ldr	r8, .L40
+ 484              	.LVL40:
+ 485              	.L35:
+ 436:Screen.c      **** 	PutcGenic(x, y, tmp, fgcolor, bgcolor, font);
+ 486              		.loc 1 436 0
+ 487 0018 16F8012B 		ldrb	r2, [r6], #1	@ zero_extendqisi2
+ 488              	.LVL41:
+ 489 001c 9AB1     		cbz	r2, .L39
+ 490              	.LVL42:
+ 491              	.L37:
+ 492              		.loc 1 437 0
+ 493 001e 5346     		mov	r3, r10
+ 494 0020 2046     		mov	r0, r4
+ 495 0022 CDE90095 		strd	r9, r5, [sp]
+ 496 0026 3946     		mov	r1, r7
+ 497 0028 C047     		blx	r8
+ 498              	.LVL43:
+ 438:Screen.c      **** 	x += font->CharPitch;
+ 499              		.loc 1 438 0
+ 500 002a AB79     		ldrb	r3, [r5, #6]	@ zero_extendqisi2
+ 501 002c 1C44     		add	r4, r4, r3
+ 502              	.LVL44:
+ 503 002e A4B2     		uxth	r4, r4
+ 504              	.LVL45:
+ 439:Screen.c      **** 	if(x >= ScreenXsize) {
+ 505              		.loc 1 439 0
+ 506 0030 B4F5A07F 		cmp	r4, #320
+ 507 0034 F0D3     		bcc	.L35
+ 440:Screen.c      **** 		y += font->LinePitch;
+ 508              		.loc 1 440 0
+ 509 0036 EB79     		ldrb	r3, [r5, #7]	@ zero_extendqisi2
+ 436:Screen.c      **** 	PutcGenic(x, y, tmp, fgcolor, bgcolor, font);
+ 510              		.loc 1 436 0
+ 511 0038 16F8012B 		ldrb	r2, [r6], #1	@ zero_extendqisi2
+ 512              		.loc 1 440 0
+ 513 003c 1F44     		add	r7, r7, r3
+ 514              	.LVL46:
+ 441:Screen.c      **** 		x = 0;
+ 515              		.loc 1 441 0
+ 516 003e 0024     		movs	r4, #0
+ 517              	.LVL47:
+ 440:Screen.c      **** 		y += font->LinePitch;
+ 518              		.loc 1 440 0
+ 519 0040 BFB2     		uxth	r7, r7
+ 520              	.LVL48:
+ 436:Screen.c      **** 	PutcGenic(x, y, tmp, fgcolor, bgcolor, font);
+ 521              		.loc 1 436 0
+ 522 0042 002A     		cmp	r2, #0
+ 523 0044 EBD1     		bne	.L37
+ 524              	.L39:
+ 442:Screen.c      **** 		}
+ 443:Screen.c      ****  	}
+ 444:Screen.c      **** }
+ 525              		.loc 1 444 0
+ 526 0046 02B0     		add	sp, sp, #8
+ 527              		.cfi_def_cfa_offset 32
+ 528              		@ sp needed
+ 529 0048 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 530              	.LVL49:
+ 531              	.L41:
+ 532              		.align	2
+ 533              	.L40:
+ 534 004c 00000000 		.word	PutcGenic
+ 535              		.cfi_endproc
+ 536              	.LFE33:
+ 538              		.global	ASC8X16
+ 539              		.global	Font_ASC8X16
+ 540              		.section	.data.ASC8X16,"aw",%progbits
+ 541              		.align	2
+ 544              	ASC8X16:
+ 545 0000 00000000 		.word	Font_ASC8X16
+ 546 0004 08       		.byte	8
+ 547 0005 10       		.byte	16
+ 548 0006 08       		.byte	8
+ 549 0007 10       		.byte	16
+ 550 0008 20       		.byte	32
+ 551 0009 000000   		.space	3
+ 552              		.section	.rodata.Font_ASC8X16,"a",%progbits
+ 553              		.align	2
+ 556              	Font_ASC8X16:
+ 557 0000 00       		.byte	0
+ 558 0001 00       		.byte	0
+ 559 0002 00       		.byte	0
+ 560 0003 00       		.byte	0
+ 561 0004 00       		.byte	0
+ 562 0005 00       		.byte	0
+ 563 0006 00       		.byte	0
+ 564 0007 00       		.byte	0
+ 565 0008 00       		.byte	0
+ 566 0009 00       		.byte	0
+ 567 000a 00       		.byte	0
+ 568 000b 00       		.byte	0
+ 569 000c 00       		.byte	0
+ 570 000d 00       		.byte	0
+ 571 000e 00       		.byte	0
+ 572 000f 00       		.byte	0
+ 573 0010 00       		.byte	0
+ 574 0011 00       		.byte	0
+ 575 0012 18       		.byte	24
+ 576 0013 3C       		.byte	60
+ 577 0014 3C       		.byte	60
+ 578 0015 3C       		.byte	60
+ 579 0016 18       		.byte	24
+ 580 0017 18       		.byte	24
+ 581 0018 18       		.byte	24
+ 582 0019 00       		.byte	0
+ 583 001a 18       		.byte	24
+ 584 001b 18       		.byte	24
+ 585 001c 00       		.byte	0
+ 586 001d 00       		.byte	0
+ 587 001e 00       		.byte	0
+ 588 001f 00       		.byte	0
+ 589 0020 00       		.byte	0
+ 590 0021 66       		.byte	102
+ 591 0022 66       		.byte	102
+ 592 0023 66       		.byte	102
+ 593 0024 24       		.byte	36
+ 594 0025 00       		.byte	0
+ 595 0026 00       		.byte	0
+ 596 0027 00       		.byte	0
+ 597 0028 00       		.byte	0
+ 598 0029 00       		.byte	0
+ 599 002a 00       		.byte	0
+ 600 002b 00       		.byte	0
+ 601 002c 00       		.byte	0
+ 602 002d 00       		.byte	0
+ 603 002e 00       		.byte	0
+ 604 002f 00       		.byte	0
+ 605 0030 00       		.byte	0
+ 606 0031 00       		.byte	0
+ 607 0032 00       		.byte	0
+ 608 0033 6C       		.byte	108
+ 609 0034 6C       		.byte	108
+ 610 0035 FE       		.byte	-2
+ 611 0036 6C       		.byte	108
+ 612 0037 6C       		.byte	108
+ 613 0038 6C       		.byte	108
+ 614 0039 FE       		.byte	-2
+ 615 003a 6C       		.byte	108
+ 616 003b 6C       		.byte	108
+ 617 003c 00       		.byte	0
+ 618 003d 00       		.byte	0
+ 619 003e 00       		.byte	0
+ 620 003f 00       		.byte	0
+ 621 0040 18       		.byte	24
+ 622 0041 18       		.byte	24
+ 623 0042 7C       		.byte	124
+ 624 0043 C6       		.byte	-58
+ 625 0044 C2       		.byte	-62
+ 626 0045 C0       		.byte	-64
+ 627 0046 7C       		.byte	124
+ 628 0047 06       		.byte	6
+ 629 0048 06       		.byte	6
+ 630 0049 86       		.byte	-122
+ 631 004a C6       		.byte	-58
+ 632 004b 7C       		.byte	124
+ 633 004c 18       		.byte	24
+ 634 004d 18       		.byte	24
+ 635 004e 00       		.byte	0
+ 636 004f 00       		.byte	0
+ 637 0050 00       		.byte	0
+ 638 0051 00       		.byte	0
+ 639 0052 00       		.byte	0
+ 640 0053 00       		.byte	0
+ 641 0054 C2       		.byte	-62
+ 642 0055 C6       		.byte	-58
+ 643 0056 0C       		.byte	12
+ 644 0057 18       		.byte	24
+ 645 0058 30       		.byte	48
+ 646 0059 60       		.byte	96
+ 647 005a C6       		.byte	-58
+ 648 005b 86       		.byte	-122
+ 649 005c 00       		.byte	0
+ 650 005d 00       		.byte	0
+ 651 005e 00       		.byte	0
+ 652 005f 00       		.byte	0
+ 653 0060 00       		.byte	0
+ 654 0061 00       		.byte	0
+ 655 0062 38       		.byte	56
+ 656 0063 6C       		.byte	108
+ 657 0064 6C       		.byte	108
+ 658 0065 38       		.byte	56
+ 659 0066 76       		.byte	118
+ 660 0067 DC       		.byte	-36
+ 661 0068 CC       		.byte	-52
+ 662 0069 CC       		.byte	-52
+ 663 006a CC       		.byte	-52
+ 664 006b 76       		.byte	118
+ 665 006c 00       		.byte	0
+ 666 006d 00       		.byte	0
+ 667 006e 00       		.byte	0
+ 668 006f 00       		.byte	0
+ 669 0070 00       		.byte	0
+ 670 0071 30       		.byte	48
+ 671 0072 30       		.byte	48
+ 672 0073 30       		.byte	48
+ 673 0074 60       		.byte	96
+ 674 0075 00       		.byte	0
+ 675 0076 00       		.byte	0
+ 676 0077 00       		.byte	0
+ 677 0078 00       		.byte	0
+ 678 0079 00       		.byte	0
+ 679 007a 00       		.byte	0
+ 680 007b 00       		.byte	0
+ 681 007c 00       		.byte	0
+ 682 007d 00       		.byte	0
+ 683 007e 00       		.byte	0
+ 684 007f 00       		.byte	0
+ 685 0080 00       		.byte	0
+ 686 0081 00       		.byte	0
+ 687 0082 0C       		.byte	12
+ 688 0083 18       		.byte	24
+ 689 0084 30       		.byte	48
+ 690 0085 30       		.byte	48
+ 691 0086 30       		.byte	48
+ 692 0087 30       		.byte	48
+ 693 0088 30       		.byte	48
+ 694 0089 30       		.byte	48
+ 695 008a 18       		.byte	24
+ 696 008b 0C       		.byte	12
+ 697 008c 00       		.byte	0
+ 698 008d 00       		.byte	0
+ 699 008e 00       		.byte	0
+ 700 008f 00       		.byte	0
+ 701 0090 00       		.byte	0
+ 702 0091 00       		.byte	0
+ 703 0092 30       		.byte	48
+ 704 0093 18       		.byte	24
+ 705 0094 0C       		.byte	12
+ 706 0095 0C       		.byte	12
+ 707 0096 0C       		.byte	12
+ 708 0097 0C       		.byte	12
+ 709 0098 0C       		.byte	12
+ 710 0099 0C       		.byte	12
+ 711 009a 18       		.byte	24
+ 712 009b 30       		.byte	48
+ 713 009c 00       		.byte	0
+ 714 009d 00       		.byte	0
+ 715 009e 00       		.byte	0
+ 716 009f 00       		.byte	0
+ 717 00a0 00       		.byte	0
+ 718 00a1 00       		.byte	0
+ 719 00a2 00       		.byte	0
+ 720 00a3 00       		.byte	0
+ 721 00a4 00       		.byte	0
+ 722 00a5 66       		.byte	102
+ 723 00a6 3C       		.byte	60
+ 724 00a7 FF       		.byte	-1
+ 725 00a8 3C       		.byte	60
+ 726 00a9 66       		.byte	102
+ 727 00aa 00       		.byte	0
+ 728 00ab 00       		.byte	0
+ 729 00ac 00       		.byte	0
+ 730 00ad 00       		.byte	0
+ 731 00ae 00       		.byte	0
+ 732 00af 00       		.byte	0
+ 733 00b0 00       		.byte	0
+ 734 00b1 00       		.byte	0
+ 735 00b2 00       		.byte	0
+ 736 00b3 00       		.byte	0
+ 737 00b4 00       		.byte	0
+ 738 00b5 18       		.byte	24
+ 739 00b6 18       		.byte	24
+ 740 00b7 7E       		.byte	126
+ 741 00b8 18       		.byte	24
+ 742 00b9 18       		.byte	24
+ 743 00ba 00       		.byte	0
+ 744 00bb 00       		.byte	0
+ 745 00bc 00       		.byte	0
+ 746 00bd 00       		.byte	0
+ 747 00be 00       		.byte	0
+ 748 00bf 00       		.byte	0
+ 749 00c0 00       		.byte	0
+ 750 00c1 00       		.byte	0
+ 751 00c2 00       		.byte	0
+ 752 00c3 00       		.byte	0
+ 753 00c4 00       		.byte	0
+ 754 00c5 00       		.byte	0
+ 755 00c6 00       		.byte	0
+ 756 00c7 00       		.byte	0
+ 757 00c8 00       		.byte	0
+ 758 00c9 18       		.byte	24
+ 759 00ca 18       		.byte	24
+ 760 00cb 18       		.byte	24
+ 761 00cc 30       		.byte	48
+ 762 00cd 00       		.byte	0
+ 763 00ce 00       		.byte	0
+ 764 00cf 00       		.byte	0
+ 765 00d0 00       		.byte	0
+ 766 00d1 00       		.byte	0
+ 767 00d2 00       		.byte	0
+ 768 00d3 00       		.byte	0
+ 769 00d4 00       		.byte	0
+ 770 00d5 00       		.byte	0
+ 771 00d6 00       		.byte	0
+ 772 00d7 FE       		.byte	-2
+ 773 00d8 00       		.byte	0
+ 774 00d9 00       		.byte	0
+ 775 00da 00       		.byte	0
+ 776 00db 00       		.byte	0
+ 777 00dc 00       		.byte	0
+ 778 00dd 00       		.byte	0
+ 779 00de 00       		.byte	0
+ 780 00df 00       		.byte	0
+ 781 00e0 00       		.byte	0
+ 782 00e1 00       		.byte	0
+ 783 00e2 00       		.byte	0
+ 784 00e3 00       		.byte	0
+ 785 00e4 00       		.byte	0
+ 786 00e5 00       		.byte	0
+ 787 00e6 00       		.byte	0
+ 788 00e7 00       		.byte	0
+ 789 00e8 00       		.byte	0
+ 790 00e9 00       		.byte	0
+ 791 00ea 18       		.byte	24
+ 792 00eb 18       		.byte	24
+ 793 00ec 00       		.byte	0
+ 794 00ed 00       		.byte	0
+ 795 00ee 00       		.byte	0
+ 796 00ef 00       		.byte	0
+ 797 00f0 00       		.byte	0
+ 798 00f1 00       		.byte	0
+ 799 00f2 00       		.byte	0
+ 800 00f3 00       		.byte	0
+ 801 00f4 02       		.byte	2
+ 802 00f5 06       		.byte	6
+ 803 00f6 0C       		.byte	12
+ 804 00f7 18       		.byte	24
+ 805 00f8 30       		.byte	48
+ 806 00f9 60       		.byte	96
+ 807 00fa C0       		.byte	-64
+ 808 00fb 80       		.byte	-128
+ 809 00fc 00       		.byte	0
+ 810 00fd 00       		.byte	0
+ 811 00fe 00       		.byte	0
+ 812 00ff 00       		.byte	0
+ 813 0100 00       		.byte	0
+ 814 0101 00       		.byte	0
+ 815 0102 38       		.byte	56
+ 816 0103 6C       		.byte	108
+ 817 0104 C6       		.byte	-58
+ 818 0105 C6       		.byte	-58
+ 819 0106 D6       		.byte	-42
+ 820 0107 D6       		.byte	-42
+ 821 0108 C6       		.byte	-58
+ 822 0109 C6       		.byte	-58
+ 823 010a 6C       		.byte	108
+ 824 010b 38       		.byte	56
+ 825 010c 00       		.byte	0
+ 826 010d 00       		.byte	0
+ 827 010e 00       		.byte	0
+ 828 010f 00       		.byte	0
+ 829 0110 00       		.byte	0
+ 830 0111 00       		.byte	0
+ 831 0112 18       		.byte	24
+ 832 0113 38       		.byte	56
+ 833 0114 78       		.byte	120
+ 834 0115 18       		.byte	24
+ 835 0116 18       		.byte	24
+ 836 0117 18       		.byte	24
+ 837 0118 18       		.byte	24
+ 838 0119 18       		.byte	24
+ 839 011a 18       		.byte	24
+ 840 011b 7E       		.byte	126
+ 841 011c 00       		.byte	0
+ 842 011d 00       		.byte	0
+ 843 011e 00       		.byte	0
+ 844 011f 00       		.byte	0
+ 845 0120 00       		.byte	0
+ 846 0121 00       		.byte	0
+ 847 0122 7C       		.byte	124
+ 848 0123 C6       		.byte	-58
+ 849 0124 06       		.byte	6
+ 850 0125 0C       		.byte	12
+ 851 0126 18       		.byte	24
+ 852 0127 30       		.byte	48
+ 853 0128 60       		.byte	96
+ 854 0129 C0       		.byte	-64
+ 855 012a C6       		.byte	-58
+ 856 012b FE       		.byte	-2
+ 857 012c 00       		.byte	0
+ 858 012d 00       		.byte	0
+ 859 012e 00       		.byte	0
+ 860 012f 00       		.byte	0
+ 861 0130 00       		.byte	0
+ 862 0131 00       		.byte	0
+ 863 0132 7C       		.byte	124
+ 864 0133 C6       		.byte	-58
+ 865 0134 06       		.byte	6
+ 866 0135 06       		.byte	6
+ 867 0136 3C       		.byte	60
+ 868 0137 06       		.byte	6
+ 869 0138 06       		.byte	6
+ 870 0139 06       		.byte	6
+ 871 013a C6       		.byte	-58
+ 872 013b 7C       		.byte	124
+ 873 013c 00       		.byte	0
+ 874 013d 00       		.byte	0
+ 875 013e 00       		.byte	0
+ 876 013f 00       		.byte	0
+ 877 0140 00       		.byte	0
+ 878 0141 00       		.byte	0
+ 879 0142 0C       		.byte	12
+ 880 0143 1C       		.byte	28
+ 881 0144 3C       		.byte	60
+ 882 0145 6C       		.byte	108
+ 883 0146 CC       		.byte	-52
+ 884 0147 FE       		.byte	-2
+ 885 0148 0C       		.byte	12
+ 886 0149 0C       		.byte	12
+ 887 014a 0C       		.byte	12
+ 888 014b 1E       		.byte	30
+ 889 014c 00       		.byte	0
+ 890 014d 00       		.byte	0
+ 891 014e 00       		.byte	0
+ 892 014f 00       		.byte	0
+ 893 0150 00       		.byte	0
+ 894 0151 00       		.byte	0
+ 895 0152 FE       		.byte	-2
+ 896 0153 C0       		.byte	-64
+ 897 0154 C0       		.byte	-64
+ 898 0155 C0       		.byte	-64
+ 899 0156 FC       		.byte	-4
+ 900 0157 06       		.byte	6
+ 901 0158 06       		.byte	6
+ 902 0159 06       		.byte	6
+ 903 015a C6       		.byte	-58
+ 904 015b 7C       		.byte	124
+ 905 015c 00       		.byte	0
+ 906 015d 00       		.byte	0
+ 907 015e 00       		.byte	0
+ 908 015f 00       		.byte	0
+ 909 0160 00       		.byte	0
+ 910 0161 00       		.byte	0
+ 911 0162 38       		.byte	56
+ 912 0163 60       		.byte	96
+ 913 0164 C0       		.byte	-64
+ 914 0165 C0       		.byte	-64
+ 915 0166 FC       		.byte	-4
+ 916 0167 C6       		.byte	-58
+ 917 0168 C6       		.byte	-58
+ 918 0169 C6       		.byte	-58
+ 919 016a C6       		.byte	-58
+ 920 016b 7C       		.byte	124
+ 921 016c 00       		.byte	0
+ 922 016d 00       		.byte	0
+ 923 016e 00       		.byte	0
+ 924 016f 00       		.byte	0
+ 925 0170 00       		.byte	0
+ 926 0171 00       		.byte	0
+ 927 0172 FE       		.byte	-2
+ 928 0173 C6       		.byte	-58
+ 929 0174 06       		.byte	6
+ 930 0175 06       		.byte	6
+ 931 0176 0C       		.byte	12
+ 932 0177 18       		.byte	24
+ 933 0178 30       		.byte	48
+ 934 0179 30       		.byte	48
+ 935 017a 30       		.byte	48
+ 936 017b 30       		.byte	48
+ 937 017c 00       		.byte	0
+ 938 017d 00       		.byte	0
+ 939 017e 00       		.byte	0
+ 940 017f 00       		.byte	0
+ 941 0180 00       		.byte	0
+ 942 0181 00       		.byte	0
+ 943 0182 7C       		.byte	124
+ 944 0183 C6       		.byte	-58
+ 945 0184 C6       		.byte	-58
+ 946 0185 C6       		.byte	-58
+ 947 0186 7C       		.byte	124
+ 948 0187 C6       		.byte	-58
+ 949 0188 C6       		.byte	-58
+ 950 0189 C6       		.byte	-58
+ 951 018a C6       		.byte	-58
+ 952 018b 7C       		.byte	124
+ 953 018c 00       		.byte	0
+ 954 018d 00       		.byte	0
+ 955 018e 00       		.byte	0
+ 956 018f 00       		.byte	0
+ 957 0190 00       		.byte	0
+ 958 0191 00       		.byte	0
+ 959 0192 7C       		.byte	124
+ 960 0193 C6       		.byte	-58
+ 961 0194 C6       		.byte	-58
+ 962 0195 C6       		.byte	-58
+ 963 0196 7E       		.byte	126
+ 964 0197 06       		.byte	6
+ 965 0198 06       		.byte	6
+ 966 0199 06       		.byte	6
+ 967 019a 0C       		.byte	12
+ 968 019b 78       		.byte	120
+ 969 019c 00       		.byte	0
+ 970 019d 00       		.byte	0
+ 971 019e 00       		.byte	0
+ 972 019f 00       		.byte	0
+ 973 01a0 00       		.byte	0
+ 974 01a1 00       		.byte	0
+ 975 01a2 00       		.byte	0
+ 976 01a3 00       		.byte	0
+ 977 01a4 18       		.byte	24
+ 978 01a5 18       		.byte	24
+ 979 01a6 00       		.byte	0
+ 980 01a7 00       		.byte	0
+ 981 01a8 00       		.byte	0
+ 982 01a9 18       		.byte	24
+ 983 01aa 18       		.byte	24
+ 984 01ab 00       		.byte	0
+ 985 01ac 00       		.byte	0
+ 986 01ad 00       		.byte	0
+ 987 01ae 00       		.byte	0
+ 988 01af 00       		.byte	0
+ 989 01b0 00       		.byte	0
+ 990 01b1 00       		.byte	0
+ 991 01b2 00       		.byte	0
+ 992 01b3 00       		.byte	0
+ 993 01b4 18       		.byte	24
+ 994 01b5 18       		.byte	24
+ 995 01b6 00       		.byte	0
+ 996 01b7 00       		.byte	0
+ 997 01b8 00       		.byte	0
+ 998 01b9 18       		.byte	24
+ 999 01ba 18       		.byte	24
+ 1000 01bb 30       		.byte	48
+ 1001 01bc 00       		.byte	0
+ 1002 01bd 00       		.byte	0
+ 1003 01be 00       		.byte	0
+ 1004 01bf 00       		.byte	0
+ 1005 01c0 00       		.byte	0
+ 1006 01c1 00       		.byte	0
+ 1007 01c2 00       		.byte	0
+ 1008 01c3 06       		.byte	6
+ 1009 01c4 0C       		.byte	12
+ 1010 01c5 18       		.byte	24
+ 1011 01c6 30       		.byte	48
+ 1012 01c7 60       		.byte	96
+ 1013 01c8 30       		.byte	48
+ 1014 01c9 18       		.byte	24
+ 1015 01ca 0C       		.byte	12
+ 1016 01cb 06       		.byte	6
+ 1017 01cc 00       		.byte	0
+ 1018 01cd 00       		.byte	0
+ 1019 01ce 00       		.byte	0
+ 1020 01cf 00       		.byte	0
+ 1021 01d0 00       		.byte	0
+ 1022 01d1 00       		.byte	0
+ 1023 01d2 00       		.byte	0
+ 1024 01d3 00       		.byte	0
+ 1025 01d4 00       		.byte	0
+ 1026 01d5 7E       		.byte	126
+ 1027 01d6 00       		.byte	0
+ 1028 01d7 00       		.byte	0
+ 1029 01d8 7E       		.byte	126
+ 1030 01d9 00       		.byte	0
+ 1031 01da 00       		.byte	0
+ 1032 01db 00       		.byte	0
+ 1033 01dc 00       		.byte	0
+ 1034 01dd 00       		.byte	0
+ 1035 01de 00       		.byte	0
+ 1036 01df 00       		.byte	0
+ 1037 01e0 00       		.byte	0
+ 1038 01e1 00       		.byte	0
+ 1039 01e2 00       		.byte	0
+ 1040 01e3 60       		.byte	96
+ 1041 01e4 30       		.byte	48
+ 1042 01e5 18       		.byte	24
+ 1043 01e6 0C       		.byte	12
+ 1044 01e7 06       		.byte	6
+ 1045 01e8 0C       		.byte	12
+ 1046 01e9 18       		.byte	24
+ 1047 01ea 30       		.byte	48
+ 1048 01eb 60       		.byte	96
+ 1049 01ec 00       		.byte	0
+ 1050 01ed 00       		.byte	0
+ 1051 01ee 00       		.byte	0
+ 1052 01ef 00       		.byte	0
+ 1053 01f0 00       		.byte	0
+ 1054 01f1 00       		.byte	0
+ 1055 01f2 7C       		.byte	124
+ 1056 01f3 C6       		.byte	-58
+ 1057 01f4 C6       		.byte	-58
+ 1058 01f5 0C       		.byte	12
+ 1059 01f6 18       		.byte	24
+ 1060 01f7 18       		.byte	24
+ 1061 01f8 18       		.byte	24
+ 1062 01f9 00       		.byte	0
+ 1063 01fa 18       		.byte	24
+ 1064 01fb 18       		.byte	24
+ 1065 01fc 00       		.byte	0
+ 1066 01fd 00       		.byte	0
+ 1067 01fe 00       		.byte	0
+ 1068 01ff 00       		.byte	0
+ 1069 0200 00       		.byte	0
+ 1070 0201 00       		.byte	0
+ 1071 0202 00       		.byte	0
+ 1072 0203 7C       		.byte	124
+ 1073 0204 C6       		.byte	-58
+ 1074 0205 C6       		.byte	-58
+ 1075 0206 DE       		.byte	-34
+ 1076 0207 DE       		.byte	-34
+ 1077 0208 DE       		.byte	-34
+ 1078 0209 DC       		.byte	-36
+ 1079 020a C0       		.byte	-64
+ 1080 020b 7C       		.byte	124
+ 1081 020c 00       		.byte	0
+ 1082 020d 00       		.byte	0
+ 1083 020e 00       		.byte	0
+ 1084 020f 00       		.byte	0
+ 1085 0210 00       		.byte	0
+ 1086 0211 00       		.byte	0
+ 1087 0212 10       		.byte	16
+ 1088 0213 38       		.byte	56
+ 1089 0214 6C       		.byte	108
+ 1090 0215 C6       		.byte	-58
+ 1091 0216 C6       		.byte	-58
+ 1092 0217 FE       		.byte	-2
+ 1093 0218 C6       		.byte	-58
+ 1094 0219 C6       		.byte	-58
+ 1095 021a C6       		.byte	-58
+ 1096 021b C6       		.byte	-58
+ 1097 021c 00       		.byte	0
+ 1098 021d 00       		.byte	0
+ 1099 021e 00       		.byte	0
+ 1100 021f 00       		.byte	0
+ 1101 0220 00       		.byte	0
+ 1102 0221 00       		.byte	0
+ 1103 0222 FC       		.byte	-4
+ 1104 0223 66       		.byte	102
+ 1105 0224 66       		.byte	102
+ 1106 0225 66       		.byte	102
+ 1107 0226 7C       		.byte	124
+ 1108 0227 66       		.byte	102
+ 1109 0228 66       		.byte	102
+ 1110 0229 66       		.byte	102
+ 1111 022a 66       		.byte	102
+ 1112 022b FC       		.byte	-4
+ 1113 022c 00       		.byte	0
+ 1114 022d 00       		.byte	0
+ 1115 022e 00       		.byte	0
+ 1116 022f 00       		.byte	0
+ 1117 0230 00       		.byte	0
+ 1118 0231 00       		.byte	0
+ 1119 0232 3C       		.byte	60
+ 1120 0233 66       		.byte	102
+ 1121 0234 C2       		.byte	-62
+ 1122 0235 C0       		.byte	-64
+ 1123 0236 C0       		.byte	-64
+ 1124 0237 C0       		.byte	-64
+ 1125 0238 C0       		.byte	-64
+ 1126 0239 C2       		.byte	-62
+ 1127 023a 66       		.byte	102
+ 1128 023b 3C       		.byte	60
+ 1129 023c 00       		.byte	0
+ 1130 023d 00       		.byte	0
+ 1131 023e 00       		.byte	0
+ 1132 023f 00       		.byte	0
+ 1133 0240 00       		.byte	0
+ 1134 0241 00       		.byte	0
+ 1135 0242 F8       		.byte	-8
+ 1136 0243 6C       		.byte	108
+ 1137 0244 66       		.byte	102
+ 1138 0245 66       		.byte	102
+ 1139 0246 66       		.byte	102
+ 1140 0247 66       		.byte	102
+ 1141 0248 66       		.byte	102
+ 1142 0249 66       		.byte	102
+ 1143 024a 6C       		.byte	108
+ 1144 024b F8       		.byte	-8
+ 1145 024c 00       		.byte	0
+ 1146 024d 00       		.byte	0
+ 1147 024e 00       		.byte	0
+ 1148 024f 00       		.byte	0
+ 1149 0250 00       		.byte	0
+ 1150 0251 00       		.byte	0
+ 1151 0252 FE       		.byte	-2
+ 1152 0253 66       		.byte	102
+ 1153 0254 62       		.byte	98
+ 1154 0255 68       		.byte	104
+ 1155 0256 78       		.byte	120
+ 1156 0257 68       		.byte	104
+ 1157 0258 60       		.byte	96
+ 1158 0259 62       		.byte	98
+ 1159 025a 66       		.byte	102
+ 1160 025b FE       		.byte	-2
+ 1161 025c 00       		.byte	0
+ 1162 025d 00       		.byte	0
+ 1163 025e 00       		.byte	0
+ 1164 025f 00       		.byte	0
+ 1165 0260 00       		.byte	0
+ 1166 0261 00       		.byte	0
+ 1167 0262 FE       		.byte	-2
+ 1168 0263 66       		.byte	102
+ 1169 0264 62       		.byte	98
+ 1170 0265 68       		.byte	104
+ 1171 0266 78       		.byte	120
+ 1172 0267 68       		.byte	104
+ 1173 0268 60       		.byte	96
+ 1174 0269 60       		.byte	96
+ 1175 026a 60       		.byte	96
+ 1176 026b F0       		.byte	-16
+ 1177 026c 00       		.byte	0
+ 1178 026d 00       		.byte	0
+ 1179 026e 00       		.byte	0
+ 1180 026f 00       		.byte	0
+ 1181 0270 00       		.byte	0
+ 1182 0271 00       		.byte	0
+ 1183 0272 3C       		.byte	60
+ 1184 0273 66       		.byte	102
+ 1185 0274 C2       		.byte	-62
+ 1186 0275 C0       		.byte	-64
+ 1187 0276 C0       		.byte	-64
+ 1188 0277 DE       		.byte	-34
+ 1189 0278 C6       		.byte	-58
+ 1190 0279 C6       		.byte	-58
+ 1191 027a 66       		.byte	102
+ 1192 027b 3A       		.byte	58
+ 1193 027c 00       		.byte	0
+ 1194 027d 00       		.byte	0
+ 1195 027e 00       		.byte	0
+ 1196 027f 00       		.byte	0
+ 1197 0280 00       		.byte	0
+ 1198 0281 00       		.byte	0
+ 1199 0282 C6       		.byte	-58
+ 1200 0283 C6       		.byte	-58
+ 1201 0284 C6       		.byte	-58
+ 1202 0285 C6       		.byte	-58
+ 1203 0286 FE       		.byte	-2
+ 1204 0287 C6       		.byte	-58
+ 1205 0288 C6       		.byte	-58
+ 1206 0289 C6       		.byte	-58
+ 1207 028a C6       		.byte	-58
+ 1208 028b C6       		.byte	-58
+ 1209 028c 00       		.byte	0
+ 1210 028d 00       		.byte	0
+ 1211 028e 00       		.byte	0
+ 1212 028f 00       		.byte	0
+ 1213 0290 00       		.byte	0
+ 1214 0291 00       		.byte	0
+ 1215 0292 3C       		.byte	60
+ 1216 0293 18       		.byte	24
+ 1217 0294 18       		.byte	24
+ 1218 0295 18       		.byte	24
+ 1219 0296 18       		.byte	24
+ 1220 0297 18       		.byte	24
+ 1221 0298 18       		.byte	24
+ 1222 0299 18       		.byte	24
+ 1223 029a 18       		.byte	24
+ 1224 029b 3C       		.byte	60
+ 1225 029c 00       		.byte	0
+ 1226 029d 00       		.byte	0
+ 1227 029e 00       		.byte	0
+ 1228 029f 00       		.byte	0
+ 1229 02a0 00       		.byte	0
+ 1230 02a1 00       		.byte	0
+ 1231 02a2 1E       		.byte	30
+ 1232 02a3 0C       		.byte	12
+ 1233 02a4 0C       		.byte	12
+ 1234 02a5 0C       		.byte	12
+ 1235 02a6 0C       		.byte	12
+ 1236 02a7 0C       		.byte	12
+ 1237 02a8 CC       		.byte	-52
+ 1238 02a9 CC       		.byte	-52
+ 1239 02aa CC       		.byte	-52
+ 1240 02ab 78       		.byte	120
+ 1241 02ac 00       		.byte	0
+ 1242 02ad 00       		.byte	0
+ 1243 02ae 00       		.byte	0
+ 1244 02af 00       		.byte	0
+ 1245 02b0 00       		.byte	0
+ 1246 02b1 00       		.byte	0
+ 1247 02b2 E6       		.byte	-26
+ 1248 02b3 66       		.byte	102
+ 1249 02b4 66       		.byte	102
+ 1250 02b5 6C       		.byte	108
+ 1251 02b6 78       		.byte	120
+ 1252 02b7 78       		.byte	120
+ 1253 02b8 6C       		.byte	108
+ 1254 02b9 66       		.byte	102
+ 1255 02ba 66       		.byte	102
+ 1256 02bb E6       		.byte	-26
+ 1257 02bc 00       		.byte	0
+ 1258 02bd 00       		.byte	0
+ 1259 02be 00       		.byte	0
+ 1260 02bf 00       		.byte	0
+ 1261 02c0 00       		.byte	0
+ 1262 02c1 00       		.byte	0
+ 1263 02c2 F0       		.byte	-16
+ 1264 02c3 60       		.byte	96
+ 1265 02c4 60       		.byte	96
+ 1266 02c5 60       		.byte	96
+ 1267 02c6 60       		.byte	96
+ 1268 02c7 60       		.byte	96
+ 1269 02c8 60       		.byte	96
+ 1270 02c9 62       		.byte	98
+ 1271 02ca 66       		.byte	102
+ 1272 02cb FE       		.byte	-2
+ 1273 02cc 00       		.byte	0
+ 1274 02cd 00       		.byte	0
+ 1275 02ce 00       		.byte	0
+ 1276 02cf 00       		.byte	0
+ 1277 02d0 00       		.byte	0
+ 1278 02d1 00       		.byte	0
+ 1279 02d2 C6       		.byte	-58
+ 1280 02d3 EE       		.byte	-18
+ 1281 02d4 FE       		.byte	-2
+ 1282 02d5 FE       		.byte	-2
+ 1283 02d6 D6       		.byte	-42
+ 1284 02d7 C6       		.byte	-58
+ 1285 02d8 C6       		.byte	-58
+ 1286 02d9 C6       		.byte	-58
+ 1287 02da C6       		.byte	-58
+ 1288 02db C6       		.byte	-58
+ 1289 02dc 00       		.byte	0
+ 1290 02dd 00       		.byte	0
+ 1291 02de 00       		.byte	0
+ 1292 02df 00       		.byte	0
+ 1293 02e0 00       		.byte	0
+ 1294 02e1 00       		.byte	0
+ 1295 02e2 C6       		.byte	-58
+ 1296 02e3 E6       		.byte	-26
+ 1297 02e4 F6       		.byte	-10
+ 1298 02e5 FE       		.byte	-2
+ 1299 02e6 DE       		.byte	-34
+ 1300 02e7 CE       		.byte	-50
+ 1301 02e8 C6       		.byte	-58
+ 1302 02e9 C6       		.byte	-58
+ 1303 02ea C6       		.byte	-58
+ 1304 02eb C6       		.byte	-58
+ 1305 02ec 00       		.byte	0
+ 1306 02ed 00       		.byte	0
+ 1307 02ee 00       		.byte	0
+ 1308 02ef 00       		.byte	0
+ 1309 02f0 00       		.byte	0
+ 1310 02f1 00       		.byte	0
+ 1311 02f2 7C       		.byte	124
+ 1312 02f3 C6       		.byte	-58
+ 1313 02f4 C6       		.byte	-58
+ 1314 02f5 C6       		.byte	-58
+ 1315 02f6 C6       		.byte	-58
+ 1316 02f7 C6       		.byte	-58
+ 1317 02f8 C6       		.byte	-58
+ 1318 02f9 C6       		.byte	-58
+ 1319 02fa C6       		.byte	-58
+ 1320 02fb 7C       		.byte	124
+ 1321 02fc 00       		.byte	0
+ 1322 02fd 00       		.byte	0
+ 1323 02fe 00       		.byte	0
+ 1324 02ff 00       		.byte	0
+ 1325 0300 00       		.byte	0
+ 1326 0301 00       		.byte	0
+ 1327 0302 FC       		.byte	-4
+ 1328 0303 66       		.byte	102
+ 1329 0304 66       		.byte	102
+ 1330 0305 66       		.byte	102
+ 1331 0306 7C       		.byte	124
+ 1332 0307 60       		.byte	96
+ 1333 0308 60       		.byte	96
+ 1334 0309 60       		.byte	96
+ 1335 030a 60       		.byte	96
+ 1336 030b F0       		.byte	-16
+ 1337 030c 00       		.byte	0
+ 1338 030d 00       		.byte	0
+ 1339 030e 00       		.byte	0
+ 1340 030f 00       		.byte	0
+ 1341 0310 00       		.byte	0
+ 1342 0311 00       		.byte	0
+ 1343 0312 7C       		.byte	124
+ 1344 0313 C6       		.byte	-58
+ 1345 0314 C6       		.byte	-58
+ 1346 0315 C6       		.byte	-58
+ 1347 0316 C6       		.byte	-58
+ 1348 0317 C6       		.byte	-58
+ 1349 0318 C6       		.byte	-58
+ 1350 0319 D6       		.byte	-42
+ 1351 031a DE       		.byte	-34
+ 1352 031b 7C       		.byte	124
+ 1353 031c 0C       		.byte	12
+ 1354 031d 0E       		.byte	14
+ 1355 031e 00       		.byte	0
+ 1356 031f 00       		.byte	0
+ 1357 0320 00       		.byte	0
+ 1358 0321 00       		.byte	0
+ 1359 0322 FC       		.byte	-4
+ 1360 0323 66       		.byte	102
+ 1361 0324 66       		.byte	102
+ 1362 0325 66       		.byte	102
+ 1363 0326 7C       		.byte	124
+ 1364 0327 6C       		.byte	108
+ 1365 0328 66       		.byte	102
+ 1366 0329 66       		.byte	102
+ 1367 032a 66       		.byte	102
+ 1368 032b E6       		.byte	-26
+ 1369 032c 00       		.byte	0
+ 1370 032d 00       		.byte	0
+ 1371 032e 00       		.byte	0
+ 1372 032f 00       		.byte	0
+ 1373 0330 00       		.byte	0
+ 1374 0331 00       		.byte	0
+ 1375 0332 7C       		.byte	124
+ 1376 0333 C6       		.byte	-58
+ 1377 0334 C6       		.byte	-58
+ 1378 0335 60       		.byte	96
+ 1379 0336 38       		.byte	56
+ 1380 0337 0C       		.byte	12
+ 1381 0338 06       		.byte	6
+ 1382 0339 C6       		.byte	-58
+ 1383 033a C6       		.byte	-58
+ 1384 033b 7C       		.byte	124
+ 1385 033c 00       		.byte	0
+ 1386 033d 00       		.byte	0
+ 1387 033e 00       		.byte	0
+ 1388 033f 00       		.byte	0
+ 1389 0340 00       		.byte	0
+ 1390 0341 00       		.byte	0
+ 1391 0342 7E       		.byte	126
+ 1392 0343 7E       		.byte	126
+ 1393 0344 5A       		.byte	90
+ 1394 0345 18       		.byte	24
+ 1395 0346 18       		.byte	24
+ 1396 0347 18       		.byte	24
+ 1397 0348 18       		.byte	24
+ 1398 0349 18       		.byte	24
+ 1399 034a 18       		.byte	24
+ 1400 034b 3C       		.byte	60
+ 1401 034c 00       		.byte	0
+ 1402 034d 00       		.byte	0
+ 1403 034e 00       		.byte	0
+ 1404 034f 00       		.byte	0
+ 1405 0350 00       		.byte	0
+ 1406 0351 00       		.byte	0
+ 1407 0352 C6       		.byte	-58
+ 1408 0353 C6       		.byte	-58
+ 1409 0354 C6       		.byte	-58
+ 1410 0355 C6       		.byte	-58
+ 1411 0356 C6       		.byte	-58
+ 1412 0357 C6       		.byte	-58
+ 1413 0358 C6       		.byte	-58
+ 1414 0359 C6       		.byte	-58
+ 1415 035a C6       		.byte	-58
+ 1416 035b 7C       		.byte	124
+ 1417 035c 00       		.byte	0
+ 1418 035d 00       		.byte	0
+ 1419 035e 00       		.byte	0
+ 1420 035f 00       		.byte	0
+ 1421 0360 00       		.byte	0
+ 1422 0361 00       		.byte	0
+ 1423 0362 C6       		.byte	-58
+ 1424 0363 C6       		.byte	-58
+ 1425 0364 C6       		.byte	-58
+ 1426 0365 C6       		.byte	-58
+ 1427 0366 C6       		.byte	-58
+ 1428 0367 C6       		.byte	-58
+ 1429 0368 C6       		.byte	-58
+ 1430 0369 6C       		.byte	108
+ 1431 036a 38       		.byte	56
+ 1432 036b 10       		.byte	16
+ 1433 036c 00       		.byte	0
+ 1434 036d 00       		.byte	0
+ 1435 036e 00       		.byte	0
+ 1436 036f 00       		.byte	0
+ 1437 0370 00       		.byte	0
+ 1438 0371 00       		.byte	0
+ 1439 0372 C6       		.byte	-58
+ 1440 0373 C6       		.byte	-58
+ 1441 0374 C6       		.byte	-58
+ 1442 0375 C6       		.byte	-58
+ 1443 0376 D6       		.byte	-42
+ 1444 0377 D6       		.byte	-42
+ 1445 0378 D6       		.byte	-42
+ 1446 0379 FE       		.byte	-2
+ 1447 037a EE       		.byte	-18
+ 1448 037b 6C       		.byte	108
+ 1449 037c 00       		.byte	0
+ 1450 037d 00       		.byte	0
+ 1451 037e 00       		.byte	0
+ 1452 037f 00       		.byte	0
+ 1453 0380 00       		.byte	0
+ 1454 0381 00       		.byte	0
+ 1455 0382 C6       		.byte	-58
+ 1456 0383 C6       		.byte	-58
+ 1457 0384 6C       		.byte	108
+ 1458 0385 7C       		.byte	124
+ 1459 0386 38       		.byte	56
+ 1460 0387 38       		.byte	56
+ 1461 0388 7C       		.byte	124
+ 1462 0389 6C       		.byte	108
+ 1463 038a C6       		.byte	-58
+ 1464 038b C6       		.byte	-58
+ 1465 038c 00       		.byte	0
+ 1466 038d 00       		.byte	0
+ 1467 038e 00       		.byte	0
+ 1468 038f 00       		.byte	0
+ 1469 0390 00       		.byte	0
+ 1470 0391 00       		.byte	0
+ 1471 0392 66       		.byte	102
+ 1472 0393 66       		.byte	102
+ 1473 0394 66       		.byte	102
+ 1474 0395 66       		.byte	102
+ 1475 0396 3C       		.byte	60
+ 1476 0397 18       		.byte	24
+ 1477 0398 18       		.byte	24
+ 1478 0399 18       		.byte	24
+ 1479 039a 18       		.byte	24
+ 1480 039b 3C       		.byte	60
+ 1481 039c 00       		.byte	0
+ 1482 039d 00       		.byte	0
+ 1483 039e 00       		.byte	0
+ 1484 039f 00       		.byte	0
+ 1485 03a0 00       		.byte	0
+ 1486 03a1 00       		.byte	0
+ 1487 03a2 FE       		.byte	-2
+ 1488 03a3 C6       		.byte	-58
+ 1489 03a4 86       		.byte	-122
+ 1490 03a5 0C       		.byte	12
+ 1491 03a6 18       		.byte	24
+ 1492 03a7 30       		.byte	48
+ 1493 03a8 60       		.byte	96
+ 1494 03a9 C2       		.byte	-62
+ 1495 03aa C6       		.byte	-58
+ 1496 03ab FE       		.byte	-2
+ 1497 03ac 00       		.byte	0
+ 1498 03ad 00       		.byte	0
+ 1499 03ae 00       		.byte	0
+ 1500 03af 00       		.byte	0
+ 1501 03b0 00       		.byte	0
+ 1502 03b1 00       		.byte	0
+ 1503 03b2 3C       		.byte	60
+ 1504 03b3 30       		.byte	48
+ 1505 03b4 30       		.byte	48
+ 1506 03b5 30       		.byte	48
+ 1507 03b6 30       		.byte	48
+ 1508 03b7 30       		.byte	48
+ 1509 03b8 30       		.byte	48
+ 1510 03b9 30       		.byte	48
+ 1511 03ba 30       		.byte	48
+ 1512 03bb 3C       		.byte	60
+ 1513 03bc 00       		.byte	0
+ 1514 03bd 00       		.byte	0
+ 1515 03be 00       		.byte	0
+ 1516 03bf 00       		.byte	0
+ 1517 03c0 00       		.byte	0
+ 1518 03c1 00       		.byte	0
+ 1519 03c2 00       		.byte	0
+ 1520 03c3 80       		.byte	-128
+ 1521 03c4 C0       		.byte	-64
+ 1522 03c5 E0       		.byte	-32
+ 1523 03c6 70       		.byte	112
+ 1524 03c7 38       		.byte	56
+ 1525 03c8 1C       		.byte	28
+ 1526 03c9 0E       		.byte	14
+ 1527 03ca 06       		.byte	6
+ 1528 03cb 02       		.byte	2
+ 1529 03cc 00       		.byte	0
+ 1530 03cd 00       		.byte	0
+ 1531 03ce 00       		.byte	0
+ 1532 03cf 00       		.byte	0
+ 1533 03d0 00       		.byte	0
+ 1534 03d1 00       		.byte	0
+ 1535 03d2 3C       		.byte	60
+ 1536 03d3 0C       		.byte	12
+ 1537 03d4 0C       		.byte	12
+ 1538 03d5 0C       		.byte	12
+ 1539 03d6 0C       		.byte	12
+ 1540 03d7 0C       		.byte	12
+ 1541 03d8 0C       		.byte	12
+ 1542 03d9 0C       		.byte	12
+ 1543 03da 0C       		.byte	12
+ 1544 03db 3C       		.byte	60
+ 1545 03dc 00       		.byte	0
+ 1546 03dd 00       		.byte	0
+ 1547 03de 00       		.byte	0
+ 1548 03df 00       		.byte	0
+ 1549 03e0 10       		.byte	16
+ 1550 03e1 38       		.byte	56
+ 1551 03e2 6C       		.byte	108
+ 1552 03e3 C6       		.byte	-58
+ 1553 03e4 00       		.byte	0
+ 1554 03e5 00       		.byte	0
+ 1555 03e6 00       		.byte	0
+ 1556 03e7 00       		.byte	0
+ 1557 03e8 00       		.byte	0
+ 1558 03e9 00       		.byte	0
+ 1559 03ea 00       		.byte	0
+ 1560 03eb 00       		.byte	0
+ 1561 03ec 00       		.byte	0
+ 1562 03ed 00       		.byte	0
+ 1563 03ee 00       		.byte	0
+ 1564 03ef 00       		.byte	0
+ 1565 03f0 00       		.byte	0
+ 1566 03f1 00       		.byte	0
+ 1567 03f2 00       		.byte	0
+ 1568 03f3 00       		.byte	0
+ 1569 03f4 00       		.byte	0
+ 1570 03f5 00       		.byte	0
+ 1571 03f6 00       		.byte	0
+ 1572 03f7 00       		.byte	0
+ 1573 03f8 00       		.byte	0
+ 1574 03f9 00       		.byte	0
+ 1575 03fa 00       		.byte	0
+ 1576 03fb 00       		.byte	0
+ 1577 03fc 00       		.byte	0
+ 1578 03fd FF       		.byte	-1
+ 1579 03fe 00       		.byte	0
+ 1580 03ff 00       		.byte	0
+ 1581 0400 30       		.byte	48
+ 1582 0401 30       		.byte	48
+ 1583 0402 18       		.byte	24
+ 1584 0403 00       		.byte	0
+ 1585 0404 00       		.byte	0
+ 1586 0405 00       		.byte	0
+ 1587 0406 00       		.byte	0
+ 1588 0407 00       		.byte	0
+ 1589 0408 00       		.byte	0
+ 1590 0409 00       		.byte	0
+ 1591 040a 00       		.byte	0
+ 1592 040b 00       		.byte	0
+ 1593 040c 00       		.byte	0
+ 1594 040d 00       		.byte	0
+ 1595 040e 00       		.byte	0
+ 1596 040f 00       		.byte	0
+ 1597 0410 00       		.byte	0
+ 1598 0411 00       		.byte	0
+ 1599 0412 00       		.byte	0
+ 1600 0413 00       		.byte	0
+ 1601 0414 00       		.byte	0
+ 1602 0415 78       		.byte	120
+ 1603 0416 0C       		.byte	12
+ 1604 0417 7C       		.byte	124
+ 1605 0418 CC       		.byte	-52
+ 1606 0419 CC       		.byte	-52
+ 1607 041a CC       		.byte	-52
+ 1608 041b 76       		.byte	118
+ 1609 041c 00       		.byte	0
+ 1610 041d 00       		.byte	0
+ 1611 041e 00       		.byte	0
+ 1612 041f 00       		.byte	0
+ 1613 0420 00       		.byte	0
+ 1614 0421 00       		.byte	0
+ 1615 0422 E0       		.byte	-32
+ 1616 0423 60       		.byte	96
+ 1617 0424 60       		.byte	96
+ 1618 0425 78       		.byte	120
+ 1619 0426 6C       		.byte	108
+ 1620 0427 66       		.byte	102
+ 1621 0428 66       		.byte	102
+ 1622 0429 66       		.byte	102
+ 1623 042a 66       		.byte	102
+ 1624 042b 7C       		.byte	124
+ 1625 042c 00       		.byte	0
+ 1626 042d 00       		.byte	0
+ 1627 042e 00       		.byte	0
+ 1628 042f 00       		.byte	0
+ 1629 0430 00       		.byte	0
+ 1630 0431 00       		.byte	0
+ 1631 0432 00       		.byte	0
+ 1632 0433 00       		.byte	0
+ 1633 0434 00       		.byte	0
+ 1634 0435 7C       		.byte	124
+ 1635 0436 C6       		.byte	-58
+ 1636 0437 C0       		.byte	-64
+ 1637 0438 C0       		.byte	-64
+ 1638 0439 C0       		.byte	-64
+ 1639 043a C6       		.byte	-58
+ 1640 043b 7C       		.byte	124
+ 1641 043c 00       		.byte	0
+ 1642 043d 00       		.byte	0
+ 1643 043e 00       		.byte	0
+ 1644 043f 00       		.byte	0
+ 1645 0440 00       		.byte	0
+ 1646 0441 00       		.byte	0
+ 1647 0442 1C       		.byte	28
+ 1648 0443 0C       		.byte	12
+ 1649 0444 0C       		.byte	12
+ 1650 0445 3C       		.byte	60
+ 1651 0446 6C       		.byte	108
+ 1652 0447 CC       		.byte	-52
+ 1653 0448 CC       		.byte	-52
+ 1654 0449 CC       		.byte	-52
+ 1655 044a CC       		.byte	-52
+ 1656 044b 76       		.byte	118
+ 1657 044c 00       		.byte	0
+ 1658 044d 00       		.byte	0
+ 1659 044e 00       		.byte	0
+ 1660 044f 00       		.byte	0
+ 1661 0450 00       		.byte	0
+ 1662 0451 00       		.byte	0
+ 1663 0452 00       		.byte	0
+ 1664 0453 00       		.byte	0
+ 1665 0454 00       		.byte	0
+ 1666 0455 7C       		.byte	124
+ 1667 0456 C6       		.byte	-58
+ 1668 0457 FE       		.byte	-2
+ 1669 0458 C0       		.byte	-64
+ 1670 0459 C0       		.byte	-64
+ 1671 045a C6       		.byte	-58
+ 1672 045b 7C       		.byte	124
+ 1673 045c 00       		.byte	0
+ 1674 045d 00       		.byte	0
+ 1675 045e 00       		.byte	0
+ 1676 045f 00       		.byte	0
+ 1677 0460 00       		.byte	0
+ 1678 0461 00       		.byte	0
+ 1679 0462 38       		.byte	56
+ 1680 0463 6C       		.byte	108
+ 1681 0464 64       		.byte	100
+ 1682 0465 60       		.byte	96
+ 1683 0466 F0       		.byte	-16
+ 1684 0467 60       		.byte	96
+ 1685 0468 60       		.byte	96
+ 1686 0469 60       		.byte	96
+ 1687 046a 60       		.byte	96
+ 1688 046b F0       		.byte	-16
+ 1689 046c 00       		.byte	0
+ 1690 046d 00       		.byte	0
+ 1691 046e 00       		.byte	0
+ 1692 046f 00       		.byte	0
+ 1693 0470 00       		.byte	0
+ 1694 0471 00       		.byte	0
+ 1695 0472 00       		.byte	0
+ 1696 0473 00       		.byte	0
+ 1697 0474 00       		.byte	0
+ 1698 0475 76       		.byte	118
+ 1699 0476 CC       		.byte	-52
+ 1700 0477 CC       		.byte	-52
+ 1701 0478 CC       		.byte	-52
+ 1702 0479 CC       		.byte	-52
+ 1703 047a CC       		.byte	-52
+ 1704 047b 7C       		.byte	124
+ 1705 047c 0C       		.byte	12
+ 1706 047d CC       		.byte	-52
+ 1707 047e 78       		.byte	120
+ 1708 047f 00       		.byte	0
+ 1709 0480 00       		.byte	0
+ 1710 0481 00       		.byte	0
+ 1711 0482 E0       		.byte	-32
+ 1712 0483 60       		.byte	96
+ 1713 0484 60       		.byte	96
+ 1714 0485 6C       		.byte	108
+ 1715 0486 76       		.byte	118
+ 1716 0487 66       		.byte	102
+ 1717 0488 66       		.byte	102
+ 1718 0489 66       		.byte	102
+ 1719 048a 66       		.byte	102
+ 1720 048b E6       		.byte	-26
+ 1721 048c 00       		.byte	0
+ 1722 048d 00       		.byte	0
+ 1723 048e 00       		.byte	0
+ 1724 048f 00       		.byte	0
+ 1725 0490 00       		.byte	0
+ 1726 0491 00       		.byte	0
+ 1727 0492 18       		.byte	24
+ 1728 0493 18       		.byte	24
+ 1729 0494 00       		.byte	0
+ 1730 0495 38       		.byte	56
+ 1731 0496 18       		.byte	24
+ 1732 0497 18       		.byte	24
+ 1733 0498 18       		.byte	24
+ 1734 0499 18       		.byte	24
+ 1735 049a 18       		.byte	24
+ 1736 049b 3C       		.byte	60
+ 1737 049c 00       		.byte	0
+ 1738 049d 00       		.byte	0
+ 1739 049e 00       		.byte	0
+ 1740 049f 00       		.byte	0
+ 1741 04a0 00       		.byte	0
+ 1742 04a1 00       		.byte	0
+ 1743 04a2 06       		.byte	6
+ 1744 04a3 06       		.byte	6
+ 1745 04a4 00       		.byte	0
+ 1746 04a5 0E       		.byte	14
+ 1747 04a6 06       		.byte	6
+ 1748 04a7 06       		.byte	6
+ 1749 04a8 06       		.byte	6
+ 1750 04a9 06       		.byte	6
+ 1751 04aa 06       		.byte	6
+ 1752 04ab 06       		.byte	6
+ 1753 04ac 66       		.byte	102
+ 1754 04ad 66       		.byte	102
+ 1755 04ae 3C       		.byte	60
+ 1756 04af 00       		.byte	0
+ 1757 04b0 00       		.byte	0
+ 1758 04b1 00       		.byte	0
+ 1759 04b2 E0       		.byte	-32
+ 1760 04b3 60       		.byte	96
+ 1761 04b4 60       		.byte	96
+ 1762 04b5 66       		.byte	102
+ 1763 04b6 6C       		.byte	108
+ 1764 04b7 78       		.byte	120
+ 1765 04b8 78       		.byte	120
+ 1766 04b9 6C       		.byte	108
+ 1767 04ba 66       		.byte	102
+ 1768 04bb E6       		.byte	-26
+ 1769 04bc 00       		.byte	0
+ 1770 04bd 00       		.byte	0
+ 1771 04be 00       		.byte	0
+ 1772 04bf 00       		.byte	0
+ 1773 04c0 00       		.byte	0
+ 1774 04c1 00       		.byte	0
+ 1775 04c2 38       		.byte	56
+ 1776 04c3 18       		.byte	24
+ 1777 04c4 18       		.byte	24
+ 1778 04c5 18       		.byte	24
+ 1779 04c6 18       		.byte	24
+ 1780 04c7 18       		.byte	24
+ 1781 04c8 18       		.byte	24
+ 1782 04c9 18       		.byte	24
+ 1783 04ca 18       		.byte	24
+ 1784 04cb 3C       		.byte	60
+ 1785 04cc 00       		.byte	0
+ 1786 04cd 00       		.byte	0
+ 1787 04ce 00       		.byte	0
+ 1788 04cf 00       		.byte	0
+ 1789 04d0 00       		.byte	0
+ 1790 04d1 00       		.byte	0
+ 1791 04d2 00       		.byte	0
+ 1792 04d3 00       		.byte	0
+ 1793 04d4 00       		.byte	0
+ 1794 04d5 EC       		.byte	-20
+ 1795 04d6 FE       		.byte	-2
+ 1796 04d7 D6       		.byte	-42
+ 1797 04d8 D6       		.byte	-42
+ 1798 04d9 D6       		.byte	-42
+ 1799 04da D6       		.byte	-42
+ 1800 04db C6       		.byte	-58
+ 1801 04dc 00       		.byte	0
+ 1802 04dd 00       		.byte	0
+ 1803 04de 00       		.byte	0
+ 1804 04df 00       		.byte	0
+ 1805 04e0 00       		.byte	0
+ 1806 04e1 00       		.byte	0
+ 1807 04e2 00       		.byte	0
+ 1808 04e3 00       		.byte	0
+ 1809 04e4 00       		.byte	0
+ 1810 04e5 DC       		.byte	-36
+ 1811 04e6 66       		.byte	102
+ 1812 04e7 66       		.byte	102
+ 1813 04e8 66       		.byte	102
+ 1814 04e9 66       		.byte	102
+ 1815 04ea 66       		.byte	102
+ 1816 04eb 66       		.byte	102
+ 1817 04ec 00       		.byte	0
+ 1818 04ed 00       		.byte	0
+ 1819 04ee 00       		.byte	0
+ 1820 04ef 00       		.byte	0
+ 1821 04f0 00       		.byte	0
+ 1822 04f1 00       		.byte	0
+ 1823 04f2 00       		.byte	0
+ 1824 04f3 00       		.byte	0
+ 1825 04f4 00       		.byte	0
+ 1826 04f5 7C       		.byte	124
+ 1827 04f6 C6       		.byte	-58
+ 1828 04f7 C6       		.byte	-58
+ 1829 04f8 C6       		.byte	-58
+ 1830 04f9 C6       		.byte	-58
+ 1831 04fa C6       		.byte	-58
+ 1832 04fb 7C       		.byte	124
+ 1833 04fc 00       		.byte	0
+ 1834 04fd 00       		.byte	0
+ 1835 04fe 00       		.byte	0
+ 1836 04ff 00       		.byte	0
+ 1837 0500 00       		.byte	0
+ 1838 0501 00       		.byte	0
+ 1839 0502 00       		.byte	0
+ 1840 0503 00       		.byte	0
+ 1841 0504 00       		.byte	0
+ 1842 0505 DC       		.byte	-36
+ 1843 0506 66       		.byte	102
+ 1844 0507 66       		.byte	102
+ 1845 0508 66       		.byte	102
+ 1846 0509 66       		.byte	102
+ 1847 050a 66       		.byte	102
+ 1848 050b 7C       		.byte	124
+ 1849 050c 60       		.byte	96
+ 1850 050d 60       		.byte	96
+ 1851 050e F0       		.byte	-16
+ 1852 050f 00       		.byte	0
+ 1853 0510 00       		.byte	0
+ 1854 0511 00       		.byte	0
+ 1855 0512 00       		.byte	0
+ 1856 0513 00       		.byte	0
+ 1857 0514 00       		.byte	0
+ 1858 0515 76       		.byte	118
+ 1859 0516 CC       		.byte	-52
+ 1860 0517 CC       		.byte	-52
+ 1861 0518 CC       		.byte	-52
+ 1862 0519 CC       		.byte	-52
+ 1863 051a CC       		.byte	-52
+ 1864 051b 7C       		.byte	124
+ 1865 051c 0C       		.byte	12
+ 1866 051d 0C       		.byte	12
+ 1867 051e 1E       		.byte	30
+ 1868 051f 00       		.byte	0
+ 1869 0520 00       		.byte	0
+ 1870 0521 00       		.byte	0
+ 1871 0522 00       		.byte	0
+ 1872 0523 00       		.byte	0
+ 1873 0524 00       		.byte	0
+ 1874 0525 DC       		.byte	-36
+ 1875 0526 76       		.byte	118
+ 1876 0527 66       		.byte	102
+ 1877 0528 60       		.byte	96
+ 1878 0529 60       		.byte	96
+ 1879 052a 60       		.byte	96
+ 1880 052b F0       		.byte	-16
+ 1881 052c 00       		.byte	0
+ 1882 052d 00       		.byte	0
+ 1883 052e 00       		.byte	0
+ 1884 052f 00       		.byte	0
+ 1885 0530 00       		.byte	0
+ 1886 0531 00       		.byte	0
+ 1887 0532 00       		.byte	0
+ 1888 0533 00       		.byte	0
+ 1889 0534 00       		.byte	0
+ 1890 0535 7C       		.byte	124
+ 1891 0536 C6       		.byte	-58
+ 1892 0537 60       		.byte	96
+ 1893 0538 38       		.byte	56
+ 1894 0539 0C       		.byte	12
+ 1895 053a C6       		.byte	-58
+ 1896 053b 7C       		.byte	124
+ 1897 053c 00       		.byte	0
+ 1898 053d 00       		.byte	0
+ 1899 053e 00       		.byte	0
+ 1900 053f 00       		.byte	0
+ 1901 0540 00       		.byte	0
+ 1902 0541 00       		.byte	0
+ 1903 0542 10       		.byte	16
+ 1904 0543 30       		.byte	48
+ 1905 0544 30       		.byte	48
+ 1906 0545 FC       		.byte	-4
+ 1907 0546 30       		.byte	48
+ 1908 0547 30       		.byte	48
+ 1909 0548 30       		.byte	48
+ 1910 0549 30       		.byte	48
+ 1911 054a 36       		.byte	54
+ 1912 054b 1C       		.byte	28
+ 1913 054c 00       		.byte	0
+ 1914 054d 00       		.byte	0
+ 1915 054e 00       		.byte	0
+ 1916 054f 00       		.byte	0
+ 1917 0550 00       		.byte	0
+ 1918 0551 00       		.byte	0
+ 1919 0552 00       		.byte	0
+ 1920 0553 00       		.byte	0
+ 1921 0554 00       		.byte	0
+ 1922 0555 CC       		.byte	-52
+ 1923 0556 CC       		.byte	-52
+ 1924 0557 CC       		.byte	-52
+ 1925 0558 CC       		.byte	-52
+ 1926 0559 CC       		.byte	-52
+ 1927 055a CC       		.byte	-52
+ 1928 055b 76       		.byte	118
+ 1929 055c 00       		.byte	0
+ 1930 055d 00       		.byte	0
+ 1931 055e 00       		.byte	0
+ 1932 055f 00       		.byte	0
+ 1933 0560 00       		.byte	0
+ 1934 0561 00       		.byte	0
+ 1935 0562 00       		.byte	0
+ 1936 0563 00       		.byte	0
+ 1937 0564 00       		.byte	0
+ 1938 0565 66       		.byte	102
+ 1939 0566 66       		.byte	102
+ 1940 0567 66       		.byte	102
+ 1941 0568 66       		.byte	102
+ 1942 0569 66       		.byte	102
+ 1943 056a 3C       		.byte	60
+ 1944 056b 18       		.byte	24
+ 1945 056c 00       		.byte	0
+ 1946 056d 00       		.byte	0
+ 1947 056e 00       		.byte	0
+ 1948 056f 00       		.byte	0
+ 1949 0570 00       		.byte	0
+ 1950 0571 00       		.byte	0
+ 1951 0572 00       		.byte	0
+ 1952 0573 00       		.byte	0
+ 1953 0574 00       		.byte	0
+ 1954 0575 C6       		.byte	-58
+ 1955 0576 C6       		.byte	-58
+ 1956 0577 D6       		.byte	-42
+ 1957 0578 D6       		.byte	-42
+ 1958 0579 D6       		.byte	-42
+ 1959 057a FE       		.byte	-2
+ 1960 057b 6C       		.byte	108
+ 1961 057c 00       		.byte	0
+ 1962 057d 00       		.byte	0
+ 1963 057e 00       		.byte	0
+ 1964 057f 00       		.byte	0
+ 1965 0580 00       		.byte	0
+ 1966 0581 00       		.byte	0
+ 1967 0582 00       		.byte	0
+ 1968 0583 00       		.byte	0
+ 1969 0584 00       		.byte	0
+ 1970 0585 C6       		.byte	-58
+ 1971 0586 6C       		.byte	108
+ 1972 0587 38       		.byte	56
+ 1973 0588 38       		.byte	56
+ 1974 0589 38       		.byte	56
+ 1975 058a 6C       		.byte	108
+ 1976 058b C6       		.byte	-58
+ 1977 058c 00       		.byte	0
+ 1978 058d 00       		.byte	0
+ 1979 058e 00       		.byte	0
+ 1980 058f 00       		.byte	0
+ 1981 0590 00       		.byte	0
+ 1982 0591 00       		.byte	0
+ 1983 0592 00       		.byte	0
+ 1984 0593 00       		.byte	0
+ 1985 0594 00       		.byte	0
+ 1986 0595 C6       		.byte	-58
+ 1987 0596 C6       		.byte	-58
+ 1988 0597 C6       		.byte	-58
+ 1989 0598 C6       		.byte	-58
+ 1990 0599 C6       		.byte	-58
+ 1991 059a C6       		.byte	-58
+ 1992 059b 7E       		.byte	126
+ 1993 059c 06       		.byte	6
+ 1994 059d 0C       		.byte	12
+ 1995 059e F8       		.byte	-8
+ 1996 059f 00       		.byte	0
+ 1997 05a0 00       		.byte	0
+ 1998 05a1 00       		.byte	0
+ 1999 05a2 00       		.byte	0
+ 2000 05a3 00       		.byte	0
+ 2001 05a4 00       		.byte	0
+ 2002 05a5 FE       		.byte	-2
+ 2003 05a6 CC       		.byte	-52
+ 2004 05a7 18       		.byte	24
+ 2005 05a8 30       		.byte	48
+ 2006 05a9 60       		.byte	96
+ 2007 05aa C6       		.byte	-58
+ 2008 05ab FE       		.byte	-2
+ 2009 05ac 00       		.byte	0
+ 2010 05ad 00       		.byte	0
+ 2011 05ae 00       		.byte	0
+ 2012 05af 00       		.byte	0
+ 2013 05b0 00       		.byte	0
+ 2014 05b1 00       		.byte	0
+ 2015 05b2 0E       		.byte	14
+ 2016 05b3 18       		.byte	24
+ 2017 05b4 18       		.byte	24
+ 2018 05b5 18       		.byte	24
+ 2019 05b6 70       		.byte	112
+ 2020 05b7 18       		.byte	24
+ 2021 05b8 18       		.byte	24
+ 2022 05b9 18       		.byte	24
+ 2023 05ba 18       		.byte	24
+ 2024 05bb 0E       		.byte	14
+ 2025 05bc 00       		.byte	0
+ 2026 05bd 00       		.byte	0
+ 2027 05be 00       		.byte	0
+ 2028 05bf 00       		.byte	0
+ 2029 05c0 00       		.byte	0
+ 2030 05c1 00       		.byte	0
+ 2031 05c2 18       		.byte	24
+ 2032 05c3 18       		.byte	24
+ 2033 05c4 18       		.byte	24
+ 2034 05c5 18       		.byte	24
+ 2035 05c6 00       		.byte	0
+ 2036 05c7 18       		.byte	24
+ 2037 05c8 18       		.byte	24
+ 2038 05c9 18       		.byte	24
+ 2039 05ca 18       		.byte	24
+ 2040 05cb 18       		.byte	24
+ 2041 05cc 00       		.byte	0
+ 2042 05cd 00       		.byte	0
+ 2043 05ce 00       		.byte	0
+ 2044 05cf 00       		.byte	0
+ 2045 05d0 00       		.byte	0
+ 2046 05d1 00       		.byte	0
+ 2047 05d2 70       		.byte	112
+ 2048 05d3 18       		.byte	24
+ 2049 05d4 18       		.byte	24
+ 2050 05d5 18       		.byte	24
+ 2051 05d6 0E       		.byte	14
+ 2052 05d7 18       		.byte	24
+ 2053 05d8 18       		.byte	24
+ 2054 05d9 18       		.byte	24
+ 2055 05da 18       		.byte	24
+ 2056 05db 70       		.byte	112
+ 2057 05dc 00       		.byte	0
+ 2058 05dd 00       		.byte	0
+ 2059 05de 00       		.byte	0
+ 2060 05df 00       		.byte	0
+ 2061 05e0 00       		.byte	0
+ 2062 05e1 00       		.byte	0
+ 2063 05e2 76       		.byte	118
+ 2064 05e3 DC       		.byte	-36
+ 2065 05e4 00       		.byte	0
+ 2066 05e5 00       		.byte	0
+ 2067 05e6 00       		.byte	0
+ 2068 05e7 00       		.byte	0
+ 2069 05e8 00       		.byte	0
+ 2070 05e9 00       		.byte	0
+ 2071 05ea 00       		.byte	0
+ 2072 05eb 00       		.byte	0
+ 2073 05ec 00       		.byte	0
+ 2074 05ed 00       		.byte	0
+ 2075 05ee 00       		.byte	0
+ 2076 05ef 00       		.byte	0
+ 2077 05f0 00       		.byte	0
+ 2078 05f1 00       		.byte	0
+ 2079 05f2 00       		.byte	0
+ 2080 05f3 00       		.byte	0
+ 2081 05f4 00       		.byte	0
+ 2082 05f5 00       		.byte	0
+ 2083 05f6 66       		.byte	102
+ 2084 05f7 66       		.byte	102
+ 2085 05f8 66       		.byte	102
+ 2086 05f9 66       		.byte	102
+ 2087 05fa 66       		.byte	102
+ 2088 05fb 7E       		.byte	126
+ 2089 05fc 62       		.byte	98
+ 2090 05fd 60       		.byte	96
+ 2091 05fe 60       		.byte	96
+ 2092 05ff C0       		.byte	-64
+ 2093 0600 00000000 		.space	2560
+ 2093      00000000 
+ 2093      00000000 
+ 2093      00000000 
+ 2093      00000000 
+ 2094              		.text
+ 2095              	.Letext0:
+ 2096              		.file 2 "Common.h"
+ 2097              		.file 3 "/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default
+ 2098              		.file 4 "/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 2099              		.file 5 "./Libraries/CMSIS/CM3/CoreSupport/core_cm3.h"
+ 2100              		.file 6 "./Libraries/CMSIS/CM3/CoreSupport/system_stm32f10x.h"
+ 2101              		.file 7 "./Libraries/CMSIS/CM3/CoreSupport/stm32f10x.h"
+ 2102              		.file 8 "Board.h"
+ 2103              		.file 9 "Screen.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Screen.c
+     /tmp/ccu7pyJg.s:16     .text.SetWindow:0000000000000000 $t
+     /tmp/ccu7pyJg.s:24     .text.SetWindow:0000000000000000 SetWindow
+     /tmp/ccu7pyJg.s:121    .text.SetWindow:0000000000000050 $d
+     /tmp/ccu7pyJg.s:127    .text.FillRect:0000000000000000 $t
+     /tmp/ccu7pyJg.s:135    .text.FillRect:0000000000000000 FillRect
+     /tmp/ccu7pyJg.s:235    .text.FillRect:0000000000000078 $d
+     /tmp/ccu7pyJg.s:242    .text.ClrScreen:0000000000000000 $t
+     /tmp/ccu7pyJg.s:250    .text.ClrScreen:0000000000000000 ClrScreen
+     /tmp/ccu7pyJg.s:281    .text.ClrScreen:0000000000000018 $d
+     /tmp/ccu7pyJg.s:286    .text.PutcGenic:0000000000000000 $t
+     /tmp/ccu7pyJg.s:294    .text.PutcGenic:0000000000000000 PutcGenic
+     /tmp/ccu7pyJg.s:441    .text.PutcGenic:00000000000000cc $d
+     /tmp/ccu7pyJg.s:448    .text.PutsGenic:0000000000000000 $t
+     /tmp/ccu7pyJg.s:456    .text.PutsGenic:0000000000000000 PutsGenic
+     /tmp/ccu7pyJg.s:534    .text.PutsGenic:000000000000004c $d
+     /tmp/ccu7pyJg.s:544    .data.ASC8X16:0000000000000000 ASC8X16
+     /tmp/ccu7pyJg.s:556    .rodata.Font_ASC8X16:0000000000000000 Font_ASC8X16
+     /tmp/ccu7pyJg.s:541    .data.ASC8X16:0000000000000000 $d
+     /tmp/ccu7pyJg.s:553    .rodata.Font_ASC8X16:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+write_data
+write_comm

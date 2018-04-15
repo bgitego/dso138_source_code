@@ -1,0 +1,563 @@
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 2
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"113-13801.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.startup.main,"ax",%progbits
+  16              		.align	1
+  17              		.p2align 2,,3
+  18              		.global	main
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	main:
+  25              	.LFB29:
+  26              		.file 1 "113-13801.c"
+   1:113-13801.c   **** //////////////////////////////////////////////////////////////////////////////
+   2:113-13801.c   **** //
+   3:113-13801.c   **** // 	Filename:	113-13801.c
+   4:113-13801.c   **** //	Version:		
+   5:113-13801.c   **** //	Data:		
+   6:113-13801.c   **** //
+   7:113-13801.c   **** //	Author:		Liu, Zemin
+   8:113-13801.c   **** //	Company:	JYE Tech
+   9:113-13801.c   **** //
+  10:113-13801.c   **** //-----------------------------------------------------------------------------
+  11:113-13801.c   **** //
+  12:113-13801.c   **** // 	Target: 		STM32F103C8 
+  13:113-13801.c   **** // 	Tool chain: 	CodeSourcery G++
+  14:113-13801.c   **** //
+  15:113-13801.c   **** //	Descriptions: 	Main firmware for low-cost DSO kit
+  16:113-13801.c   **** //	PCB: 		109-13800-00C
+  17:113-13801.c   **** //-----------------------------------------------------------------------------
+  18:113-13801.c   **** //	Required files:
+  19:113-13801.c   **** //
+  20:113-13801.c   **** //-----------------------------------------------------------------------------
+  21:113-13801.c   **** //	ATTENTION: 
+  22:113-13801.c   **** //-----------------------------------------------------------------------------
+  23:113-13801.c   **** //	Revision History:
+  24:113-13801.c   **** //
+  25:113-13801.c   **** //
+  26:113-13801.c   **** ///////////////////////////////////////////////////////////////////////////////
+  27:113-13801.c   **** 
+  28:113-13801.c   **** #include "stm32f10x.h"
+  29:113-13801.c   **** #include "stm32f10x_conf.h"
+  30:113-13801.c   **** 
+  31:113-13801.c   **** #include "Common.h"
+  32:113-13801.c   **** #include "Board.h"
+  33:113-13801.c   **** #include	"Screen.h"
+  34:113-13801.c   **** #include	"Command.h"
+  35:113-13801.c   **** #include 	"Eeprom.h"
+  36:113-13801.c   **** 
+  37:113-13801.c   **** #include	"libdso138.h"
+  38:113-13801.c   **** 
+  39:113-13801.c   **** #include 	"UserCode.h"
+  40:113-13801.c   **** 
+  41:113-13801.c   **** int main (void)
+  42:113-13801.c   **** {
+  27              		.loc 1 42 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  32              		.cfi_def_cfa_offset 36
+  33              		.cfi_offset 4, -36
+  34              		.cfi_offset 5, -32
+  35              		.cfi_offset 6, -28
+  36              		.cfi_offset 7, -24
+  37              		.cfi_offset 8, -20
+  38              		.cfi_offset 9, -16
+  39              		.cfi_offset 10, -12
+  40              		.cfi_offset 11, -8
+  41              		.cfi_offset 14, -4
+  43:113-13801.c   ****  U16 tmp1, tmp2;
+  44:113-13801.c   ****  
+  45:113-13801.c   ****  Clock_Init();
+  42              		.loc 1 45 0
+  43 0004 464B     		ldr	r3, .L36
+  42:113-13801.c   ****  U16 tmp1, tmp2;
+  44              		.loc 1 42 0
+  45 0006 83B0     		sub	sp, sp, #12
+  46              		.cfi_def_cfa_offset 48
+  47              		.loc 1 45 0
+  48 0008 9847     		blx	r3
+  49              	.LVL0:
+  46:113-13801.c   ****  
+  47:113-13801.c   ****  Port_Init();
+  50              		.loc 1 47 0
+  51 000a 464B     		ldr	r3, .L36+4
+  52 000c 9847     		blx	r3
+  53              	.LVL1:
+  48:113-13801.c   **** 
+  49:113-13801.c   ****  // Check SW4 pin. If the pin is read LOW enter TEST mode
+  50:113-13801.c   ****  tmp1 = ((PB_Port & PB_Bits) | ~PB_Bits);
+  54              		.loc 1 50 0
+  55 000e 464B     		ldr	r3, .L36+8
+  56 0010 9B68     		ldr	r3, [r3, #8]
+  57              	.LVL2:
+  51:113-13801.c   ****  if(!BitTest(tmp1, 0x8000)) {
+  58              		.loc 1 51 0
+  59 0012 1904     		lsls	r1, r3, #16
+  60 0014 01D4     		bmi	.L2
+  52:113-13801.c   **** 	// Enter TEST mode
+  53:113-13801.c   **** 	TestMode();
+  61              		.loc 1 53 0
+  62 0016 454B     		ldr	r3, .L36+12
+  63              	.LVL3:
+  64 0018 9847     		blx	r3
+  65              	.LVL4:
+  66              	.L2:
+  54:113-13801.c   ****  	}
+  55:113-13801.c   ****  
+  56:113-13801.c   ****  /* Unlock the Flash Program Erase controller */
+  57:113-13801.c   ****  FLASH_Unlock();
+  58:113-13801.c   **** 
+  59:113-13801.c   ****  /* EEPROM Init */
+  60:113-13801.c   ****  EE_Init();
+  61:113-13801.c   **** 
+  62:113-13801.c   ****  TFT_Init_Ili9341();
+  63:113-13801.c   ****  
+  64:113-13801.c   ****  USART1_Init();
+  65:113-13801.c   ****  uputs((U8 *)"Uart1 Ok\n\r", USART1);
+  66:113-13801.c   **** 
+  67:113-13801.c   ****  SysTick_Init();
+  68:113-13801.c   ****  TIM3_Init();
+  69:113-13801.c   ****  TIM4_Init();
+  70:113-13801.c   **** 
+  71:113-13801.c   ****  ADC2_Init();
+  72:113-13801.c   ****  
+  73:113-13801.c   ****  AppInit();  
+  74:113-13801.c   ****  
+  75:113-13801.c   ****  tmp1 = clBlack;
+  76:113-13801.c   ****  PutsGenic(24, 120, (U8 *)"FW: 113-13801-037", clWhite, tmp1, &ASC8X16);
+  67              		.loc 1 76 0
+  68 001a 4FF0000B 		mov	fp, #0
+  57:113-13801.c   **** 
+  69              		.loc 1 57 0
+  70 001e 444B     		ldr	r3, .L36+16
+  71 0020 9847     		blx	r3
+  72              	.LVL5:
+  60:113-13801.c   **** 
+  73              		.loc 1 60 0
+  74 0022 444B     		ldr	r3, .L36+20
+  75 0024 9847     		blx	r3
+  76              	.LVL6:
+  62:113-13801.c   ****  
+  77              		.loc 1 62 0
+  78 0026 444B     		ldr	r3, .L36+24
+  79 0028 9847     		blx	r3
+  80              	.LVL7:
+  64:113-13801.c   ****  uputs((U8 *)"Uart1 Ok\n\r", USART1);
+  81              		.loc 1 64 0
+  82 002a 444B     		ldr	r3, .L36+28
+  83 002c 9847     		blx	r3
+  84              	.LVL8:
+  65:113-13801.c   **** 
+  85              		.loc 1 65 0
+  86 002e 4449     		ldr	r1, .L36+32
+  87 0030 4448     		ldr	r0, .L36+36
+  88 0032 454B     		ldr	r3, .L36+40
+  89 0034 9847     		blx	r3
+  90              	.LVL9:
+  67:113-13801.c   ****  TIM3_Init();
+  91              		.loc 1 67 0
+  92 0036 454B     		ldr	r3, .L36+44
+  93 0038 9847     		blx	r3
+  94              	.LVL10:
+  68:113-13801.c   ****  TIM4_Init();
+  95              		.loc 1 68 0
+  96 003a 454B     		ldr	r3, .L36+48
+  97 003c 9847     		blx	r3
+  98              	.LVL11:
+  69:113-13801.c   **** 
+  99              		.loc 1 69 0
+ 100 003e 454B     		ldr	r3, .L36+52
+ 101 0040 9847     		blx	r3
+ 102              	.LVL12:
+ 103              		.loc 1 76 0
+ 104 0042 454D     		ldr	r5, .L36+56
+  71:113-13801.c   ****  
+ 105              		.loc 1 71 0
+ 106 0044 454B     		ldr	r3, .L36+60
+ 107 0046 9847     		blx	r3
+ 108              	.LVL13:
+  73:113-13801.c   ****  
+ 109              		.loc 1 73 0
+ 110 0048 454B     		ldr	r3, .L36+64
+ 111 004a 9847     		blx	r3
+ 112              	.LVL14:
+ 113              		.loc 1 76 0
+ 114 004c 454C     		ldr	r4, .L36+68
+ 115 004e CDE900B5 		strd	fp, r5, [sp]
+ 116 0052 4FF6FF73 		movw	r3, #65535
+ 117 0056 444A     		ldr	r2, .L36+72
+ 118 0058 7821     		movs	r1, #120
+ 119 005a 1820     		movs	r0, #24
+ 120 005c A047     		blx	r4
+ 121              	.LVL15:
+  77:113-13801.c   ****  PutsGenic(24, 140, (U8 *)LibVersion, clWhite, tmp1, &ASC8X16);
+ 122              		.loc 1 77 0
+ 123 005e CDE900B5 		strd	fp, r5, [sp]
+ 124 0062 4FF6FF73 		movw	r3, #65535
+ 125 0066 414A     		ldr	r2, .L36+76
+ 126 0068 8C21     		movs	r1, #140
+ 127 006a 1820     		movs	r0, #24
+ 128 006c A047     		blx	r4
+ 129              	.LVL16:
+  78:113-13801.c   ****  PutsGenic(24, 180, (U8 *)"Booting...", clWhite, tmp1, &ASC8X16);
+ 130              		.loc 1 78 0
+ 131 006e 404A     		ldr	r2, .L36+80
+ 132 0070 B421     		movs	r1, #180
+ 133 0072 1820     		movs	r0, #24
+ 134 0074 CDE900B5 		strd	fp, r5, [sp]
+ 135 0078 4FF6FF73 		movw	r3, #65535
+ 136 007c A047     		blx	r4
+ 137              	.LVL17:
+  79:113-13801.c   **** 
+  80:113-13801.c   ****  // LED blink twice
+  81:113-13801.c   ****  LedBlink();
+ 138              		.loc 1 81 0
+ 139 007e 3D4B     		ldr	r3, .L36+84
+ 140 0080 9847     		blx	r3
+ 141              	.LVL18:
+  82:113-13801.c   **** 
+  83:113-13801.c   ****  NVIC_Configuration();
+ 142              		.loc 1 83 0
+ 143 0082 3D4B     		ldr	r3, .L36+88
+ 144 0084 9847     		blx	r3
+ 145              	.LVL19:
+  84:113-13801.c   **** 
+  85:113-13801.c   ****  Flags = 0;
+ 146              		.loc 1 85 0
+ 147 0086 3D4B     		ldr	r3, .L36+92
+  86:113-13801.c   ****  
+  87:113-13801.c   **** // Uncomment the following line to disable display of scope panel
+  88:113-13801.c   **** // NoScopePanel = 1;
+  89:113-13801.c   ****  
+  90:113-13801.c   ****  while(1) {
+  91:113-13801.c   **** // ============================
+  92:113-13801.c   **** // Note: 	Keep this section in the main loop for proper capture engine running
+  93:113-13801.c   **** //		even scope panel display is disabled.
+  94:113-13801.c   **** 
+  95:113-13801.c   ****  	DsoDisplay();
+  96:113-13801.c   **** 
+  97:113-13801.c   **** 	tmp1 = GetDsoStatus();
+  98:113-13801.c   **** 
+  99:113-13801.c   **** // --------------------------------------------------------	
+ 100:113-13801.c   **** 	if(BitTest(tmp1, DSO_NormalDisplay)) {
+ 101:113-13801.c   **** 
+ 102:113-13801.c   **** 		// Add your diaplay codes here
+ 103:113-13801.c   **** 		UsrCode();
+ 104:113-13801.c   **** 		}
+ 105:113-13801.c   **** // --------------------------------------------------------
+ 106:113-13801.c   **** 
+ 107:113-13801.c   ****  	if(GTimeout) {
+ 108:113-13801.c   **** 		GTimeout = 0;
+ 148              		.loc 1 108 0
+ 149 0088 D946     		mov	r9, fp
+ 150 008a DFF81C81 		ldr	r8, .L36+136
+ 151 008e 3C4F     		ldr	r7, .L36+96
+ 152 0090 3C4D     		ldr	r5, .L36+100
+ 153 0092 DFF818A1 		ldr	r10, .L36+140
+ 154 0096 3C4C     		ldr	r4, .L36+104
+ 155 0098 3C4E     		ldr	r6, .L36+108
+  85:113-13801.c   ****  
+ 156              		.loc 1 85 0
+ 157 009a A3F800B0 		strh	fp, [r3]	@ movhi
+ 158 009e 0EE0     		b	.L9
+ 159              	.LVL20:
+ 160              	.L3:
+ 107:113-13801.c   **** 		GTimeout = 0;
+ 161              		.loc 1 107 0
+ 162 00a0 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 163 00a2 BBB9     		cbnz	r3, .L30
+ 164              	.LVL21:
+ 165              	.L4:
+ 109:113-13801.c   **** 		StartCapture();
+ 110:113-13801.c   ****  		}
+ 111:113-13801.c   **** 	
+ 112:113-13801.c   **** // ============================	
+ 113:113-13801.c   **** 
+ 114:113-13801.c   **** 
+ 115:113-13801.c   **** 	if(BitTest(Keypad.Flags, (1 << KF_DoKeyScan))) {
+ 166              		.loc 1 115 0
+ 167 00a4 2388     		ldrh	r3, [r4]
+ 168 00a6 DA07     		lsls	r2, r3, #31
+ 169 00a8 1AD4     		bmi	.L31
+ 170              	.L5:
+ 116:113-13801.c   **** 		BitClr(Keypad.Flags, (1 << KF_DoKeyScan));
+ 117:113-13801.c   **** 		// Do key scan
+ 118:113-13801.c   **** 		KeyScan();
+ 119:113-13801.c   **** 		}
+ 120:113-13801.c   **** 
+ 121:113-13801.c   **** 	if(Keypad.KeyCode) {
+ 171              		.loc 1 121 0
+ 172 00aa E388     		ldrh	r3, [r4, #6]
+ 173 00ac 03BB     		cbnz	r3, .L32
+ 174              	.L6:
+ 122:113-13801.c   **** 		// Process key code
+ 123:113-13801.c   **** 		KeyProc();
+ 124:113-13801.c   **** 		Keypad.KeyCode = 0;
+ 125:113-13801.c   **** 		}
+ 126:113-13801.c   **** 
+ 127:113-13801.c   **** 	if(GTimer == 0) {
+ 175              		.loc 1 127 0
+ 176 00ae 3388     		ldrh	r3, [r6]
+ 177 00b0 13B9     		cbnz	r3, .L7
+ 128:113-13801.c   **** 		if(BitTest(tmp1, DSO_CaptureDone)) {
+ 178              		.loc 1 128 0
+ 179 00b2 1BF0010F 		tst	fp, #1
+ 180 00b6 20D1     		bne	.L33
+ 181              	.L7:
+ 129:113-13801.c   **** 			UpdateDisp(Disp_Trace);
+ 130:113-13801.c   **** 			tmp2 = GetTimebase();
+ 131:113-13801.c   **** 			if(tmp2 <= TB_1ms) {
+ 132:113-13801.c   **** 				// Start next capture		
+ 133:113-13801.c   **** 				StartCapture();
+ 134:113-13801.c   **** 				}
+ 135:113-13801.c   **** 			else {
+ 136:113-13801.c   **** 				// Lower capture rate
+ 137:113-13801.c   **** 				GTimer = 40;
+ 138:113-13801.c   **** 				}
+ 139:113-13801.c   **** 			}
+ 140:113-13801.c   **** 		}
+ 141:113-13801.c   **** 
+ 142:113-13801.c   **** 	
+ 143:113-13801.c   **** 	if(BitTest(tmp1, DSO_Rolling)) {
+ 182              		.loc 1 143 0
+ 183 00b8 1BF0080F 		tst	fp, #8
+ 184 00bc 2BD1     		bne	.L34
+ 185              	.L9:
+  95:113-13801.c   **** 
+ 186              		.loc 1 95 0
+ 187 00be C047     		blx	r8
+ 188              	.LVL22:
+  97:113-13801.c   **** 
+ 189              		.loc 1 97 0
+ 190 00c0 B847     		blx	r7
+ 191              	.LVL23:
+ 100:113-13801.c   **** 
+ 192              		.loc 1 100 0
+ 193 00c2 10F0800F 		tst	r0, #128
+  97:113-13801.c   **** 
+ 194              		.loc 1 97 0
+ 195 00c6 8346     		mov	fp, r0
+ 196              	.LVL24:
+ 100:113-13801.c   **** 
+ 197              		.loc 1 100 0
+ 198 00c8 EAD0     		beq	.L3
+ 103:113-13801.c   **** 		}
+ 199              		.loc 1 103 0
+ 200 00ca 314B     		ldr	r3, .L36+112
+ 201 00cc 9847     		blx	r3
+ 202              	.LVL25:
+ 107:113-13801.c   **** 		GTimeout = 0;
+ 203              		.loc 1 107 0
+ 204 00ce 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 205 00d0 002B     		cmp	r3, #0
+ 206 00d2 E7D0     		beq	.L4
+ 207              	.L30:
+ 108:113-13801.c   **** 		StartCapture();
+ 208              		.loc 1 108 0
+ 209 00d4 85F80090 		strb	r9, [r5]
+ 109:113-13801.c   ****  		}
+ 210              		.loc 1 109 0
+ 211 00d8 D047     		blx	r10
+ 212              	.LVL26:
+ 115:113-13801.c   **** 		BitClr(Keypad.Flags, (1 << KF_DoKeyScan));
+ 213              		.loc 1 115 0
+ 214 00da 2388     		ldrh	r3, [r4]
+ 215 00dc DA07     		lsls	r2, r3, #31
+ 216 00de E4D5     		bpl	.L5
+ 217              	.L31:
+ 116:113-13801.c   **** 		// Do key scan
+ 218              		.loc 1 116 0
+ 219 00e0 23F00103 		bic	r3, r3, #1
+ 220 00e4 2380     		strh	r3, [r4]	@ movhi
+ 118:113-13801.c   **** 		}
+ 221              		.loc 1 118 0
+ 222 00e6 2B4B     		ldr	r3, .L36+116
+ 223 00e8 9847     		blx	r3
+ 224              	.LVL27:
+ 121:113-13801.c   **** 		// Process key code
+ 225              		.loc 1 121 0
+ 226 00ea E388     		ldrh	r3, [r4, #6]
+ 227 00ec 002B     		cmp	r3, #0
+ 228 00ee DED0     		beq	.L6
+ 229              	.L32:
+ 123:113-13801.c   **** 		Keypad.KeyCode = 0;
+ 230              		.loc 1 123 0
+ 231 00f0 294B     		ldr	r3, .L36+120
+ 232 00f2 9847     		blx	r3
+ 233              	.LVL28:
+ 124:113-13801.c   **** 		}
+ 234              		.loc 1 124 0
+ 235 00f4 A4F80690 		strh	r9, [r4, #6]	@ movhi
+ 236 00f8 D9E7     		b	.L6
+ 237              	.L33:
+ 129:113-13801.c   **** 			tmp2 = GetTimebase();
+ 238              		.loc 1 129 0
+ 239 00fa 0420     		movs	r0, #4
+ 240 00fc 274B     		ldr	r3, .L36+124
+ 241 00fe 9847     		blx	r3
+ 242              	.LVL29:
+ 130:113-13801.c   **** 			if(tmp2 <= TB_1ms) {
+ 243              		.loc 1 130 0
+ 244 0100 274B     		ldr	r3, .L36+128
+ 245 0102 9847     		blx	r3
+ 246              	.LVL30:
+ 131:113-13801.c   **** 				// Start next capture		
+ 247              		.loc 1 131 0
+ 248 0104 80B2     		uxth	r0, r0
+ 249              	.LVL31:
+ 250 0106 1228     		cmp	r0, #18
+ 251 0108 08D9     		bls	.L35
+ 137:113-13801.c   **** 				}
+ 252              		.loc 1 137 0
+ 253 010a 4FF02803 		mov	r3, #40	@ movhi
+ 254              		.loc 1 143 0
+ 255 010e 1BF0080F 		tst	fp, #8
+ 137:113-13801.c   **** 				}
+ 256              		.loc 1 137 0
+ 257 0112 3380     		strh	r3, [r6]	@ movhi
+ 258              		.loc 1 143 0
+ 259 0114 D3D0     		beq	.L9
+ 260              	.L34:
+ 144:113-13801.c   **** 		Rolling();
+ 261              		.loc 1 144 0
+ 262 0116 234B     		ldr	r3, .L36+132
+ 263 0118 9847     		blx	r3
+ 264              	.LVL32:
+ 265 011a D0E7     		b	.L9
+ 266              	.L35:
+ 133:113-13801.c   **** 				}
+ 267              		.loc 1 133 0
+ 268 011c D047     		blx	r10
+ 269              	.LVL33:
+ 270 011e CBE7     		b	.L7
+ 271              	.L37:
+ 272              		.align	2
+ 273              	.L36:
+ 274 0120 00000000 		.word	Clock_Init
+ 275 0124 00000000 		.word	Port_Init
+ 276 0128 000C0140 		.word	1073810432
+ 277 012c 00000000 		.word	TestMode
+ 278 0130 00000000 		.word	FLASH_Unlock
+ 279 0134 00000000 		.word	EE_Init
+ 280 0138 00000000 		.word	TFT_Init_Ili9341
+ 281 013c 00000000 		.word	USART1_Init
+ 282 0140 00380140 		.word	1073821696
+ 283 0144 00000000 		.word	.LC0
+ 284 0148 00000000 		.word	uputs
+ 285 014c 00000000 		.word	SysTick_Init
+ 286 0150 00000000 		.word	TIM3_Init
+ 287 0154 00000000 		.word	TIM4_Init
+ 288 0158 00000000 		.word	ASC8X16
+ 289 015c 00000000 		.word	ADC2_Init
+ 290 0160 00000000 		.word	AppInit
+ 291 0164 00000000 		.word	PutsGenic
+ 292 0168 0C000000 		.word	.LC1
+ 293 016c 00000000 		.word	LibVersion
+ 294 0170 20000000 		.word	.LC2
+ 295 0174 00000000 		.word	LedBlink
+ 296 0178 00000000 		.word	NVIC_Configuration
+ 297 017c 00000000 		.word	Flags
+ 298 0180 00000000 		.word	GetDsoStatus
+ 299 0184 00000000 		.word	GTimeout
+ 300 0188 00000000 		.word	Keypad
+ 301 018c 00000000 		.word	GTimer
+ 302 0190 00000000 		.word	UsrCode
+ 303 0194 00000000 		.word	KeyScan
+ 304 0198 00000000 		.word	KeyProc
+ 305 019c 00000000 		.word	UpdateDisp
+ 306 01a0 00000000 		.word	GetTimebase
+ 307 01a4 00000000 		.word	Rolling
+ 308 01a8 00000000 		.word	DsoDisplay
+ 309 01ac 00000000 		.word	StartCapture
+ 310              		.cfi_endproc
+ 311              	.LFE29:
+ 313              		.comm	int_buffer,32,4
+ 314              		.section	.rodata.main.str1.4,"aMS",%progbits,1
+ 315              		.align	2
+ 316              	.LC0:
+ 317 0000 55617274 		.ascii	"Uart1 Ok\012\015\000"
+ 317      31204F6B 
+ 317      0A0D00
+ 318 000b 00       		.space	1
+ 319              	.LC1:
+ 320 000c 46573A20 		.ascii	"FW: 113-13801-037\000"
+ 320      3131332D 
+ 320      31333830 
+ 320      312D3033 
+ 320      3700
+ 321 001e 0000     		.space	2
+ 322              	.LC2:
+ 323 0020 426F6F74 		.ascii	"Booting...\000"
+ 323      696E672E 
+ 323      2E2E00
+ 324              		.text
+ 325              	.Letext0:
+ 326              		.file 2 "/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default
+ 327              		.file 3 "/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 328              		.file 4 "./Libraries/CMSIS/CM3/CoreSupport/core_cm3.h"
+ 329              		.file 5 "./Libraries/CMSIS/CM3/CoreSupport/system_stm32f10x.h"
+ 330              		.file 6 "./Libraries/CMSIS/CM3/CoreSupport/stm32f10x.h"
+ 331              		.file 7 "Common.h"
+ 332              		.file 8 "Board.h"
+ 333              		.file 9 "Screen.h"
+ 334              		.file 10 "Command.h"
+ 335              		.file 11 "Eeprom.h"
+ 336              		.file 12 "libdso138.h"
+ 337              		.file 13 "UartInt.h"
+ 338              		.file 14 "./Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_flash.h"
+ 339              		.file 15 "UserCode.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 113-13801.c
+     /tmp/cclljCXE.s:16     .text.startup.main:0000000000000000 $t
+     /tmp/cclljCXE.s:24     .text.startup.main:0000000000000000 main
+     /tmp/cclljCXE.s:274    .text.startup.main:0000000000000120 $d
+                            *COM*:0000000000000020 int_buffer
+     /tmp/cclljCXE.s:315    .rodata.main.str1.4:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+Clock_Init
+Port_Init
+TestMode
+FLASH_Unlock
+EE_Init
+TFT_Init_Ili9341
+USART1_Init
+uputs
+SysTick_Init
+TIM3_Init
+TIM4_Init
+ASC8X16
+ADC2_Init
+AppInit
+PutsGenic
+LibVersion
+LedBlink
+NVIC_Configuration
+Flags
+GetDsoStatus
+GTimeout
+Keypad
+GTimer
+UsrCode
+KeyScan
+KeyProc
+UpdateDisp
+GetTimebase
+Rolling
+DsoDisplay
+StartCapture

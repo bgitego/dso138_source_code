@@ -1,0 +1,2194 @@
+Archive member included to satisfy reference by file (symbol)
+
+./libdso138.a(libdso138.o)    FLASH_RUN/113-13801.o (LibVersion)
+/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_udivsi3.o)
+                              ./libdso138.a(libdso138.o) (__aeabi_uidiv)
+/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_dvmd_tls.o)
+                              /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_udivsi3.o) (__aeabi_idiv0)
+/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+                              ./libdso138.a(libdso138.o) (__aeabi_dadd)
+/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_muldivdf3.o)
+                              ./libdso138.a(libdso138.o) (__aeabi_dmul)
+/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixdfsi.o)
+                              ./libdso138.a(libdso138.o) (__aeabi_d2iz)
+/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_truncdfsf2.o)
+                              ./libdso138.a(libdso138.o) (__aeabi_d2f)
+/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+                              ./libdso138.a(libdso138.o) (__aeabi_i2f)
+/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+                              ./libdso138.a(libdso138.o) (__aeabi_fcmpge)
+/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixunssfsi.o)
+                              ./libdso138.a(libdso138.o) (__aeabi_f2uiz)
+
+Allocating common symbols
+Common symbol       size              file
+
+MyDso               0x12              ./libdso138.a(libdso138.o)
+SampleBuf1          0x800             ./libdso138.a(libdso138.o)
+TimerKeyScan        0x2               FLASH_RUN/Board.o
+TempBuf             0x800             ./libdso138.a(libdso138.o)
+previousTickVal     0x4               FLASH_RUN/UserCode.o
+YlenA               0x12c             ./libdso138.a(libdso138.o)
+SampleBuf2          0x800             ./libdso138.a(libdso138.o)
+GTimeout            0x1               FLASH_RUN/Board.o
+GeneralBuf          0x32              ./libdso138.a(libdso138.o)
+currentTickVal      0x4               FLASH_RUN/UserCode.o
+MyDsoCtrl           0x1c              ./libdso138.a(libdso138.o)
+BannerShowTime      0x2               ./libdso138.a(libdso138.o)
+GTimer              0x2               FLASH_RUN/Board.o
+CurrentSample       0x4               ./libdso138.a(libdso138.o)
+YlenB               0x12c             ./libdso138.a(libdso138.o)
+FlashStatus         0x1               FLASH_RUN/Eeprom.o
+YstartA             0x12c             ./libdso138.a(libdso138.o)
+int_buffer          0x20              FLASH_RUN/113-13801.o
+MainLoopCount       0x2               ./libdso138.a(libdso138.o)
+deltaTickValue      0x4               FLASH_RUN/UserCode.o
+VSenPrev            0x1               FLASH_RUN/Command.o
+YstartB             0x12c             ./libdso138.a(libdso138.o)
+CplPrev             0x1               FLASH_RUN/Command.o
+SampleBuf           0x4               ./libdso138.a(libdso138.o)
+BannerTimer         0x2               ./libdso138.a(libdso138.o)
+Flags               0x2               FLASH_RUN/Command.o
+Keypad              0x14              FLASH_RUN/Command.o
+
+Discarded input sections
+
+ .text          0x0000000000000000       0x14 FLASH_RUN/startup_stm32f10x_md.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/startup_stm32f10x_md.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/startup_stm32f10x_md.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/113-13801.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/113-13801.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/113-13801.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/Board.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/Board.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/Board.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/Common.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/Common.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/Common.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/Screen.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/Screen.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/Screen.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/Command.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/Command.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/Command.o
+ .text.KeyConvert
+                0x0000000000000000       0x2c FLASH_RUN/Command.o
+ .text.DoKeyOkH
+                0x0000000000000000       0x1c FLASH_RUN/Command.o
+ .text.DoKeySelH
+                0x0000000000000000        0x4 FLASH_RUN/Command.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/stm32f10x_it.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/stm32f10x_it.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/stm32f10x_it.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/Eeprom.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/Eeprom.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/Eeprom.o
+ COMMON         0x0000000000000000        0x1 FLASH_RUN/Eeprom.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/UartInt.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/UartInt.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/UartInt.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/UserCode.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/UserCode.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/UserCode.o
+ COMMON         0x0000000000000000        0xc FLASH_RUN/UserCode.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/core_cm3.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/core_cm3.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/core_cm3.o
+ .text.__get_PSP
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__set_PSP
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__get_MSP
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__set_MSP
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__get_BASEPRI
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__set_BASEPRI
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__get_PRIMASK
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__set_PRIMASK
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__get_FAULTMASK
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__set_FAULTMASK
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__get_CONTROL
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__set_CONTROL
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__REV    0x0000000000000000        0x4 FLASH_RUN/core_cm3.o
+ .text.__REV16  0x0000000000000000        0x4 FLASH_RUN/core_cm3.o
+ .text.__REVSH  0x0000000000000000        0x4 FLASH_RUN/core_cm3.o
+ .text.__RBIT   0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__LDREXB
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__LDREXH
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__LDREXW
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__STREXB
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__STREXH
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .text.__STREXW
+                0x0000000000000000        0x8 FLASH_RUN/core_cm3.o
+ .debug_info    0x0000000000000000      0x540 FLASH_RUN/core_cm3.o
+ .debug_abbrev  0x0000000000000000       0xbd FLASH_RUN/core_cm3.o
+ .debug_loc     0x0000000000000000      0x33a FLASH_RUN/core_cm3.o
+ .debug_aranges
+                0x0000000000000000       0xc8 FLASH_RUN/core_cm3.o
+ .debug_ranges  0x0000000000000000       0xb8 FLASH_RUN/core_cm3.o
+ .debug_line    0x0000000000000000      0x29e FLASH_RUN/core_cm3.o
+ .debug_str     0x0000000000000000      0x334 FLASH_RUN/core_cm3.o
+ .comment       0x0000000000000000       0x7f FLASH_RUN/core_cm3.o
+ .debug_frame   0x0000000000000000      0x170 FLASH_RUN/core_cm3.o
+ .ARM.attributes
+                0x0000000000000000       0x33 FLASH_RUN/core_cm3.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/system_stm32f10x.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/system_stm32f10x.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/system_stm32f10x.o
+ .text.SystemCoreClockUpdate
+                0x0000000000000000       0x5c FLASH_RUN/system_stm32f10x.o
+ .data.AHBPrescTable
+                0x0000000000000000       0x10 FLASH_RUN/system_stm32f10x.o
+ .data.SystemCoreClock
+                0x0000000000000000        0x4 FLASH_RUN/system_stm32f10x.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/misc.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/misc.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/misc.o
+ .text.NVIC_PriorityGroupConfig
+                0x0000000000000000       0x40 FLASH_RUN/misc.o
+ .text.NVIC_SystemLPConfig
+                0x0000000000000000       0x50 FLASH_RUN/misc.o
+ .text.SysTick_CLKSourceConfig
+                0x0000000000000000       0x44 FLASH_RUN/misc.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/stm32f10x_gpio.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/stm32f10x_gpio.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_DeInit
+                0x0000000000000000       0xe4 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_AFIODeInit
+                0x0000000000000000       0x1c FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_Init
+                0x0000000000000000      0x170 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_StructInit
+                0x0000000000000000       0x10 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_ReadInputDataBit
+                0x0000000000000000       0xb8 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_ReadInputData
+                0x0000000000000000       0x58 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_ReadOutputDataBit
+                0x0000000000000000       0xb8 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_ReadOutputData
+                0x0000000000000000       0x58 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_SetBits
+                0x0000000000000000       0x64 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_ResetBits
+                0x0000000000000000       0x64 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_WriteBit
+                0x0000000000000000       0xd4 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_Write
+                0x0000000000000000       0x58 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_PinLockConfig
+                0x0000000000000000       0x70 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_EventOutputConfig
+                0x0000000000000000       0x44 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_EventOutputCmd
+                0x0000000000000000       0x24 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_PinRemapConfig
+                0x0000000000000000      0x1a0 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_EXTILineConfig
+                0x0000000000000000       0x58 FLASH_RUN/stm32f10x_gpio.o
+ .text.GPIO_ETH_MediaInterfaceConfig
+                0x0000000000000000       0x24 FLASH_RUN/stm32f10x_gpio.o
+ .rodata.GPIO_DeInit.str1.4
+                0x0000000000000000       0x3a FLASH_RUN/stm32f10x_gpio.o
+ .debug_info    0x0000000000000000      0xcf5 FLASH_RUN/stm32f10x_gpio.o
+ .debug_abbrev  0x0000000000000000      0x23c FLASH_RUN/stm32f10x_gpio.o
+ .debug_loc     0x0000000000000000      0xa33 FLASH_RUN/stm32f10x_gpio.o
+ .debug_aranges
+                0x0000000000000000       0xa8 FLASH_RUN/stm32f10x_gpio.o
+ .debug_ranges  0x0000000000000000       0x98 FLASH_RUN/stm32f10x_gpio.o
+ .debug_line    0x0000000000000000      0x76d FLASH_RUN/stm32f10x_gpio.o
+ .debug_str     0x0000000000000000      0x5a5 FLASH_RUN/stm32f10x_gpio.o
+ .comment       0x0000000000000000       0x7f FLASH_RUN/stm32f10x_gpio.o
+ .debug_frame   0x0000000000000000      0x298 FLASH_RUN/stm32f10x_gpio.o
+ .ARM.attributes
+                0x0000000000000000       0x33 FLASH_RUN/stm32f10x_gpio.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/stm32f10x_usart.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/stm32f10x_usart.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_DeInit
+                0x0000000000000000       0xc0 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_StructInit
+                0x0000000000000000       0x14 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_ClockInit
+                0x0000000000000000       0x98 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_ClockStructInit
+                0x0000000000000000        0xc FLASH_RUN/stm32f10x_usart.o
+ .text.USART_ITConfig
+                0x0000000000000000      0x118 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_DMACmd
+                0x0000000000000000       0x74 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_SetAddress
+                0x0000000000000000       0x64 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_WakeUpConfig
+                0x0000000000000000       0x68 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_ReceiverWakeUpCmd
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_usart.o
+ .text.USART_LINBreakDetectLengthConfig
+                0x0000000000000000       0x68 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_LINCmd
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_usart.o
+ .text.USART_ReceiveData
+                0x0000000000000000       0x48 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_SendBreak
+                0x0000000000000000       0x4c FLASH_RUN/stm32f10x_usart.o
+ .text.USART_SetGuardTime
+                0x0000000000000000       0x44 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_SetPrescaler
+                0x0000000000000000       0x54 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_SmartCardCmd
+                0x0000000000000000       0x5c FLASH_RUN/stm32f10x_usart.o
+ .text.USART_SmartCardNACKCmd
+                0x0000000000000000       0x5c FLASH_RUN/stm32f10x_usart.o
+ .text.USART_HalfDuplexCmd
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_usart.o
+ .text.USART_OverSampling8Cmd
+                0x0000000000000000       0x68 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_OneBitMethodCmd
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_usart.o
+ .text.USART_IrDAConfig
+                0x0000000000000000       0x68 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_IrDACmd
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_usart.o
+ .text.USART_ClearFlag
+                0x0000000000000000       0x84 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_GetITStatus
+                0x0000000000000000       0xf8 FLASH_RUN/stm32f10x_usart.o
+ .text.USART_ClearITPendingBit
+                0x0000000000000000       0xa0 FLASH_RUN/stm32f10x_usart.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/stm32f10x_rcc.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/stm32f10x_rcc.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_DeInit
+                0x0000000000000000       0x40 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_HSEConfig
+                0x0000000000000000       0x90 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_WaitForHSEStartUp
+                0x0000000000000000       0x30 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_AdjustHSICalibrationValue
+                0x0000000000000000       0x30 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_HSICmd
+                0x0000000000000000       0x24 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_PLLConfig
+                0x0000000000000000       0x68 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_PLLCmd
+                0x0000000000000000       0x24 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_SYSCLKConfig
+                0x0000000000000000       0x2c FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_GetSYSCLKSource
+                0x0000000000000000       0x10 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_HCLKConfig
+                0x0000000000000000       0x4c FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_PCLK1Config
+                0x0000000000000000       0x40 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_PCLK2Config
+                0x0000000000000000       0x40 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_ITConfig
+                0x0000000000000000       0x50 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_USBCLKConfig
+                0x0000000000000000       0x24 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_ADCCLKConfig
+                0x0000000000000000       0x30 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_LSEConfig
+                0x0000000000000000       0x48 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_LSICmd
+                0x0000000000000000       0x24 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_RTCCLKConfig
+                0x0000000000000000       0x34 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_RTCCLKCmd
+                0x0000000000000000       0x24 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_AHBPeriphClockCmd
+                0x0000000000000000       0x54 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_APB2PeriphClockCmd
+                0x0000000000000000       0x54 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_APB1PeriphClockCmd
+                0x0000000000000000       0x54 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_APB2PeriphResetCmd
+                0x0000000000000000       0x54 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_APB1PeriphResetCmd
+                0x0000000000000000       0x54 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_BackupResetCmd
+                0x0000000000000000       0x24 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_ClockSecuritySystemCmd
+                0x0000000000000000       0x24 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_MCOConfig
+                0x0000000000000000       0x28 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_GetFlagStatus
+                0x0000000000000000       0x70 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_ClearFlag
+                0x0000000000000000       0x10 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_GetITStatus
+                0x0000000000000000       0x40 FLASH_RUN/stm32f10x_rcc.o
+ .text.RCC_ClearITPendingBit
+                0x0000000000000000       0x28 FLASH_RUN/stm32f10x_rcc.o
+ .rodata.RCC_HSEConfig.str1.4
+                0x0000000000000000       0x39 FLASH_RUN/stm32f10x_rcc.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/stm32f10x_flash.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/stm32f10x_flash.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_SetLatency
+                0x0000000000000000       0x2c FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_HalfCycleAccessCmd
+                0x0000000000000000       0x34 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_PrefetchBufferCmd
+                0x0000000000000000       0x34 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_UnlockBank1
+                0x0000000000000000        0x8 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_Lock
+                0x0000000000000000       0x10 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_LockBank1
+                0x0000000000000000        0x8 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_GetUserOptionByte
+                0x0000000000000000        0xc FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_GetWriteProtectionOptionByte
+                0x0000000000000000        0xc FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_GetReadOutProtectionStatus
+                0x0000000000000000       0x10 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_GetPrefetchBufferStatus
+                0x0000000000000000       0x10 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_ITConfig
+                0x0000000000000000       0x50 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_GetFlagStatus
+                0x0000000000000000       0x4c FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_ClearFlag
+                0x0000000000000000       0x28 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_GetStatus
+                0x0000000000000000       0x28 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_EraseAllPages
+                0x0000000000000000       0x40 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_EraseAllBank1Pages
+                0x0000000000000000        0x8 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_EraseOptionBytes
+                0x0000000000000000       0x88 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_ProgramWord
+                0x0000000000000000       0x90 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_ProgramOptionByteData
+                0x0000000000000000       0x70 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_EnableWriteProtection
+                0x0000000000000000       0xdc FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_ReadOutProtection
+                0x0000000000000000       0xac FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_UserOptionByteConfig
+                0x0000000000000000       0xa0 FLASH_RUN/stm32f10x_flash.o
+ .text.FLASH_WaitForLastBank1Operation
+                0x0000000000000000        0x8 FLASH_RUN/stm32f10x_flash.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/stm32f10x_dma.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/stm32f10x_dma.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/stm32f10x_dma.o
+ .text.DMA_Init
+                0x0000000000000000      0x164 FLASH_RUN/stm32f10x_dma.o
+ .text.DMA_StructInit
+                0x0000000000000000       0x1c FLASH_RUN/stm32f10x_dma.o
+ .text.DMA_Cmd  0x0000000000000000       0x8c FLASH_RUN/stm32f10x_dma.o
+ .text.DMA_ITConfig
+                0x0000000000000000       0xa0 FLASH_RUN/stm32f10x_dma.o
+ .text.DMA_GetCurrDataCounter
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_dma.o
+ .text.DMA_GetFlagStatus
+                0x0000000000000000      0x15c FLASH_RUN/stm32f10x_dma.o
+ .text.DMA_ClearFlag
+                0x0000000000000000       0x4c FLASH_RUN/stm32f10x_dma.o
+ .text.DMA_GetITStatus
+                0x0000000000000000      0x15c FLASH_RUN/stm32f10x_dma.o
+ .text.DMA_ClearITPendingBit
+                0x0000000000000000       0x4c FLASH_RUN/stm32f10x_dma.o
+ .text          0x0000000000000000        0x0 FLASH_RUN/stm32f10x_tim.o
+ .data          0x0000000000000000        0x0 FLASH_RUN/stm32f10x_tim.o
+ .bss           0x0000000000000000        0x0 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_DeInit
+                0x0000000000000000      0x230 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_TimeBaseInit
+                0x0000000000000000      0x174 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC1Init
+                0x0000000000000000      0x1b4 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC2Init
+                0x0000000000000000      0x184 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC3Init
+                0x0000000000000000      0x168 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC4Init
+                0x0000000000000000      0x118 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_BDTRConfig
+                0x0000000000000000       0xdc FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_TimeBaseStructInit
+                0x0000000000000000       0x14 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OCStructInit
+                0x0000000000000000       0x14 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ICStructInit
+                0x0000000000000000       0x10 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_BDTRStructInit
+                0x0000000000000000       0x14 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_Cmd  0x0000000000000000       0xc8 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_CtrlPWMOutputs
+                0x0000000000000000       0x70 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ITConfig
+                0x0000000000000000       0xdc FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_GenerateEvent
+                0x0000000000000000       0xb8 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_DMAConfig
+                0x0000000000000000       0xac FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_DMACmd
+                0x0000000000000000       0xac FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_InternalClockConfig
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ETRConfig
+                0x0000000000000000       0x90 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ETRClockMode1Config
+                0x0000000000000000       0xa0 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ETRClockMode2Config
+                0x0000000000000000       0x98 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_PrescalerConfig
+                0x0000000000000000       0xb8 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_CounterModeConfig
+                0x0000000000000000       0x74 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SelectInputTrigger
+                0x0000000000000000       0x88 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ITRxExternalClockConfig
+                0x0000000000000000       0x88 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_TIxExternalClockConfig
+                0x0000000000000000      0x128 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_EncoderInterfaceConfig
+                0x0000000000000000       0xc0 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ForcedOC1Config
+                0x0000000000000000       0xb4 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ForcedOC2Config
+                0x0000000000000000       0x88 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ForcedOC3Config
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ForcedOC4Config
+                0x0000000000000000       0x70 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ARRPreloadConfig
+                0x0000000000000000       0xc8 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SelectCOM
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SelectCCDMA
+                0x0000000000000000       0x88 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_CCPreloadControl
+                0x0000000000000000       0x78 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC1PreloadConfig
+                0x0000000000000000       0xb4 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC2PreloadConfig
+                0x0000000000000000       0x88 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC3PreloadConfig
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC4PreloadConfig
+                0x0000000000000000       0x70 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC1FastConfig
+                0x0000000000000000       0xb4 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC2FastConfig
+                0x0000000000000000       0x88 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC3FastConfig
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC4FastConfig
+                0x0000000000000000       0x70 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ClearOC1Ref
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ClearOC2Ref
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ClearOC3Ref
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ClearOC4Ref
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC1PolarityConfig
+                0x0000000000000000       0xb0 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC1NPolarityConfig
+                0x0000000000000000       0x64 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC2PolarityConfig
+                0x0000000000000000       0x84 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC2NPolarityConfig
+                0x0000000000000000       0x50 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC3PolarityConfig
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC3NPolarityConfig
+                0x0000000000000000       0x50 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_OC4PolarityConfig
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_CCxCmd
+                0x0000000000000000       0xc8 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_CCxNCmd
+                0x0000000000000000       0x84 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SelectOCxM
+                0x0000000000000000      0x144 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_UpdateDisableConfig
+                0x0000000000000000       0xc8 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_UpdateRequestConfig
+                0x0000000000000000       0xc8 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SelectHallSensor
+                0x0000000000000000       0x88 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SelectOnePulseMode
+                0x0000000000000000       0xc8 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SelectOutputTrigger
+                0x0000000000000000       0x9c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SelectSlaveMode
+                0x0000000000000000       0x84 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SelectMasterSlaveMode
+                0x0000000000000000       0x88 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SetCounter
+                0x0000000000000000       0xa4 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SetAutoreload
+                0x0000000000000000       0xa4 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SetCompare1
+                0x0000000000000000       0x94 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SetCompare2
+                0x0000000000000000       0x64 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SetCompare3
+                0x0000000000000000       0x4c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SetCompare4
+                0x0000000000000000       0x50 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SetIC1Prescaler
+                0x0000000000000000       0xb4 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SetIC2Prescaler
+                0x0000000000000000       0x88 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_PWMIConfig
+                0x0000000000000000      0x18c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SetIC3Prescaler
+                0x0000000000000000       0x6c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SetIC4Prescaler
+                0x0000000000000000       0x70 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ICInit
+                0x0000000000000000      0x2e0 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_SetClockDivision
+                0x0000000000000000       0xbc FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_GetCapture1
+                0x0000000000000000       0x94 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_GetCapture2
+                0x0000000000000000       0x64 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_GetCapture3
+                0x0000000000000000       0x4c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_GetCapture4
+                0x0000000000000000       0x4c FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_GetCounter
+                0x0000000000000000       0xa4 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_GetPrescaler
+                0x0000000000000000       0xa4 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_GetFlagStatus
+                0x0000000000000000       0xf0 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ClearFlag
+                0x0000000000000000       0xbc FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_GetITStatus
+                0x0000000000000000       0xe0 FLASH_RUN/stm32f10x_tim.o
+ .text.TIM_ClearITPendingBit
+                0x0000000000000000       0xbc FLASH_RUN/stm32f10x_tim.o
+ .rodata.TIM_DeInit.str1.4
+                0x0000000000000000       0x39 FLASH_RUN/stm32f10x_tim.o
+ .debug_info    0x0000000000000000     0x403e FLASH_RUN/stm32f10x_tim.o
+ .debug_abbrev  0x0000000000000000      0x2c0 FLASH_RUN/stm32f10x_tim.o
+ .debug_loc     0x0000000000000000     0x2e88 FLASH_RUN/stm32f10x_tim.o
+ .debug_aranges
+                0x0000000000000000      0x2d0 FLASH_RUN/stm32f10x_tim.o
+ .debug_ranges  0x0000000000000000      0x3e0 FLASH_RUN/stm32f10x_tim.o
+ .debug_line    0x0000000000000000     0x2459 FLASH_RUN/stm32f10x_tim.o
+ .debug_str     0x0000000000000000      0xe80 FLASH_RUN/stm32f10x_tim.o
+ .comment       0x0000000000000000       0x7f FLASH_RUN/stm32f10x_tim.o
+ .debug_frame   0x0000000000000000      0xc28 FLASH_RUN/stm32f10x_tim.o
+ .ARM.attributes
+                0x0000000000000000       0x33 FLASH_RUN/stm32f10x_tim.o
+ .data          0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_udivsi3.o)
+ .bss           0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_udivsi3.o)
+ .data          0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_dvmd_tls.o)
+ .bss           0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_dvmd_tls.o)
+ .data          0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+ .bss           0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+ .data          0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_muldivdf3.o)
+ .bss           0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_muldivdf3.o)
+ .data          0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixdfsi.o)
+ .bss           0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixdfsi.o)
+ .data          0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_truncdfsf2.o)
+ .bss           0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_truncdfsf2.o)
+ .data          0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+ .bss           0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+ .data          0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+ .bss           0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+ .data          0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixunssfsi.o)
+ .bss           0x0000000000000000        0x0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixunssfsi.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+RAM              0x0000000020000000 0x0000000000005000 xrw
+FLASH            0x0000000008000000 0x0000000000010000 xr
+FLASHB1          0x0000000000000000 0x0000000000000000 xr
+EXTMEMB0         0x0000000000000000 0x0000000000000000 xr
+EXTMEMB1         0x0000000000000000 0x0000000000000000 xr
+EXTMEMB2         0x0000000000000000 0x0000000000000000 xr
+EXTMEMB3         0x0000000000000000 0x0000000000000000 xr
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD FLASH_RUN/startup_stm32f10x_md.o
+LOAD FLASH_RUN/113-13801.o
+LOAD FLASH_RUN/Board.o
+LOAD FLASH_RUN/Common.o
+LOAD FLASH_RUN/Screen.o
+LOAD FLASH_RUN/Command.o
+LOAD FLASH_RUN/stm32f10x_it.o
+LOAD FLASH_RUN/Eeprom.o
+LOAD FLASH_RUN/UartInt.o
+LOAD FLASH_RUN/UserCode.o
+LOAD FLASH_RUN/core_cm3.o
+LOAD FLASH_RUN/system_stm32f10x.o
+LOAD FLASH_RUN/misc.o
+LOAD FLASH_RUN/stm32f10x_gpio.o
+LOAD FLASH_RUN/stm32f10x_usart.o
+LOAD FLASH_RUN/stm32f10x_rcc.o
+LOAD FLASH_RUN/stm32f10x_flash.o
+LOAD FLASH_RUN/stm32f10x_dma.o
+LOAD FLASH_RUN/stm32f10x_tim.o
+LOAD /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc.a
+LOAD /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7-m/libm.a
+LOAD /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc.a
+LOAD /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a
+LOAD /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7-m/libstdc++.a
+LOAD ./libdso138.a
+START GROUP
+LOAD /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a
+LOAD /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7-m/libg.a
+LOAD /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc.a
+END GROUP
+                0x0000000000000400                __Stack_Size = 0x400
+                [!provide]                        PROVIDE (_Stack_Size, __Stack_Size)
+                0x0000000020004c00                __Stack_Init = (_estack - __Stack_Size)
+                [!provide]                        PROVIDE (_Stack_Init, __Stack_Init)
+                0x0000000000000100                _Minimum_Stack_Size = 0x100
+                0x0000000020005000                _estack = 0x20005000
+
+.isr_vector     0x0000000008000000      0x10c
+                0x0000000008000000                . = ALIGN (0x4)
+ *(.isr_vector)
+ .isr_vector    0x0000000008000000      0x10c FLASH_RUN/startup_stm32f10x_md.o
+                0x0000000008000000                g_pfnVectors
+                0x000000000800010c                . = ALIGN (0x4)
+
+.flashtext      0x000000000800010c        0x0
+                0x000000000800010c                . = ALIGN (0x4)
+ *(.flashtext)
+                0x000000000800010c                . = ALIGN (0x4)
+
+.text           0x0000000008000110     0x81dc
+                0x0000000008000110                . = ALIGN (0x4)
+ *(.text)
+ .text          0x0000000008000110     0x3270 ./libdso138.a(libdso138.o)
+                0x0000000008000110                SetWindow1
+                0x00000000080001d4                PutcGenic1
+                0x0000000008000378                DrawRect
+                0x0000000008000480                TIM1_Init
+                0x0000000008000514                TIM2_Init
+                0x00000000080005c4                ADC1_Init
+                0x000000000800065c                DMA1_CH1_Init
+                0x00000000080006a0                NVIC_Configuration_lib
+                0x0000000008000710                DSO_Init
+                0x000000000800087c                Min
+                0x00000000080008b8                Max
+                0x00000000080008f4                BinToDec16
+                0x0000000008000a80                UpdateTimebase
+                0x0000000008000ae8                StartCapture
+                0x0000000008000e28                ProcCapture
+                0x0000000008001d04                Rolling
+                0x0000000008001d58                StopCapture
+                0x0000000008001d7c                SetVSen
+                0x0000000008001dcc                GetVSen
+                0x0000000008001de8                SetCpl
+                0x0000000008001e34                GetCpl
+                0x0000000008001e50                SetVPos
+                0x0000000008001ea0                GetVPos
+                0x0000000008001ebc                SetTimeBase
+                0x0000000008001f0c                GetTimebase
+                0x0000000008001f28                SetHPos
+                0x0000000008001f88                GetHPos
+                0x0000000008001fa4                SetTrigMode
+                0x0000000008001ff0                GetTrigMode
+                0x000000000800200c                SetTrigEdge
+                0x0000000008002058                GetTrigEdge
+                0x0000000008002074                SetTrigLvl
+                0x00000000080020cc                GetTrigLvl
+                0x00000000080020e8                SetRecLen
+                0x000000000800213c                GetRecLen
+                0x0000000008002154                SetFocus
+                0x000000000800218c                GetFocus
+                0x00000000080021a4                GetDsoStatus
+                0x00000000080021bc                SetHold
+                0x00000000080021dc                ClrHold
+                0x00000000080021fc                GetAverage
+                0x0000000008002218                SetVPosOfs
+                0x0000000008002268                GetVPosOfs
+                0x0000000008002284                UpdateDisp
+                0x00000000080022b0                Dummy
+                0x00000000080022bc                DsoDisplay
+                0x0000000008002b2c                Grid
+                0x0000000008002cd0                FastShow
+                0x0000000008002fa4                FastDraw
+                0x00000000080030f4                TIM1_CC_IRQHandler
+                0x0000000008003254                ADC1_2_IRQHandler
+                0x00000000080032e4                DMA1_Channel1_IRQHandler
+                0x0000000008003378                DeadLoop
+ .text          0x0000000008003380       0x24 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_udivsi3.o)
+                0x0000000008003380                __udivsi3
+                0x0000000008003380                __aeabi_uidiv
+                0x0000000008003394                __aeabi_uidivmod
+ .text          0x00000000080033a4        0x4 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_dvmd_tls.o)
+                0x00000000080033a4                __aeabi_ldiv0
+                0x00000000080033a4                __aeabi_idiv0
+ .text          0x00000000080033a8      0x378 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+                0x00000000080033a8                __aeabi_drsub
+                0x00000000080033b0                __aeabi_dsub
+                0x00000000080033b0                __subdf3
+                0x00000000080033b4                __adddf3
+                0x00000000080033b4                __aeabi_dadd
+                0x000000000800362c                __aeabi_ui2d
+                0x000000000800362c                __floatunsidf
+                0x000000000800364c                __floatsidf
+                0x000000000800364c                __aeabi_i2d
+                0x0000000008003670                __extendsfdf2
+                0x0000000008003670                __aeabi_f2d
+                0x00000000080036b4                __aeabi_ul2d
+                0x00000000080036b4                __floatundidf
+                0x00000000080036c4                __floatdidf
+                0x00000000080036c4                __aeabi_l2d
+ .text          0x0000000008003720      0x424 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_muldivdf3.o)
+                0x0000000008003720                __aeabi_dmul
+                0x0000000008003720                __muldf3
+                0x0000000008003974                __aeabi_ddiv
+                0x0000000008003974                __divdf3
+ .text          0x0000000008003b44       0x50 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixdfsi.o)
+                0x0000000008003b44                __fixdfsi
+                0x0000000008003b44                __aeabi_d2iz
+ .text          0x0000000008003b94       0xa0 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_truncdfsf2.o)
+                0x0000000008003b94                __aeabi_d2f
+                0x0000000008003b94                __truncdfsf2
+ .text          0x0000000008003c34      0x21c /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+                0x0000000008003c34                __aeabi_frsub
+                0x0000000008003c3c                __subsf3
+                0x0000000008003c3c                __aeabi_fsub
+                0x0000000008003c40                __aeabi_fadd
+                0x0000000008003c40                __addsf3
+                0x0000000008003da0                __aeabi_ui2f
+                0x0000000008003da0                __floatunsisf
+                0x0000000008003da8                __aeabi_i2f
+                0x0000000008003da8                __floatsisf
+                0x0000000008003dc4                __floatundisf
+                0x0000000008003dc4                __aeabi_ul2f
+                0x0000000008003dd4                __floatdisf
+                0x0000000008003dd4                __aeabi_l2f
+ .text          0x0000000008003e50       0xec /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+                0x0000000008003e50                __gtsf2
+                0x0000000008003e50                __gesf2
+                0x0000000008003e58                __lesf2
+                0x0000000008003e58                __ltsf2
+                0x0000000008003e60                __nesf2
+                0x0000000008003e60                __eqsf2
+                0x0000000008003e60                __cmpsf2
+                0x0000000008003ec0                __aeabi_cfrcmple
+                0x0000000008003ec8                __aeabi_cfcmple
+                0x0000000008003ec8                __aeabi_cfcmpeq
+                0x0000000008003ed8                __aeabi_fcmpeq
+                0x0000000008003eec                __aeabi_fcmplt
+                0x0000000008003f00                __aeabi_fcmple
+                0x0000000008003f14                __aeabi_fcmpge
+                0x0000000008003f28                __aeabi_fcmpgt
+ .text          0x0000000008003f3c       0x40 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixunssfsi.o)
+                0x0000000008003f3c                __aeabi_f2uiz
+                0x0000000008003f3c                __fixunssfsi
+ *(.text.*)
+ .text.Reset_Handler
+                0x0000000008003f7c       0x44 FLASH_RUN/startup_stm32f10x_md.o
+                0x0000000008003f7c                Reset_Handler
+ .text.Default_Handler
+                0x0000000008003fc0        0x2 FLASH_RUN/startup_stm32f10x_md.o
+                0x0000000008003fc0                EXTI2_IRQHandler
+                0x0000000008003fc0                PVD_IRQHandler
+                0x0000000008003fc0                EXTI3_IRQHandler
+                0x0000000008003fc0                EXTI0_IRQHandler
+                0x0000000008003fc0                I2C2_EV_IRQHandler
+                0x0000000008003fc0                SPI1_IRQHandler
+                0x0000000008003fc0                TAMPER_IRQHandler
+                0x0000000008003fc0                DMA1_Channel4_IRQHandler
+                0x0000000008003fc0                USART3_IRQHandler
+                0x0000000008003fc0                RTC_IRQHandler
+                0x0000000008003fc0                DMA1_Channel7_IRQHandler
+                0x0000000008003fc0                CAN1_RX1_IRQHandler
+                0x0000000008003fc0                TIM4_IRQHandler
+                0x0000000008003fc0                I2C1_EV_IRQHandler
+                0x0000000008003fc0                DMA1_Channel6_IRQHandler
+                0x0000000008003fc0                TIM3_IRQHandler
+                0x0000000008003fc0                RCC_IRQHandler
+                0x0000000008003fc0                TIM1_TRG_COM_IRQHandler
+                0x0000000008003fc0                Default_Handler
+                0x0000000008003fc0                EXTI15_10_IRQHandler
+                0x0000000008003fc0                EXTI9_5_IRQHandler
+                0x0000000008003fc0                SPI2_IRQHandler
+                0x0000000008003fc0                DMA1_Channel5_IRQHandler
+                0x0000000008003fc0                EXTI4_IRQHandler
+                0x0000000008003fc0                USB_LP_CAN1_RX0_IRQHandler
+                0x0000000008003fc0                USB_HP_CAN1_TX_IRQHandler
+                0x0000000008003fc0                DMA1_Channel3_IRQHandler
+                0x0000000008003fc0                TIM1_UP_IRQHandler
+                0x0000000008003fc0                WWDG_IRQHandler
+                0x0000000008003fc0                TIM2_IRQHandler
+                0x0000000008003fc0                TIM1_BRK_IRQHandler
+                0x0000000008003fc0                EXTI1_IRQHandler
+                0x0000000008003fc0                RTCAlarm_IRQHandler
+                0x0000000008003fc0                USART2_IRQHandler
+                0x0000000008003fc0                I2C2_ER_IRQHandler
+                0x0000000008003fc0                DMA1_Channel2_IRQHandler
+                0x0000000008003fc0                CAN1_SCE_IRQHandler
+                0x0000000008003fc0                FLASH_IRQHandler
+                0x0000000008003fc0                USART1_IRQHandler
+                0x0000000008003fc0                I2C1_ER_IRQHandler
+                0x0000000008003fc0                USBWakeUp_IRQHandler
+ *fill*         0x0000000008003fc2        0x2 
+ .text.startup.main
+                0x0000000008003fc4      0x1b0 FLASH_RUN/113-13801.o
+                0x0000000008003fc4                main
+ .text.Clock_Init
+                0x0000000008004174       0x6c FLASH_RUN/Board.o
+                0x0000000008004174                Clock_Init
+ .text.Port_Init
+                0x00000000080041e0       0x64 FLASH_RUN/Board.o
+                0x00000000080041e0                Port_Init
+ .text.USART1_Init
+                0x0000000008004244       0x3c FLASH_RUN/Board.o
+                0x0000000008004244                USART1_Init
+ .text.UartPutc
+                0x0000000008004280       0x28 FLASH_RUN/Board.o
+                0x0000000008004280                UartPutc
+ .text.uputs    0x00000000080042a8       0x20 FLASH_RUN/Board.o
+                0x00000000080042a8                uputs
+ .text.TIM3_Init
+                0x00000000080042c8       0x50 FLASH_RUN/Board.o
+                0x00000000080042c8                TIM3_Init
+ .text.TIM4_Init
+                0x0000000008004318       0x58 FLASH_RUN/Board.o
+                0x0000000008004318                TIM4_Init
+ .text.SysTick_Init
+                0x0000000008004370       0x18 FLASH_RUN/Board.o
+                0x0000000008004370                SysTick_Init
+ .text.ADC2_Init
+                0x0000000008004388       0x44 FLASH_RUN/Board.o
+                0x0000000008004388                ADC2_Init
+ .text.ADC_Poll
+                0x00000000080043cc       0x18 FLASH_RUN/Board.o
+                0x00000000080043cc                ADC_Poll
+ .text.TFT_Init_Ili9341
+                0x00000000080043e4      0x784 FLASH_RUN/Board.o
+                0x00000000080043e4                TFT_Init_Ili9341
+ .text.write_comm
+                0x0000000008004b68       0x34 FLASH_RUN/Board.o
+                0x0000000008004b68                write_comm
+ .text.write_data
+                0x0000000008004b9c       0x34 FLASH_RUN/Board.o
+                0x0000000008004b9c                write_data
+ .text.assert_failed
+                0x0000000008004bd0        0x4 FLASH_RUN/Board.o
+                0x0000000008004bd0                assert_failed
+ .text.NVIC_Configuration
+                0x0000000008004bd4       0x58 FLASH_RUN/Board.o
+                0x0000000008004bd4                NVIC_Configuration
+ .text.OutputTLvl
+                0x0000000008004c2c       0x28 FLASH_RUN/Board.o
+                0x0000000008004c2c                OutputTLvl
+ .text.Delay    0x0000000008004c54       0x28 FLASH_RUN/Common.o
+                0x0000000008004c54                Delay
+ .text.SetWindow
+                0x0000000008004c7c       0x58 FLASH_RUN/Screen.o
+                0x0000000008004c7c                SetWindow
+ .text.FillRect
+                0x0000000008004cd4       0x84 FLASH_RUN/Screen.o
+                0x0000000008004cd4                FillRect
+ .text.ClrScreen
+                0x0000000008004d58       0x1c FLASH_RUN/Screen.o
+                0x0000000008004d58                ClrScreen
+ .text.PutcGenic
+                0x0000000008004d74       0xd8 FLASH_RUN/Screen.o
+                0x0000000008004d74                PutcGenic
+ .text.PutsGenic
+                0x0000000008004e4c       0x50 FLASH_RUN/Screen.o
+                0x0000000008004e4c                PutsGenic
+ .text.DoKeyOkH.part.0
+                0x0000000008004e9c       0x30 FLASH_RUN/Command.o
+ .text.AppInit  0x0000000008004ecc      0x1b8 FLASH_RUN/Command.o
+                0x0000000008004ecc                AppInit
+ .text.KeyScan  0x0000000008005084      0x164 FLASH_RUN/Command.o
+                0x0000000008005084                KeyScan
+ .text.DoKeyOk  0x00000000080051e8       0x48 FLASH_RUN/Command.o
+                0x00000000080051e8                DoKeyOk
+ .text.DoKeyInc
+                0x0000000008005230      0x160 FLASH_RUN/Command.o
+                0x0000000008005230                DoKeyInc
+ .text.DoKeyDec
+                0x0000000008005390      0x140 FLASH_RUN/Command.o
+                0x0000000008005390                DoKeyDec
+ .text.DoKeySel
+                0x00000000080054d0       0x2c FLASH_RUN/Command.o
+                0x00000000080054d0                DoKeySel
+ .text.DoKeyIncH
+                0x00000000080054fc       0x88 FLASH_RUN/Command.o
+                0x00000000080054fc                DoKeyIncH
+ .text.DoKeyDecH
+                0x0000000008005584       0x88 FLASH_RUN/Command.o
+                0x0000000008005584                DoKeyDecH
+ .text.KeyProc  0x000000000800560c       0x68 FLASH_RUN/Command.o
+                0x000000000800560c                KeyProc
+ .text.LedBlink
+                0x0000000008005674       0x60 FLASH_RUN/Command.o
+                0x0000000008005674                LedBlink
+ .text.TestMode
+                0x00000000080056d4       0xc8 FLASH_RUN/Command.o
+                0x00000000080056d4                TestMode
+ .text.NMI_Handler
+                0x000000000800579c        0x4 FLASH_RUN/stm32f10x_it.o
+                0x000000000800579c                NMI_Handler
+ .text.HardFault_Handler
+                0x00000000080057a0        0x4 FLASH_RUN/stm32f10x_it.o
+                0x00000000080057a0                HardFault_Handler
+ .text.MemManage_Handler
+                0x00000000080057a4        0x4 FLASH_RUN/stm32f10x_it.o
+                0x00000000080057a4                MemManage_Handler
+ .text.BusFault_Handler
+                0x00000000080057a8        0x4 FLASH_RUN/stm32f10x_it.o
+                0x00000000080057a8                BusFault_Handler
+ .text.UsageFault_Handler
+                0x00000000080057ac        0x4 FLASH_RUN/stm32f10x_it.o
+                0x00000000080057ac                UsageFault_Handler
+ .text.SVC_Handler
+                0x00000000080057b0        0x4 FLASH_RUN/stm32f10x_it.o
+                0x00000000080057b0                SVC_Handler
+ .text.DebugMon_Handler
+                0x00000000080057b4        0x4 FLASH_RUN/stm32f10x_it.o
+                0x00000000080057b4                DebugMon_Handler
+ .text.PendSV_Handler
+                0x00000000080057b8        0x4 FLASH_RUN/stm32f10x_it.o
+                0x00000000080057b8                PendSV_Handler
+ .text.SysTick_Handler
+                0x00000000080057bc       0x44 FLASH_RUN/stm32f10x_it.o
+                0x00000000080057bc                SysTick_Handler
+ .text.EE_VerifyPageFullWriteVariable
+                0x0000000008005800       0x7c FLASH_RUN/Eeprom.o
+ .text.EE_Format
+                0x000000000800587c       0x34 FLASH_RUN/Eeprom.o
+ .text.EE_ReadVariable
+                0x00000000080058b0       0x64 FLASH_RUN/Eeprom.o
+                0x00000000080058b0                EE_ReadVariable
+ .text.EE_Init  0x0000000008005914      0x158 FLASH_RUN/Eeprom.o
+                0x0000000008005914                EE_Init
+ .text.EE_WriteVariable
+                0x0000000008005a6c       0xc0 FLASH_RUN/Eeprom.o
+                0x0000000008005a6c                EE_WriteVariable
+ .text.uputInt  0x0000000008005b2c       0xb4 FLASH_RUN/UartInt.o
+                0x0000000008005b2c                uputInt
+ .text.UsrCode  0x0000000008005be0      0x14c FLASH_RUN/UserCode.o
+                0x0000000008005be0                UsrCode
+ .text.SystemInit
+                0x0000000008005d2c       0xfc FLASH_RUN/system_stm32f10x.o
+                0x0000000008005d2c                SystemInit
+ .text.NVIC_Init
+                0x0000000008005e28       0x8c FLASH_RUN/misc.o
+                0x0000000008005e28                NVIC_Init
+ .text.NVIC_SetVectorTable
+                0x0000000008005eb4       0x4c FLASH_RUN/misc.o
+                0x0000000008005eb4                NVIC_SetVectorTable
+ .text.USART_Init
+                0x0000000008005f00      0x1a4 FLASH_RUN/stm32f10x_usart.o
+                0x0000000008005f00                USART_Init
+ .text.USART_Cmd
+                0x00000000080060a4       0x6c FLASH_RUN/stm32f10x_usart.o
+                0x00000000080060a4                USART_Cmd
+ .text.USART_SendData
+                0x0000000008006110       0x5c FLASH_RUN/stm32f10x_usart.o
+                0x0000000008006110                USART_SendData
+ .text.USART_GetFlagStatus
+                0x000000000800616c       0xb8 FLASH_RUN/stm32f10x_usart.o
+                0x000000000800616c                USART_GetFlagStatus
+ .text.RCC_GetClocksFreq
+                0x0000000008006224       0x90 FLASH_RUN/stm32f10x_rcc.o
+                0x0000000008006224                RCC_GetClocksFreq
+ .text.FLASH_Unlock
+                0x00000000080062b4       0x18 FLASH_RUN/stm32f10x_flash.o
+                0x00000000080062b4                FLASH_Unlock
+ .text.FLASH_GetBank1Status
+                0x00000000080062cc       0x28 FLASH_RUN/stm32f10x_flash.o
+                0x00000000080062cc                FLASH_GetBank1Status
+ .text.FLASH_WaitForLastOperation
+                0x00000000080062f4       0x24 FLASH_RUN/stm32f10x_flash.o
+                0x00000000080062f4                FLASH_WaitForLastOperation
+ .text.FLASH_ErasePage
+                0x0000000008006318       0x68 FLASH_RUN/stm32f10x_flash.o
+                0x0000000008006318                FLASH_ErasePage
+ .text.FLASH_ProgramHalfWord
+                0x0000000008006380       0x60 FLASH_RUN/stm32f10x_flash.o
+                0x0000000008006380                FLASH_ProgramHalfWord
+ .text.DMA_DeInit
+                0x00000000080063e0      0x1a0 FLASH_RUN/stm32f10x_dma.o
+                0x00000000080063e0                DMA_DeInit
+ *(.rodata)
+ .rodata        0x0000000008006580      0xab0 ./libdso138.a(libdso138.o)
+                0x0000000008006580                Logo
+                0x00000000080067a0                Jinyuedianzi_font
+                0x0000000008006908                Jyetech_font
+                0x00000000080069f8                Web_font
+                0x0000000008006b08                DSO138_font
+                0x0000000008006d24                DSO138a_font
+                0x0000000008006d90                ByJyetech_font
+                0x0000000008006e08                Jinyue_font
+                0x0000000008006e80                Web1_font
+                0x0000000008006f0c                VsenString
+                0x0000000008006f3c                TLvlRate
+                0x0000000008006f60                CplString
+                0x0000000008006f6c                TBString
+                0x0000000008007004                TMString
+ *(.rodata*)
+ .rodata.main.str1.4
+                0x0000000008007030       0x2b FLASH_RUN/113-13801.o
+ *fill*         0x000000000800705b        0x1 
+ .rodata.Font_ASC8X16
+                0x000000000800705c     0x1000 FLASH_RUN/Screen.o
+                0x000000000800705c                Font_ASC8X16
+ .rodata.KScanCodeTab
+                0x000000000800805c       0x24 FLASH_RUN/Command.o
+                0x000000000800805c                KScanCodeTab
+ .rodata.UsrCode.str1.4
+                0x0000000008008080      0x188 FLASH_RUN/UserCode.o
+                                        0x18c (size before relaxing)
+ .rodata.NVIC_PriorityGroupConfig.str1.4
+                0x0000000008008208       0x30 FLASH_RUN/misc.o
+ .rodata.USART_DeInit.str1.4
+                0x0000000008008238       0x3b FLASH_RUN/stm32f10x_usart.o
+ *fill*         0x0000000008008273        0x1 
+ .rodata.FLASH_SetLatency.str1.4
+                0x0000000008008274       0x3b FLASH_RUN/stm32f10x_flash.o
+ *fill*         0x00000000080082af        0x1 
+ .rodata.DMA_DeInit.str1.4
+                0x00000000080082b0       0x3c FLASH_RUN/stm32f10x_dma.o
+                                         0x39 (size before relaxing)
+ *(.glue_7)
+ .glue_7        0x00000000080082ec        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x00000000080082ec        0x0 linker stubs
+                0x00000000080082ec                . = ALIGN (0x4)
+                0x00000000080082ec                _etext = .
+                0x00000000080082ec                _sidata = _etext
+
+.vfp11_veneer   0x00000000080082ec        0x0
+ .vfp11_veneer  0x00000000080082ec        0x0 linker stubs
+
+.v4_bx          0x00000000080082ec        0x0
+ .v4_bx         0x00000000080082ec        0x0 linker stubs
+
+.iplt           0x00000000080082ec        0x0
+ .iplt          0x00000000080082ec        0x0 FLASH_RUN/startup_stm32f10x_md.o
+
+.rel.dyn        0x00000000080082ec        0x0
+ .rel.iplt      0x00000000080082ec        0x0 FLASH_RUN/startup_stm32f10x_md.o
+
+.data           0x0000000020000000      0x180 load address 0x00000000080082ec
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                _sdata = .
+ *(.data)
+ .data          0x0000000020000000      0x138 ./libdso138.a(libdso138.o)
+                0x0000000020000000                LibVersion
+                0x0000000020000010                JYELogo
+                0x000000002000001c                Jinyuedianzi
+                0x0000000020000028                Jyetech
+                0x0000000020000034                Web
+                0x0000000020000040                DSO138
+                0x000000002000004c                DSO138a
+                0x0000000020000058                ByJyetech
+                0x0000000020000064                Jinyue
+                0x0000000020000070                Web1
+                0x000000002000007c                Pointers
+                0x0000000020000094                LevelPtr
+                0x00000000200000a0                Edges
+                0x00000000200000b4                EdgeInd
+                0x00000000200000c0                FocusBox
+                0x00000000200000d8                TBconstants_PSC
+                0x0000000020000108                TBconstants
+ *(.data.*)
+ .data.ASC8X16  0x0000000020000138        0xc FLASH_RUN/Screen.o
+                0x0000000020000138                ASC8X16
+ .data.VirtAddVarTab
+                0x0000000020000144       0x28 FLASH_RUN/Eeprom.o
+                0x0000000020000144                VirtAddVarTab
+ .data.ADCPrescTable
+                0x000000002000016c        0x4 FLASH_RUN/stm32f10x_rcc.o
+ .data.APBAHBPrescTable
+                0x0000000020000170       0x10 FLASH_RUN/stm32f10x_rcc.o
+                0x0000000020000180                . = ALIGN (0x4)
+                0x0000000020000180                _edata = .
+
+.igot.plt       0x0000000020000180        0x0 load address 0x000000000800846c
+ .igot.plt      0x0000000020000180        0x0 FLASH_RUN/startup_stm32f10x_md.o
+
+.bss            0x0000000020000180     0x1d70 load address 0x000000000800846c
+                0x0000000020000180                . = ALIGN (0x4)
+                0x0000000020000180                _sbss = .
+ *(.bss)
+ .bss           0x0000000020000180        0x8 ./libdso138.a(libdso138.o)
+                0x0000000020000180                NoScopePanel
+                0x0000000020000182                GoodStart
+                0x0000000020000184                GoodStartCount
+                0x0000000020000186                LogoShown
+                0x0000000020000187                LogoShowDone
+ *(COMMON)
+ COMMON         0x0000000020000188       0x20 FLASH_RUN/113-13801.o
+                0x0000000020000188                int_buffer
+ COMMON         0x00000000200001a8        0x6 FLASH_RUN/Board.o
+                0x00000000200001a8                TimerKeyScan
+                0x00000000200001aa                GTimeout
+                0x00000000200001ac                GTimer
+ *fill*         0x00000000200001ae        0x2 
+ COMMON         0x00000000200001b0       0x18 FLASH_RUN/Command.o
+                0x00000000200001b0                VSenPrev
+                0x00000000200001b1                CplPrev
+                0x00000000200001b2                Flags
+                0x00000000200001b4                Keypad
+ COMMON         0x00000000200001c8     0x1d26 ./libdso138.a(libdso138.o)
+                0x00000000200001c8                MyDso
+                0x00000000200001dc                SampleBuf1
+                0x00000000200009dc                TempBuf
+                0x00000000200011dc                YlenA
+                0x0000000020001308                SampleBuf2
+                0x0000000020001b08                GeneralBuf
+                0x0000000020001b3c                MyDsoCtrl
+                0x0000000020001b58                BannerShowTime
+                0x0000000020001b5c                CurrentSample
+                0x0000000020001b60                YlenB
+                0x0000000020001c8c                YstartA
+                0x0000000020001db8                MainLoopCount
+                0x0000000020001dbc                YstartB
+                0x0000000020001ee8                SampleBuf
+                0x0000000020001eec                BannerTimer
+                0x0000000020001ef0                . = ALIGN (0x4)
+ *fill*         0x0000000020001eee        0x2 
+                0x0000000020001ef0                _ebss = .
+                [!provide]                        PROVIDE (end, _ebss)
+                [!provide]                        PROVIDE (_end, _ebss)
+
+.bss.DataVar    0x0000000020001ef0        0x2 load address 0x000000000800a1dc
+ .bss.DataVar   0x0000000020001ef0        0x2 FLASH_RUN/Eeprom.o
+                0x0000000020001ef0                DataVar
+
+._usrstack      0x0000000020001ef2      0x102 load address 0x000000000800a1de
+                0x0000000020001ef4                . = ALIGN (0x4)
+ *fill*         0x0000000020001ef2        0x2 
+                0x0000000020001ef4                _susrstack = .
+                0x0000000020001ff4                . = (. + _Minimum_Stack_Size)
+ *fill*         0x0000000020001ef4      0x100 
+                0x0000000020001ff4                . = ALIGN (0x4)
+                0x0000000020001ff4                _eusrstack = .
+
+.b1text
+ *(.b1text)
+ *(.b1rodata)
+ *(.b1rodata*)
+
+.eb0text
+ *(.eb0text)
+ *(.eb0rodata)
+ *(.eb0rodata*)
+
+.eb1text
+ *(.eb1text)
+ *(.eb1rodata)
+ *(.eb1rodata*)
+
+.eb2text
+ *(.eb2text)
+ *(.eb2rodata)
+ *(.eb2rodata*)
+
+.eb3text
+ *(.eb3text)
+ *(.eb3rodata)
+ *(.eb3rodata*)
+
+DISCARD
+ libc.a(*)
+ libm.a(*)
+ libgcc.a(*)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x0000000000000000       0xa8
+ *(.comment)
+ .comment       0x0000000000000000       0x7e FLASH_RUN/113-13801.o
+                                         0x7f (size before relaxing)
+ .comment       0x000000000000007e       0x7f FLASH_RUN/Board.o
+ .comment       0x000000000000007e       0x7f FLASH_RUN/Common.o
+ .comment       0x000000000000007e       0x7f FLASH_RUN/Screen.o
+ .comment       0x000000000000007e       0x7f FLASH_RUN/Command.o
+ .comment       0x000000000000007e       0x7f FLASH_RUN/stm32f10x_it.o
+ .comment       0x000000000000007e       0x7f FLASH_RUN/Eeprom.o
+ .comment       0x000000000000007e       0x7f FLASH_RUN/UartInt.o
+ .comment       0x000000000000007e       0x7f FLASH_RUN/UserCode.o
+ .comment       0x000000000000007e       0x7f FLASH_RUN/system_stm32f10x.o
+ .comment       0x000000000000007e       0x7f FLASH_RUN/misc.o
+ .comment       0x000000000000007e       0x7f FLASH_RUN/stm32f10x_usart.o
+ .comment       0x000000000000007e       0x7f FLASH_RUN/stm32f10x_rcc.o
+ .comment       0x000000000000007e       0x7f FLASH_RUN/stm32f10x_flash.o
+ .comment       0x000000000000007e       0x7f FLASH_RUN/stm32f10x_dma.o
+ .comment       0x000000000000007e       0x2a ./libdso138.a(libdso138.o)
+                                         0x2b (size before relaxing)
+
+.ARM.attributes
+                0x0000000000000000       0x31
+ .ARM.attributes
+                0x0000000000000000       0x21 FLASH_RUN/startup_stm32f10x_md.o
+ .ARM.attributes
+                0x0000000000000021       0x33 FLASH_RUN/113-13801.o
+ .ARM.attributes
+                0x0000000000000054       0x33 FLASH_RUN/Board.o
+ .ARM.attributes
+                0x0000000000000087       0x33 FLASH_RUN/Common.o
+ .ARM.attributes
+                0x00000000000000ba       0x33 FLASH_RUN/Screen.o
+ .ARM.attributes
+                0x00000000000000ed       0x33 FLASH_RUN/Command.o
+ .ARM.attributes
+                0x0000000000000120       0x33 FLASH_RUN/stm32f10x_it.o
+ .ARM.attributes
+                0x0000000000000153       0x33 FLASH_RUN/Eeprom.o
+ .ARM.attributes
+                0x0000000000000186       0x33 FLASH_RUN/UartInt.o
+ .ARM.attributes
+                0x00000000000001b9       0x33 FLASH_RUN/UserCode.o
+ .ARM.attributes
+                0x00000000000001ec       0x33 FLASH_RUN/system_stm32f10x.o
+ .ARM.attributes
+                0x000000000000021f       0x33 FLASH_RUN/misc.o
+ .ARM.attributes
+                0x0000000000000252       0x33 FLASH_RUN/stm32f10x_usart.o
+ .ARM.attributes
+                0x0000000000000285       0x33 FLASH_RUN/stm32f10x_rcc.o
+ .ARM.attributes
+                0x00000000000002b8       0x33 FLASH_RUN/stm32f10x_flash.o
+ .ARM.attributes
+                0x00000000000002eb       0x33 FLASH_RUN/stm32f10x_dma.o
+ .ARM.attributes
+                0x000000000000031e       0x34 ./libdso138.a(libdso138.o)
+ .ARM.attributes
+                0x0000000000000352       0x1d /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_udivsi3.o)
+ .ARM.attributes
+                0x000000000000036f       0x1d /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_dvmd_tls.o)
+ .ARM.attributes
+                0x000000000000038c       0x1d /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+ .ARM.attributes
+                0x00000000000003a9       0x1d /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_muldivdf3.o)
+ .ARM.attributes
+                0x00000000000003c6       0x1d /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixdfsi.o)
+ .ARM.attributes
+                0x00000000000003e3       0x1d /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_truncdfsf2.o)
+ .ARM.attributes
+                0x0000000000000400       0x1d /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+ .ARM.attributes
+                0x000000000000041d       0x1d /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+ .ARM.attributes
+                0x000000000000043a       0x1d /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixunssfsi.o)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x0000000000000000      0x658
+ *(.debug_aranges)
+ .debug_aranges
+                0x0000000000000000       0x28 FLASH_RUN/startup_stm32f10x_md.o
+ .debug_aranges
+                0x0000000000000028       0x20 FLASH_RUN/113-13801.o
+ .debug_aranges
+                0x0000000000000048       0x98 FLASH_RUN/Board.o
+ .debug_aranges
+                0x00000000000000e0       0x20 FLASH_RUN/Common.o
+ .debug_aranges
+                0x0000000000000100       0x40 FLASH_RUN/Screen.o
+ .debug_aranges
+                0x0000000000000140       0x90 FLASH_RUN/Command.o
+ .debug_aranges
+                0x00000000000001d0       0x48 FLASH_RUN/stm32f10x_it.o
+ .debug_aranges
+                0x0000000000000218       0x40 FLASH_RUN/Eeprom.o
+ .debug_aranges
+                0x0000000000000258       0x20 FLASH_RUN/UartInt.o
+ .debug_aranges
+                0x0000000000000278       0x20 FLASH_RUN/UserCode.o
+ .debug_aranges
+                0x0000000000000298       0x28 FLASH_RUN/system_stm32f10x.o
+ .debug_aranges
+                0x00000000000002c0       0x40 FLASH_RUN/misc.o
+ .debug_aranges
+                0x0000000000000300      0x100 FLASH_RUN/stm32f10x_usart.o
+ .debug_aranges
+                0x0000000000000400      0x118 FLASH_RUN/stm32f10x_rcc.o
+ .debug_aranges
+                0x0000000000000518       0xd8 FLASH_RUN/stm32f10x_flash.o
+ .debug_aranges
+                0x00000000000005f0       0x68 FLASH_RUN/stm32f10x_dma.o
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x0000000000000000     0x91a8
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x0000000000000000       0x22 FLASH_RUN/startup_stm32f10x_md.o
+ .debug_info    0x0000000000000022      0x959 FLASH_RUN/113-13801.o
+ .debug_info    0x000000000000097b     0x16e8 FLASH_RUN/Board.o
+ .debug_info    0x0000000000002063       0x7f FLASH_RUN/Common.o
+ .debug_info    0x00000000000020e2      0x6d1 FLASH_RUN/Screen.o
+ .debug_info    0x00000000000027b3     0x1629 FLASH_RUN/Command.o
+ .debug_info    0x0000000000003ddc      0x25b FLASH_RUN/stm32f10x_it.o
+ .debug_info    0x0000000000004037      0x799 FLASH_RUN/Eeprom.o
+ .debug_info    0x00000000000047d0      0x283 FLASH_RUN/UartInt.o
+ .debug_info    0x0000000000004a53      0x685 FLASH_RUN/UserCode.o
+ .debug_info    0x00000000000050d8      0x306 FLASH_RUN/system_stm32f10x.o
+ .debug_info    0x00000000000053de      0x642 FLASH_RUN/misc.o
+ .debug_info    0x0000000000005a20     0x146a FLASH_RUN/stm32f10x_usart.o
+ .debug_info    0x0000000000006e8a      0xed0 FLASH_RUN/stm32f10x_rcc.o
+ .debug_info    0x0000000000007d5a      0xcc6 FLASH_RUN/stm32f10x_flash.o
+ .debug_info    0x0000000000008a20      0x788 FLASH_RUN/stm32f10x_dma.o
+
+.debug_abbrev   0x0000000000000000     0x1c24
+ *(.debug_abbrev)
+ .debug_abbrev  0x0000000000000000       0x12 FLASH_RUN/startup_stm32f10x_md.o
+ .debug_abbrev  0x0000000000000012      0x188 FLASH_RUN/113-13801.o
+ .debug_abbrev  0x000000000000019a      0x2b0 FLASH_RUN/Board.o
+ .debug_abbrev  0x000000000000044a       0x5a FLASH_RUN/Common.o
+ .debug_abbrev  0x00000000000004a4      0x1cf FLASH_RUN/Screen.o
+ .debug_abbrev  0x0000000000000673      0x30b FLASH_RUN/Command.o
+ .debug_abbrev  0x000000000000097e      0x104 FLASH_RUN/stm32f10x_it.o
+ .debug_abbrev  0x0000000000000a82      0x26a FLASH_RUN/Eeprom.o
+ .debug_abbrev  0x0000000000000cec      0x145 FLASH_RUN/UartInt.o
+ .debug_abbrev  0x0000000000000e31      0x142 FLASH_RUN/UserCode.o
+ .debug_abbrev  0x0000000000000f73      0x19d FLASH_RUN/system_stm32f10x.o
+ .debug_abbrev  0x0000000000001110      0x1b8 FLASH_RUN/misc.o
+ .debug_abbrev  0x00000000000012c8      0x22e FLASH_RUN/stm32f10x_usart.o
+ .debug_abbrev  0x00000000000014f6      0x2e1 FLASH_RUN/stm32f10x_rcc.o
+ .debug_abbrev  0x00000000000017d7      0x285 FLASH_RUN/stm32f10x_flash.o
+ .debug_abbrev  0x0000000000001a5c      0x1c8 FLASH_RUN/stm32f10x_dma.o
+
+.debug_line     0x0000000000000000     0x3aa1
+ *(.debug_line)
+ .debug_line    0x0000000000000000       0x72 FLASH_RUN/startup_stm32f10x_md.o
+ .debug_line    0x0000000000000072      0x240 FLASH_RUN/113-13801.o
+ .debug_line    0x00000000000002b2      0x6ef FLASH_RUN/Board.o
+ .debug_line    0x00000000000009a1       0x49 FLASH_RUN/Common.o
+ .debug_line    0x00000000000009ea      0x22a FLASH_RUN/Screen.o
+ .debug_line    0x0000000000000c14      0x47f FLASH_RUN/Command.o
+ .debug_line    0x0000000000001093      0x1d3 FLASH_RUN/stm32f10x_it.o
+ .debug_line    0x0000000000001266      0x2f6 FLASH_RUN/Eeprom.o
+ .debug_line    0x000000000000155c      0x19a FLASH_RUN/UartInt.o
+ .debug_line    0x00000000000016f6      0x1a3 FLASH_RUN/UserCode.o
+ .debug_line    0x0000000000001899      0x1d4 FLASH_RUN/system_stm32f10x.o
+ .debug_line    0x0000000000001a6d      0x285 FLASH_RUN/misc.o
+ .debug_line    0x0000000000001cf2      0x9fe FLASH_RUN/stm32f10x_usart.o
+ .debug_line    0x00000000000026f0      0x729 FLASH_RUN/stm32f10x_rcc.o
+ .debug_line    0x0000000000002e19      0x598 FLASH_RUN/stm32f10x_flash.o
+ .debug_line    0x00000000000033b1      0x6f0 FLASH_RUN/stm32f10x_dma.o
+
+.debug_frame    0x0000000000000000     0x17b0
+ *(.debug_frame)
+ .debug_frame   0x0000000000000000       0x44 FLASH_RUN/113-13801.o
+ .debug_frame   0x0000000000000044      0x224 FLASH_RUN/Board.o
+ .debug_frame   0x0000000000000268       0x28 FLASH_RUN/Common.o
+ .debug_frame   0x0000000000000290       0xf8 FLASH_RUN/Screen.o
+ .debug_frame   0x0000000000000388      0x2c0 FLASH_RUN/Command.o
+ .debug_frame   0x0000000000000648       0xa0 FLASH_RUN/stm32f10x_it.o
+ .debug_frame   0x00000000000006e8      0x114 FLASH_RUN/Eeprom.o
+ .debug_frame   0x00000000000007fc       0x38 FLASH_RUN/UartInt.o
+ .debug_frame   0x0000000000000834       0x48 FLASH_RUN/UserCode.o
+ .debug_frame   0x000000000000087c       0x54 FLASH_RUN/system_stm32f10x.o
+ .debug_frame   0x00000000000008d0       0xb0 FLASH_RUN/misc.o
+ .debug_frame   0x0000000000000980      0x3d4 FLASH_RUN/stm32f10x_usart.o
+ .debug_frame   0x0000000000000d54      0x39c FLASH_RUN/stm32f10x_rcc.o
+ .debug_frame   0x00000000000010f0      0x2f8 FLASH_RUN/stm32f10x_flash.o
+ .debug_frame   0x00000000000013e8      0x12c FLASH_RUN/stm32f10x_dma.o
+ .debug_frame   0x0000000000001514       0x20 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_udivsi3.o)
+ .debug_frame   0x0000000000001534       0xac /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+ .debug_frame   0x00000000000015e0       0x50 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_muldivdf3.o)
+ .debug_frame   0x0000000000001630       0x24 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixdfsi.o)
+ .debug_frame   0x0000000000001654       0x24 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_truncdfsf2.o)
+ .debug_frame   0x0000000000001678       0x4c /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+ .debug_frame   0x00000000000016c4       0xc8 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+ .debug_frame   0x000000000000178c       0x24 /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixunssfsi.o)
+
+.debug_str      0x0000000000000000     0x2336
+ *(.debug_str)
+ .debug_str     0x0000000000000000       0x5b FLASH_RUN/startup_stm32f10x_md.o
+ .debug_str     0x000000000000005b      0x721 FLASH_RUN/113-13801.o
+                                        0x7d5 (size before relaxing)
+ .debug_str     0x000000000000077c      0x673 FLASH_RUN/Board.o
+                                        0x984 (size before relaxing)
+ .debug_str     0x0000000000000def        0xf FLASH_RUN/Common.o
+                                        0x155 (size before relaxing)
+ .debug_str     0x0000000000000dfe       0x63 FLASH_RUN/Screen.o
+                                        0x477 (size before relaxing)
+ .debug_str     0x0000000000000e61      0x37a FLASH_RUN/Command.o
+                                        0x94d (size before relaxing)
+ .debug_str     0x00000000000011db       0x9f FLASH_RUN/stm32f10x_it.o
+                                        0x31b (size before relaxing)
+ .debug_str     0x000000000000127a      0x179 FLASH_RUN/Eeprom.o
+                                        0x440 (size before relaxing)
+ .debug_str     0x00000000000013f3       0x23 FLASH_RUN/UartInt.o
+                                        0x276 (size before relaxing)
+ .debug_str     0x0000000000001416       0x48 FLASH_RUN/UserCode.o
+                                        0x325 (size before relaxing)
+ .debug_str     0x000000000000145e       0xbf FLASH_RUN/system_stm32f10x.o
+                                        0x2e0 (size before relaxing)
+ .debug_str     0x000000000000151d      0x16d FLASH_RUN/misc.o
+                                        0x42d (size before relaxing)
+ .debug_str     0x000000000000168a      0x416 FLASH_RUN/stm32f10x_usart.o
+                                        0x745 (size before relaxing)
+ .debug_str     0x0000000000001aa0      0x33d FLASH_RUN/stm32f10x_rcc.o
+                                        0x68f (size before relaxing)
+ .debug_str     0x0000000000001ddd      0x370 FLASH_RUN/stm32f10x_flash.o
+                                        0x65d (size before relaxing)
+ .debug_str     0x000000000000214d      0x1e9 FLASH_RUN/stm32f10x_dma.o
+                                        0x413 (size before relaxing)
+
+.debug_loc      0x0000000000000000     0x4341
+ *(.debug_loc)
+ .debug_loc     0x0000000000000000       0x54 FLASH_RUN/113-13801.o
+ .debug_loc     0x0000000000000054      0x7cc FLASH_RUN/Board.o
+ .debug_loc     0x0000000000000820      0x3ea FLASH_RUN/Screen.o
+ .debug_loc     0x0000000000000c0a      0x501 FLASH_RUN/Command.o
+ .debug_loc     0x000000000000110b      0x805 FLASH_RUN/Eeprom.o
+ .debug_loc     0x0000000000001910       0x57 FLASH_RUN/UartInt.o
+ .debug_loc     0x0000000000001967       0xbc FLASH_RUN/system_stm32f10x.o
+ .debug_loc     0x0000000000001a23      0x24e FLASH_RUN/misc.o
+ .debug_loc     0x0000000000001c71      0xe70 FLASH_RUN/stm32f10x_usart.o
+ .debug_loc     0x0000000000002ae1      0xae1 FLASH_RUN/stm32f10x_rcc.o
+ .debug_loc     0x00000000000035c2      0x9ec FLASH_RUN/stm32f10x_flash.o
+ .debug_loc     0x0000000000003fae      0x393 FLASH_RUN/stm32f10x_dma.o
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+OUTPUT(FLASH_RUN/113-13801-037.elf elf32-littlearm)
+
+.debug_ranges   0x0000000000000000      0x6c0
+ .debug_ranges  0x0000000000000000       0x20 FLASH_RUN/startup_stm32f10x_md.o
+ .debug_ranges  0x0000000000000020       0x10 FLASH_RUN/113-13801.o
+ .debug_ranges  0x0000000000000030       0xd0 FLASH_RUN/Board.o
+ .debug_ranges  0x0000000000000100       0x10 FLASH_RUN/Common.o
+ .debug_ranges  0x0000000000000110       0x30 FLASH_RUN/Screen.o
+ .debug_ranges  0x0000000000000140       0xd8 FLASH_RUN/Command.o
+ .debug_ranges  0x0000000000000218       0x38 FLASH_RUN/stm32f10x_it.o
+ .debug_ranges  0x0000000000000250       0x90 FLASH_RUN/Eeprom.o
+ .debug_ranges  0x00000000000002e0       0x10 FLASH_RUN/UartInt.o
+ .debug_ranges  0x00000000000002f0       0x10 FLASH_RUN/UserCode.o
+ .debug_ranges  0x0000000000000300       0x40 FLASH_RUN/system_stm32f10x.o
+ .debug_ranges  0x0000000000000340       0x30 FLASH_RUN/misc.o
+ .debug_ranges  0x0000000000000370       0xf0 FLASH_RUN/stm32f10x_usart.o
+ .debug_ranges  0x0000000000000460      0x128 FLASH_RUN/stm32f10x_rcc.o
+ .debug_ranges  0x0000000000000588       0xe0 FLASH_RUN/stm32f10x_flash.o
+ .debug_ranges  0x0000000000000668       0x58 FLASH_RUN/stm32f10x_dma.o
+
+Cross Reference Table
+
+Symbol                                            File
+ADC1_2_IRQHandler                                 ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/startup_stm32f10x_md.o
+ADC1_Init                                         ./libdso138.a(libdso138.o)
+ADC2_Init                                         FLASH_RUN/Board.o
+                                                  FLASH_RUN/113-13801.o
+ADC_Poll                                          FLASH_RUN/Board.o
+                                                  FLASH_RUN/Command.o
+AHBPrescTable                                     FLASH_RUN/system_stm32f10x.o
+ASC8X16                                           FLASH_RUN/Screen.o
+                                                  ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/113-13801.o
+AppInit                                           FLASH_RUN/Command.o
+                                                  FLASH_RUN/113-13801.o
+BannerShowTime                                    ./libdso138.a(libdso138.o)
+BannerTimer                                       ./libdso138.a(libdso138.o)
+BinToDec16                                        ./libdso138.a(libdso138.o)
+BusFault_Handler                                  FLASH_RUN/stm32f10x_it.o
+                                                  FLASH_RUN/startup_stm32f10x_md.o
+ByJyetech                                         ./libdso138.a(libdso138.o)
+ByJyetech_font                                    ./libdso138.a(libdso138.o)
+CAN1_RX1_IRQHandler                               FLASH_RUN/startup_stm32f10x_md.o
+CAN1_SCE_IRQHandler                               FLASH_RUN/startup_stm32f10x_md.o
+Clock_Init                                        FLASH_RUN/Board.o
+                                                  FLASH_RUN/113-13801.o
+ClrHold                                           ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+ClrScreen                                         FLASH_RUN/Screen.o
+                                                  ./libdso138.a(libdso138.o)
+CplPrev                                           FLASH_RUN/Command.o
+CplString                                         ./libdso138.a(libdso138.o)
+CurrentSample                                     ./libdso138.a(libdso138.o)
+DMA1_CH1_Init                                     ./libdso138.a(libdso138.o)
+DMA1_Channel1_IRQHandler                          ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/startup_stm32f10x_md.o
+DMA1_Channel2_IRQHandler                          FLASH_RUN/startup_stm32f10x_md.o
+DMA1_Channel3_IRQHandler                          FLASH_RUN/startup_stm32f10x_md.o
+DMA1_Channel4_IRQHandler                          FLASH_RUN/startup_stm32f10x_md.o
+DMA1_Channel5_IRQHandler                          FLASH_RUN/startup_stm32f10x_md.o
+DMA1_Channel6_IRQHandler                          FLASH_RUN/startup_stm32f10x_md.o
+DMA1_Channel7_IRQHandler                          FLASH_RUN/startup_stm32f10x_md.o
+DMA_ClearFlag                                     FLASH_RUN/stm32f10x_dma.o
+DMA_ClearITPendingBit                             FLASH_RUN/stm32f10x_dma.o
+DMA_Cmd                                           FLASH_RUN/stm32f10x_dma.o
+DMA_DeInit                                        FLASH_RUN/stm32f10x_dma.o
+                                                  ./libdso138.a(libdso138.o)
+DMA_GetCurrDataCounter                            FLASH_RUN/stm32f10x_dma.o
+DMA_GetFlagStatus                                 FLASH_RUN/stm32f10x_dma.o
+DMA_GetITStatus                                   FLASH_RUN/stm32f10x_dma.o
+DMA_ITConfig                                      FLASH_RUN/stm32f10x_dma.o
+DMA_Init                                          FLASH_RUN/stm32f10x_dma.o
+DMA_StructInit                                    FLASH_RUN/stm32f10x_dma.o
+DSO138                                            ./libdso138.a(libdso138.o)
+DSO138_font                                       ./libdso138.a(libdso138.o)
+DSO138a                                           ./libdso138.a(libdso138.o)
+DSO138a_font                                      ./libdso138.a(libdso138.o)
+DSO_Init                                          ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+DataVar                                           FLASH_RUN/Eeprom.o
+DeadLoop                                          ./libdso138.a(libdso138.o)
+DebugMon_Handler                                  FLASH_RUN/stm32f10x_it.o
+                                                  FLASH_RUN/startup_stm32f10x_md.o
+Default_Handler                                   FLASH_RUN/startup_stm32f10x_md.o
+Delay                                             FLASH_RUN/Common.o
+                                                  FLASH_RUN/Command.o
+                                                  FLASH_RUN/Board.o
+DoKeyDec                                          FLASH_RUN/Command.o
+DoKeyDecH                                         FLASH_RUN/Command.o
+DoKeyInc                                          FLASH_RUN/Command.o
+DoKeyIncH                                         FLASH_RUN/Command.o
+DoKeyOk                                           FLASH_RUN/Command.o
+DoKeyOkH                                          FLASH_RUN/Command.o
+DoKeySel                                          FLASH_RUN/Command.o
+DoKeySelH                                         FLASH_RUN/Command.o
+DrawRect                                          ./libdso138.a(libdso138.o)
+DsoDisplay                                        ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/113-13801.o
+Dummy                                             ./libdso138.a(libdso138.o)
+EE_Init                                           FLASH_RUN/Eeprom.o
+                                                  FLASH_RUN/113-13801.o
+EE_ReadVariable                                   FLASH_RUN/Eeprom.o
+                                                  FLASH_RUN/Command.o
+EE_WriteVariable                                  FLASH_RUN/Eeprom.o
+                                                  FLASH_RUN/Command.o
+EXTI0_IRQHandler                                  FLASH_RUN/startup_stm32f10x_md.o
+EXTI15_10_IRQHandler                              FLASH_RUN/startup_stm32f10x_md.o
+EXTI1_IRQHandler                                  FLASH_RUN/startup_stm32f10x_md.o
+EXTI2_IRQHandler                                  FLASH_RUN/startup_stm32f10x_md.o
+EXTI3_IRQHandler                                  FLASH_RUN/startup_stm32f10x_md.o
+EXTI4_IRQHandler                                  FLASH_RUN/startup_stm32f10x_md.o
+EXTI9_5_IRQHandler                                FLASH_RUN/startup_stm32f10x_md.o
+EdgeInd                                           ./libdso138.a(libdso138.o)
+Edges                                             ./libdso138.a(libdso138.o)
+FLASH_ClearFlag                                   FLASH_RUN/stm32f10x_flash.o
+FLASH_EnableWriteProtection                       FLASH_RUN/stm32f10x_flash.o
+FLASH_EraseAllBank1Pages                          FLASH_RUN/stm32f10x_flash.o
+FLASH_EraseAllPages                               FLASH_RUN/stm32f10x_flash.o
+FLASH_EraseOptionBytes                            FLASH_RUN/stm32f10x_flash.o
+FLASH_ErasePage                                   FLASH_RUN/stm32f10x_flash.o
+                                                  FLASH_RUN/Eeprom.o
+FLASH_GetBank1Status                              FLASH_RUN/stm32f10x_flash.o
+FLASH_GetFlagStatus                               FLASH_RUN/stm32f10x_flash.o
+FLASH_GetPrefetchBufferStatus                     FLASH_RUN/stm32f10x_flash.o
+FLASH_GetReadOutProtectionStatus                  FLASH_RUN/stm32f10x_flash.o
+FLASH_GetStatus                                   FLASH_RUN/stm32f10x_flash.o
+FLASH_GetUserOptionByte                           FLASH_RUN/stm32f10x_flash.o
+FLASH_GetWriteProtectionOptionByte                FLASH_RUN/stm32f10x_flash.o
+FLASH_HalfCycleAccessCmd                          FLASH_RUN/stm32f10x_flash.o
+FLASH_IRQHandler                                  FLASH_RUN/startup_stm32f10x_md.o
+FLASH_ITConfig                                    FLASH_RUN/stm32f10x_flash.o
+FLASH_Lock                                        FLASH_RUN/stm32f10x_flash.o
+FLASH_LockBank1                                   FLASH_RUN/stm32f10x_flash.o
+FLASH_PrefetchBufferCmd                           FLASH_RUN/stm32f10x_flash.o
+FLASH_ProgramHalfWord                             FLASH_RUN/stm32f10x_flash.o
+                                                  FLASH_RUN/Eeprom.o
+FLASH_ProgramOptionByteData                       FLASH_RUN/stm32f10x_flash.o
+FLASH_ProgramWord                                 FLASH_RUN/stm32f10x_flash.o
+FLASH_ReadOutProtection                           FLASH_RUN/stm32f10x_flash.o
+FLASH_SetLatency                                  FLASH_RUN/stm32f10x_flash.o
+FLASH_Unlock                                      FLASH_RUN/stm32f10x_flash.o
+                                                  FLASH_RUN/113-13801.o
+FLASH_UnlockBank1                                 FLASH_RUN/stm32f10x_flash.o
+FLASH_UserOptionByteConfig                        FLASH_RUN/stm32f10x_flash.o
+FLASH_WaitForLastBank1Operation                   FLASH_RUN/stm32f10x_flash.o
+FLASH_WaitForLastOperation                        FLASH_RUN/stm32f10x_flash.o
+FastDraw                                          ./libdso138.a(libdso138.o)
+FastShow                                          ./libdso138.a(libdso138.o)
+FillRect                                          FLASH_RUN/Screen.o
+                                                  ./libdso138.a(libdso138.o)
+Flags                                             FLASH_RUN/Command.o
+                                                  FLASH_RUN/113-13801.o
+FlashStatus                                       FLASH_RUN/Eeprom.o
+FocusBox                                          ./libdso138.a(libdso138.o)
+Font_ASC8X16                                      FLASH_RUN/Screen.o
+GPIO_AFIODeInit                                   FLASH_RUN/stm32f10x_gpio.o
+GPIO_DeInit                                       FLASH_RUN/stm32f10x_gpio.o
+GPIO_ETH_MediaInterfaceConfig                     FLASH_RUN/stm32f10x_gpio.o
+GPIO_EXTILineConfig                               FLASH_RUN/stm32f10x_gpio.o
+GPIO_EventOutputCmd                               FLASH_RUN/stm32f10x_gpio.o
+GPIO_EventOutputConfig                            FLASH_RUN/stm32f10x_gpio.o
+GPIO_Init                                         FLASH_RUN/stm32f10x_gpio.o
+GPIO_PinLockConfig                                FLASH_RUN/stm32f10x_gpio.o
+GPIO_PinRemapConfig                               FLASH_RUN/stm32f10x_gpio.o
+GPIO_ReadInputData                                FLASH_RUN/stm32f10x_gpio.o
+GPIO_ReadInputDataBit                             FLASH_RUN/stm32f10x_gpio.o
+GPIO_ReadOutputData                               FLASH_RUN/stm32f10x_gpio.o
+GPIO_ReadOutputDataBit                            FLASH_RUN/stm32f10x_gpio.o
+GPIO_ResetBits                                    FLASH_RUN/stm32f10x_gpio.o
+GPIO_SetBits                                      FLASH_RUN/stm32f10x_gpio.o
+GPIO_StructInit                                   FLASH_RUN/stm32f10x_gpio.o
+GPIO_Write                                        FLASH_RUN/stm32f10x_gpio.o
+GPIO_WriteBit                                     FLASH_RUN/stm32f10x_gpio.o
+GTimeout                                          FLASH_RUN/Board.o
+                                                  ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/stm32f10x_it.o
+                                                  FLASH_RUN/113-13801.o
+GTimer                                            FLASH_RUN/Board.o
+                                                  ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/stm32f10x_it.o
+                                                  FLASH_RUN/113-13801.o
+GeneralBuf                                        ./libdso138.a(libdso138.o)
+GetAverage                                        ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+GetCpl                                            ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/UserCode.o
+GetDsoStatus                                      ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+                                                  FLASH_RUN/113-13801.o
+GetFocus                                          ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+GetHPos                                           ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/UserCode.o
+                                                  FLASH_RUN/Command.o
+GetRecLen                                         ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/UserCode.o
+                                                  FLASH_RUN/Command.o
+GetTimebase                                       ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/UserCode.o
+                                                  FLASH_RUN/Command.o
+                                                  FLASH_RUN/113-13801.o
+GetTrigEdge                                       ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/UserCode.o
+                                                  FLASH_RUN/Command.o
+GetTrigLvl                                        ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/UserCode.o
+                                                  FLASH_RUN/Command.o
+                                                  FLASH_RUN/Board.o
+GetTrigMode                                       ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/UserCode.o
+                                                  FLASH_RUN/Command.o
+GetVPos                                           ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/UserCode.o
+                                                  FLASH_RUN/Command.o
+GetVPosOfs                                        ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/UserCode.o
+                                                  FLASH_RUN/Board.o
+GetVSen                                           ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/UserCode.o
+GoodStart                                         ./libdso138.a(libdso138.o)
+GoodStartCount                                    ./libdso138.a(libdso138.o)
+Grid                                              ./libdso138.a(libdso138.o)
+HardFault_Handler                                 FLASH_RUN/stm32f10x_it.o
+                                                  FLASH_RUN/startup_stm32f10x_md.o
+I2C1_ER_IRQHandler                                FLASH_RUN/startup_stm32f10x_md.o
+I2C1_EV_IRQHandler                                FLASH_RUN/startup_stm32f10x_md.o
+I2C2_ER_IRQHandler                                FLASH_RUN/startup_stm32f10x_md.o
+I2C2_EV_IRQHandler                                FLASH_RUN/startup_stm32f10x_md.o
+JYELogo                                           ./libdso138.a(libdso138.o)
+Jinyue                                            ./libdso138.a(libdso138.o)
+Jinyue_font                                       ./libdso138.a(libdso138.o)
+Jinyuedianzi                                      ./libdso138.a(libdso138.o)
+Jinyuedianzi_font                                 ./libdso138.a(libdso138.o)
+Jyetech                                           ./libdso138.a(libdso138.o)
+Jyetech_font                                      ./libdso138.a(libdso138.o)
+KScanCodeTab                                      FLASH_RUN/Command.o
+KeyConvert                                        FLASH_RUN/Command.o
+KeyProc                                           FLASH_RUN/Command.o
+                                                  FLASH_RUN/113-13801.o
+KeyScan                                           FLASH_RUN/Command.o
+                                                  FLASH_RUN/113-13801.o
+Keypad                                            FLASH_RUN/Command.o
+                                                  FLASH_RUN/stm32f10x_it.o
+                                                  FLASH_RUN/113-13801.o
+LedBlink                                          FLASH_RUN/Command.o
+                                                  FLASH_RUN/113-13801.o
+LevelPtr                                          ./libdso138.a(libdso138.o)
+LibVersion                                        ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/113-13801.o
+Logo                                              ./libdso138.a(libdso138.o)
+LogoShowDone                                      ./libdso138.a(libdso138.o)
+LogoShown                                         ./libdso138.a(libdso138.o)
+MainLoopCount                                     ./libdso138.a(libdso138.o)
+Max                                               ./libdso138.a(libdso138.o)
+MemManage_Handler                                 FLASH_RUN/stm32f10x_it.o
+                                                  FLASH_RUN/startup_stm32f10x_md.o
+Min                                               ./libdso138.a(libdso138.o)
+MyDso                                             ./libdso138.a(libdso138.o)
+MyDsoCtrl                                         ./libdso138.a(libdso138.o)
+NMI_Handler                                       FLASH_RUN/stm32f10x_it.o
+                                                  FLASH_RUN/startup_stm32f10x_md.o
+NVIC_Configuration                                FLASH_RUN/Board.o
+                                                  FLASH_RUN/113-13801.o
+NVIC_Configuration_lib                            ./libdso138.a(libdso138.o)
+NVIC_Init                                         FLASH_RUN/misc.o
+                                                  ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Board.o
+NVIC_PriorityGroupConfig                          FLASH_RUN/misc.o
+NVIC_SetVectorTable                               FLASH_RUN/misc.o
+                                                  FLASH_RUN/Board.o
+NVIC_SystemLPConfig                               FLASH_RUN/misc.o
+NoScopePanel                                      ./libdso138.a(libdso138.o)
+OutputTLvl                                        FLASH_RUN/Board.o
+                                                  FLASH_RUN/Command.o
+PVD_IRQHandler                                    FLASH_RUN/startup_stm32f10x_md.o
+PendSV_Handler                                    FLASH_RUN/stm32f10x_it.o
+                                                  FLASH_RUN/startup_stm32f10x_md.o
+Pointers                                          ./libdso138.a(libdso138.o)
+Port_Init                                         FLASH_RUN/Board.o
+                                                  FLASH_RUN/113-13801.o
+ProcCapture                                       ./libdso138.a(libdso138.o)
+PutcGenic                                         FLASH_RUN/Screen.o
+                                                  ./libdso138.a(libdso138.o)
+PutcGenic1                                        ./libdso138.a(libdso138.o)
+PutsGenic                                         FLASH_RUN/Screen.o
+                                                  ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/113-13801.o
+RCC_ADCCLKConfig                                  FLASH_RUN/stm32f10x_rcc.o
+RCC_AHBPeriphClockCmd                             FLASH_RUN/stm32f10x_rcc.o
+RCC_APB1PeriphClockCmd                            FLASH_RUN/stm32f10x_rcc.o
+RCC_APB1PeriphResetCmd                            FLASH_RUN/stm32f10x_rcc.o
+                                                  FLASH_RUN/stm32f10x_tim.o
+                                                  FLASH_RUN/stm32f10x_usart.o
+RCC_APB2PeriphClockCmd                            FLASH_RUN/stm32f10x_rcc.o
+RCC_APB2PeriphResetCmd                            FLASH_RUN/stm32f10x_rcc.o
+                                                  FLASH_RUN/stm32f10x_tim.o
+                                                  FLASH_RUN/stm32f10x_usart.o
+                                                  FLASH_RUN/stm32f10x_gpio.o
+RCC_AdjustHSICalibrationValue                     FLASH_RUN/stm32f10x_rcc.o
+RCC_BackupResetCmd                                FLASH_RUN/stm32f10x_rcc.o
+RCC_ClearFlag                                     FLASH_RUN/stm32f10x_rcc.o
+RCC_ClearITPendingBit                             FLASH_RUN/stm32f10x_rcc.o
+RCC_ClockSecuritySystemCmd                        FLASH_RUN/stm32f10x_rcc.o
+RCC_DeInit                                        FLASH_RUN/stm32f10x_rcc.o
+RCC_GetClocksFreq                                 FLASH_RUN/stm32f10x_rcc.o
+                                                  FLASH_RUN/stm32f10x_usart.o
+RCC_GetFlagStatus                                 FLASH_RUN/stm32f10x_rcc.o
+RCC_GetITStatus                                   FLASH_RUN/stm32f10x_rcc.o
+RCC_GetSYSCLKSource                               FLASH_RUN/stm32f10x_rcc.o
+RCC_HCLKConfig                                    FLASH_RUN/stm32f10x_rcc.o
+RCC_HSEConfig                                     FLASH_RUN/stm32f10x_rcc.o
+RCC_HSICmd                                        FLASH_RUN/stm32f10x_rcc.o
+RCC_IRQHandler                                    FLASH_RUN/startup_stm32f10x_md.o
+RCC_ITConfig                                      FLASH_RUN/stm32f10x_rcc.o
+RCC_LSEConfig                                     FLASH_RUN/stm32f10x_rcc.o
+RCC_LSICmd                                        FLASH_RUN/stm32f10x_rcc.o
+RCC_MCOConfig                                     FLASH_RUN/stm32f10x_rcc.o
+RCC_PCLK1Config                                   FLASH_RUN/stm32f10x_rcc.o
+RCC_PCLK2Config                                   FLASH_RUN/stm32f10x_rcc.o
+RCC_PLLCmd                                        FLASH_RUN/stm32f10x_rcc.o
+RCC_PLLConfig                                     FLASH_RUN/stm32f10x_rcc.o
+RCC_RTCCLKCmd                                     FLASH_RUN/stm32f10x_rcc.o
+RCC_RTCCLKConfig                                  FLASH_RUN/stm32f10x_rcc.o
+RCC_SYSCLKConfig                                  FLASH_RUN/stm32f10x_rcc.o
+RCC_USBCLKConfig                                  FLASH_RUN/stm32f10x_rcc.o
+RCC_WaitForHSEStartUp                             FLASH_RUN/stm32f10x_rcc.o
+RTCAlarm_IRQHandler                               FLASH_RUN/startup_stm32f10x_md.o
+RTC_IRQHandler                                    FLASH_RUN/startup_stm32f10x_md.o
+Reset_Handler                                     FLASH_RUN/startup_stm32f10x_md.o
+Rolling                                           ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/113-13801.o
+SPI1_IRQHandler                                   FLASH_RUN/startup_stm32f10x_md.o
+SPI2_IRQHandler                                   FLASH_RUN/startup_stm32f10x_md.o
+SVC_Handler                                       FLASH_RUN/stm32f10x_it.o
+                                                  FLASH_RUN/startup_stm32f10x_md.o
+SampleBuf                                         ./libdso138.a(libdso138.o)
+SampleBuf1                                        ./libdso138.a(libdso138.o)
+SampleBuf2                                        ./libdso138.a(libdso138.o)
+SetCpl                                            ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+SetFocus                                          ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+SetHPos                                           ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+SetHold                                           ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+SetRecLen                                         ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+SetTimeBase                                       ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+SetTrigEdge                                       ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+SetTrigLvl                                        ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+SetTrigMode                                       ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+SetVPos                                           ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+SetVPosOfs                                        ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+SetVSen                                           ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+SetWindow                                         FLASH_RUN/Screen.o
+SetWindow1                                        ./libdso138.a(libdso138.o)
+StartCapture                                      ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+                                                  FLASH_RUN/113-13801.o
+StopCapture                                       ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+SysTick_CLKSourceConfig                           FLASH_RUN/misc.o
+SysTick_Handler                                   FLASH_RUN/stm32f10x_it.o
+                                                  FLASH_RUN/startup_stm32f10x_md.o
+SysTick_Init                                      FLASH_RUN/Board.o
+                                                  FLASH_RUN/113-13801.o
+SystemCoreClock                                   FLASH_RUN/system_stm32f10x.o
+SystemCoreClockUpdate                             FLASH_RUN/system_stm32f10x.o
+SystemInit                                        FLASH_RUN/system_stm32f10x.o
+                                                  FLASH_RUN/startup_stm32f10x_md.o
+TAMPER_IRQHandler                                 FLASH_RUN/startup_stm32f10x_md.o
+TBString                                          ./libdso138.a(libdso138.o)
+TBconstants                                       ./libdso138.a(libdso138.o)
+TBconstants_PSC                                   ./libdso138.a(libdso138.o)
+TFT_Init_Ili9341                                  FLASH_RUN/Board.o
+                                                  FLASH_RUN/113-13801.o
+TIM1_BRK_IRQHandler                               FLASH_RUN/startup_stm32f10x_md.o
+TIM1_CC_IRQHandler                                ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/startup_stm32f10x_md.o
+TIM1_Init                                         ./libdso138.a(libdso138.o)
+TIM1_TRG_COM_IRQHandler                           FLASH_RUN/startup_stm32f10x_md.o
+TIM1_UP_IRQHandler                                FLASH_RUN/startup_stm32f10x_md.o
+TIM2_IRQHandler                                   FLASH_RUN/startup_stm32f10x_md.o
+TIM2_Init                                         ./libdso138.a(libdso138.o)
+TIM3_IRQHandler                                   FLASH_RUN/startup_stm32f10x_md.o
+TIM3_Init                                         FLASH_RUN/Board.o
+                                                  FLASH_RUN/113-13801.o
+TIM4_IRQHandler                                   FLASH_RUN/startup_stm32f10x_md.o
+TIM4_Init                                         FLASH_RUN/Board.o
+                                                  FLASH_RUN/113-13801.o
+TIM_ARRPreloadConfig                              FLASH_RUN/stm32f10x_tim.o
+TIM_BDTRConfig                                    FLASH_RUN/stm32f10x_tim.o
+TIM_BDTRStructInit                                FLASH_RUN/stm32f10x_tim.o
+TIM_CCPreloadControl                              FLASH_RUN/stm32f10x_tim.o
+TIM_CCxCmd                                        FLASH_RUN/stm32f10x_tim.o
+TIM_CCxNCmd                                       FLASH_RUN/stm32f10x_tim.o
+TIM_ClearFlag                                     FLASH_RUN/stm32f10x_tim.o
+TIM_ClearITPendingBit                             FLASH_RUN/stm32f10x_tim.o
+TIM_ClearOC1Ref                                   FLASH_RUN/stm32f10x_tim.o
+TIM_ClearOC2Ref                                   FLASH_RUN/stm32f10x_tim.o
+TIM_ClearOC3Ref                                   FLASH_RUN/stm32f10x_tim.o
+TIM_ClearOC4Ref                                   FLASH_RUN/stm32f10x_tim.o
+TIM_Cmd                                           FLASH_RUN/stm32f10x_tim.o
+TIM_CounterModeConfig                             FLASH_RUN/stm32f10x_tim.o
+TIM_CtrlPWMOutputs                                FLASH_RUN/stm32f10x_tim.o
+TIM_DMACmd                                        FLASH_RUN/stm32f10x_tim.o
+TIM_DMAConfig                                     FLASH_RUN/stm32f10x_tim.o
+TIM_DeInit                                        FLASH_RUN/stm32f10x_tim.o
+TIM_ETRClockMode1Config                           FLASH_RUN/stm32f10x_tim.o
+TIM_ETRClockMode2Config                           FLASH_RUN/stm32f10x_tim.o
+TIM_ETRConfig                                     FLASH_RUN/stm32f10x_tim.o
+TIM_EncoderInterfaceConfig                        FLASH_RUN/stm32f10x_tim.o
+TIM_ForcedOC1Config                               FLASH_RUN/stm32f10x_tim.o
+TIM_ForcedOC2Config                               FLASH_RUN/stm32f10x_tim.o
+TIM_ForcedOC3Config                               FLASH_RUN/stm32f10x_tim.o
+TIM_ForcedOC4Config                               FLASH_RUN/stm32f10x_tim.o
+TIM_GenerateEvent                                 FLASH_RUN/stm32f10x_tim.o
+TIM_GetCapture1                                   FLASH_RUN/stm32f10x_tim.o
+TIM_GetCapture2                                   FLASH_RUN/stm32f10x_tim.o
+TIM_GetCapture3                                   FLASH_RUN/stm32f10x_tim.o
+TIM_GetCapture4                                   FLASH_RUN/stm32f10x_tim.o
+TIM_GetCounter                                    FLASH_RUN/stm32f10x_tim.o
+TIM_GetFlagStatus                                 FLASH_RUN/stm32f10x_tim.o
+TIM_GetITStatus                                   FLASH_RUN/stm32f10x_tim.o
+TIM_GetPrescaler                                  FLASH_RUN/stm32f10x_tim.o
+TIM_ICInit                                        FLASH_RUN/stm32f10x_tim.o
+TIM_ICStructInit                                  FLASH_RUN/stm32f10x_tim.o
+TIM_ITConfig                                      FLASH_RUN/stm32f10x_tim.o
+TIM_ITRxExternalClockConfig                       FLASH_RUN/stm32f10x_tim.o
+TIM_InternalClockConfig                           FLASH_RUN/stm32f10x_tim.o
+TIM_OC1FastConfig                                 FLASH_RUN/stm32f10x_tim.o
+TIM_OC1Init                                       FLASH_RUN/stm32f10x_tim.o
+TIM_OC1NPolarityConfig                            FLASH_RUN/stm32f10x_tim.o
+TIM_OC1PolarityConfig                             FLASH_RUN/stm32f10x_tim.o
+TIM_OC1PreloadConfig                              FLASH_RUN/stm32f10x_tim.o
+TIM_OC2FastConfig                                 FLASH_RUN/stm32f10x_tim.o
+TIM_OC2Init                                       FLASH_RUN/stm32f10x_tim.o
+TIM_OC2NPolarityConfig                            FLASH_RUN/stm32f10x_tim.o
+TIM_OC2PolarityConfig                             FLASH_RUN/stm32f10x_tim.o
+TIM_OC2PreloadConfig                              FLASH_RUN/stm32f10x_tim.o
+TIM_OC3FastConfig                                 FLASH_RUN/stm32f10x_tim.o
+TIM_OC3Init                                       FLASH_RUN/stm32f10x_tim.o
+TIM_OC3NPolarityConfig                            FLASH_RUN/stm32f10x_tim.o
+TIM_OC3PolarityConfig                             FLASH_RUN/stm32f10x_tim.o
+TIM_OC3PreloadConfig                              FLASH_RUN/stm32f10x_tim.o
+TIM_OC4FastConfig                                 FLASH_RUN/stm32f10x_tim.o
+TIM_OC4Init                                       FLASH_RUN/stm32f10x_tim.o
+TIM_OC4PolarityConfig                             FLASH_RUN/stm32f10x_tim.o
+TIM_OC4PreloadConfig                              FLASH_RUN/stm32f10x_tim.o
+TIM_OCStructInit                                  FLASH_RUN/stm32f10x_tim.o
+TIM_PWMIConfig                                    FLASH_RUN/stm32f10x_tim.o
+TIM_PrescalerConfig                               FLASH_RUN/stm32f10x_tim.o
+TIM_SelectCCDMA                                   FLASH_RUN/stm32f10x_tim.o
+TIM_SelectCOM                                     FLASH_RUN/stm32f10x_tim.o
+TIM_SelectHallSensor                              FLASH_RUN/stm32f10x_tim.o
+TIM_SelectInputTrigger                            FLASH_RUN/stm32f10x_tim.o
+TIM_SelectMasterSlaveMode                         FLASH_RUN/stm32f10x_tim.o
+TIM_SelectOCxM                                    FLASH_RUN/stm32f10x_tim.o
+TIM_SelectOnePulseMode                            FLASH_RUN/stm32f10x_tim.o
+TIM_SelectOutputTrigger                           FLASH_RUN/stm32f10x_tim.o
+TIM_SelectSlaveMode                               FLASH_RUN/stm32f10x_tim.o
+TIM_SetAutoreload                                 FLASH_RUN/stm32f10x_tim.o
+TIM_SetClockDivision                              FLASH_RUN/stm32f10x_tim.o
+TIM_SetCompare1                                   FLASH_RUN/stm32f10x_tim.o
+TIM_SetCompare2                                   FLASH_RUN/stm32f10x_tim.o
+TIM_SetCompare3                                   FLASH_RUN/stm32f10x_tim.o
+TIM_SetCompare4                                   FLASH_RUN/stm32f10x_tim.o
+TIM_SetCounter                                    FLASH_RUN/stm32f10x_tim.o
+TIM_SetIC1Prescaler                               FLASH_RUN/stm32f10x_tim.o
+TIM_SetIC2Prescaler                               FLASH_RUN/stm32f10x_tim.o
+TIM_SetIC3Prescaler                               FLASH_RUN/stm32f10x_tim.o
+TIM_SetIC4Prescaler                               FLASH_RUN/stm32f10x_tim.o
+TIM_TIxExternalClockConfig                        FLASH_RUN/stm32f10x_tim.o
+TIM_TimeBaseInit                                  FLASH_RUN/stm32f10x_tim.o
+TIM_TimeBaseStructInit                            FLASH_RUN/stm32f10x_tim.o
+TIM_UpdateDisableConfig                           FLASH_RUN/stm32f10x_tim.o
+TIM_UpdateRequestConfig                           FLASH_RUN/stm32f10x_tim.o
+TLvlRate                                          ./libdso138.a(libdso138.o)
+TMString                                          ./libdso138.a(libdso138.o)
+TempBuf                                           ./libdso138.a(libdso138.o)
+TestMode                                          FLASH_RUN/Command.o
+                                                  FLASH_RUN/113-13801.o
+TimerKeyScan                                      FLASH_RUN/Board.o
+                                                  FLASH_RUN/stm32f10x_it.o
+                                                  FLASH_RUN/Command.o
+USART1_IRQHandler                                 FLASH_RUN/startup_stm32f10x_md.o
+USART1_Init                                       FLASH_RUN/Board.o
+                                                  FLASH_RUN/113-13801.o
+USART2_IRQHandler                                 FLASH_RUN/startup_stm32f10x_md.o
+USART3_IRQHandler                                 FLASH_RUN/startup_stm32f10x_md.o
+USART_ClearFlag                                   FLASH_RUN/stm32f10x_usart.o
+USART_ClearITPendingBit                           FLASH_RUN/stm32f10x_usart.o
+USART_ClockInit                                   FLASH_RUN/stm32f10x_usart.o
+USART_ClockStructInit                             FLASH_RUN/stm32f10x_usart.o
+USART_Cmd                                         FLASH_RUN/stm32f10x_usart.o
+                                                  FLASH_RUN/Board.o
+USART_DMACmd                                      FLASH_RUN/stm32f10x_usart.o
+USART_DeInit                                      FLASH_RUN/stm32f10x_usart.o
+USART_GetFlagStatus                               FLASH_RUN/stm32f10x_usart.o
+                                                  FLASH_RUN/Board.o
+USART_GetITStatus                                 FLASH_RUN/stm32f10x_usart.o
+USART_HalfDuplexCmd                               FLASH_RUN/stm32f10x_usart.o
+USART_ITConfig                                    FLASH_RUN/stm32f10x_usart.o
+USART_Init                                        FLASH_RUN/stm32f10x_usart.o
+                                                  FLASH_RUN/Board.o
+USART_IrDACmd                                     FLASH_RUN/stm32f10x_usart.o
+USART_IrDAConfig                                  FLASH_RUN/stm32f10x_usart.o
+USART_LINBreakDetectLengthConfig                  FLASH_RUN/stm32f10x_usart.o
+USART_LINCmd                                      FLASH_RUN/stm32f10x_usart.o
+USART_OneBitMethodCmd                             FLASH_RUN/stm32f10x_usart.o
+USART_OverSampling8Cmd                            FLASH_RUN/stm32f10x_usart.o
+USART_ReceiveData                                 FLASH_RUN/stm32f10x_usart.o
+USART_ReceiverWakeUpCmd                           FLASH_RUN/stm32f10x_usart.o
+USART_SendBreak                                   FLASH_RUN/stm32f10x_usart.o
+USART_SendData                                    FLASH_RUN/stm32f10x_usart.o
+                                                  FLASH_RUN/Board.o
+USART_SetAddress                                  FLASH_RUN/stm32f10x_usart.o
+USART_SetGuardTime                                FLASH_RUN/stm32f10x_usart.o
+USART_SetPrescaler                                FLASH_RUN/stm32f10x_usart.o
+USART_SmartCardCmd                                FLASH_RUN/stm32f10x_usart.o
+USART_SmartCardNACKCmd                            FLASH_RUN/stm32f10x_usart.o
+USART_StructInit                                  FLASH_RUN/stm32f10x_usart.o
+USART_WakeUpConfig                                FLASH_RUN/stm32f10x_usart.o
+USBWakeUp_IRQHandler                              FLASH_RUN/startup_stm32f10x_md.o
+USB_HP_CAN1_TX_IRQHandler                         FLASH_RUN/startup_stm32f10x_md.o
+USB_LP_CAN1_RX0_IRQHandler                        FLASH_RUN/startup_stm32f10x_md.o
+UartPutc                                          FLASH_RUN/Board.o
+                                                  FLASH_RUN/UartInt.o
+UpdateDisp                                        ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+                                                  FLASH_RUN/113-13801.o
+UpdateTimebase                                    ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Command.o
+UsageFault_Handler                                FLASH_RUN/stm32f10x_it.o
+                                                  FLASH_RUN/startup_stm32f10x_md.o
+UsrCode                                           FLASH_RUN/UserCode.o
+                                                  FLASH_RUN/113-13801.o
+VSenPrev                                          FLASH_RUN/Command.o
+VirtAddVarTab                                     FLASH_RUN/Eeprom.o
+                                                  FLASH_RUN/Command.o
+VsenString                                        ./libdso138.a(libdso138.o)
+WWDG_IRQHandler                                   FLASH_RUN/startup_stm32f10x_md.o
+Web                                               ./libdso138.a(libdso138.o)
+Web1                                              ./libdso138.a(libdso138.o)
+Web1_font                                         ./libdso138.a(libdso138.o)
+Web_font                                          ./libdso138.a(libdso138.o)
+YlenA                                             ./libdso138.a(libdso138.o)
+YlenB                                             ./libdso138.a(libdso138.o)
+YstartA                                           ./libdso138.a(libdso138.o)
+YstartB                                           ./libdso138.a(libdso138.o)
+__LDREXB                                          FLASH_RUN/core_cm3.o
+__LDREXH                                          FLASH_RUN/core_cm3.o
+__LDREXW                                          FLASH_RUN/core_cm3.o
+__RBIT                                            FLASH_RUN/core_cm3.o
+__REV                                             FLASH_RUN/core_cm3.o
+__REV16                                           FLASH_RUN/core_cm3.o
+__REVSH                                           FLASH_RUN/core_cm3.o
+__STREXB                                          FLASH_RUN/core_cm3.o
+__STREXH                                          FLASH_RUN/core_cm3.o
+__STREXW                                          FLASH_RUN/core_cm3.o
+__adddf3                                          /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+__addsf3                                          /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+__aeabi_cfcmpeq                                   /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+__aeabi_cfcmple                                   /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+__aeabi_cfrcmple                                  /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+__aeabi_d2f                                       /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_truncdfsf2.o)
+                                                  ./libdso138.a(libdso138.o)
+__aeabi_d2iz                                      /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixdfsi.o)
+                                                  ./libdso138.a(libdso138.o)
+__aeabi_dadd                                      /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+                                                  ./libdso138.a(libdso138.o)
+__aeabi_ddiv                                      /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_muldivdf3.o)
+__aeabi_dmul                                      /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_muldivdf3.o)
+                                                  ./libdso138.a(libdso138.o)
+__aeabi_drsub                                     /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+__aeabi_dsub                                      /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+__aeabi_f2d                                       /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+                                                  ./libdso138.a(libdso138.o)
+__aeabi_f2uiz                                     /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixunssfsi.o)
+                                                  ./libdso138.a(libdso138.o)
+__aeabi_fadd                                      /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+__aeabi_fcmpeq                                    /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+__aeabi_fcmpge                                    /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+                                                  ./libdso138.a(libdso138.o)
+__aeabi_fcmpgt                                    /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+__aeabi_fcmple                                    /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+__aeabi_fcmplt                                    /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+__aeabi_frsub                                     /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+__aeabi_fsub                                      /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+__aeabi_i2d                                       /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+__aeabi_i2f                                       /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+                                                  ./libdso138.a(libdso138.o)
+__aeabi_idiv0                                     /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_dvmd_tls.o)
+                                                  /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_udivsi3.o)
+__aeabi_l2d                                       /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+__aeabi_l2f                                       /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+__aeabi_ldiv0                                     /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_dvmd_tls.o)
+__aeabi_ui2d                                      /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+__aeabi_ui2f                                      /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+__aeabi_uidiv                                     /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_udivsi3.o)
+                                                  ./libdso138.a(libdso138.o)
+__aeabi_uidivmod                                  /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_udivsi3.o)
+__aeabi_ul2d                                      /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+__aeabi_ul2f                                      /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+__cmpsf2                                          /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+__divdf3                                          /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_muldivdf3.o)
+__eqsf2                                           /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+__extendsfdf2                                     /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+__fixdfsi                                         /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixdfsi.o)
+__fixunssfsi                                      /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_fixunssfsi.o)
+__floatdidf                                       /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+__floatdisf                                       /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+__floatsidf                                       /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+__floatsisf                                       /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+__floatundidf                                     /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+__floatundisf                                     /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+__floatunsidf                                     /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+__floatunsisf                                     /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+__gesf2                                           /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+__get_BASEPRI                                     FLASH_RUN/core_cm3.o
+__get_CONTROL                                     FLASH_RUN/core_cm3.o
+__get_FAULTMASK                                   FLASH_RUN/core_cm3.o
+__get_MSP                                         FLASH_RUN/core_cm3.o
+__get_PRIMASK                                     FLASH_RUN/core_cm3.o
+__get_PSP                                         FLASH_RUN/core_cm3.o
+__gtsf2                                           /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+__lesf2                                           /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+__ltsf2                                           /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+__muldf3                                          /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_muldivdf3.o)
+__nesf2                                           /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_cmpsf2.o)
+__set_BASEPRI                                     FLASH_RUN/core_cm3.o
+__set_CONTROL                                     FLASH_RUN/core_cm3.o
+__set_FAULTMASK                                   FLASH_RUN/core_cm3.o
+__set_MSP                                         FLASH_RUN/core_cm3.o
+__set_PRIMASK                                     FLASH_RUN/core_cm3.o
+__set_PSP                                         FLASH_RUN/core_cm3.o
+__subdf3                                          /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubdf3.o)
+__subsf3                                          /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_addsubsf3.o)
+__truncdfsf2                                      /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_arm_truncdfsf2.o)
+__udivsi3                                         /home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7-m/libgcc.a(_udivsi3.o)
+_ebss                                             FLASH_RUN/startup_stm32f10x_md.o
+_edata                                            FLASH_RUN/startup_stm32f10x_md.o
+_estack                                           FLASH_RUN/startup_stm32f10x_md.o
+_sbss                                             FLASH_RUN/startup_stm32f10x_md.o
+_sdata                                            FLASH_RUN/startup_stm32f10x_md.o
+_sidata                                           FLASH_RUN/startup_stm32f10x_md.o
+assert_failed                                     FLASH_RUN/Board.o
+                                                  FLASH_RUN/stm32f10x_tim.o
+                                                  FLASH_RUN/stm32f10x_dma.o
+                                                  FLASH_RUN/stm32f10x_flash.o
+                                                  FLASH_RUN/stm32f10x_rcc.o
+                                                  FLASH_RUN/stm32f10x_usart.o
+                                                  FLASH_RUN/stm32f10x_gpio.o
+                                                  FLASH_RUN/misc.o
+currentTickVal                                    FLASH_RUN/UserCode.o
+deltaTickValue                                    FLASH_RUN/UserCode.o
+g_pfnVectors                                      FLASH_RUN/startup_stm32f10x_md.o
+int_buffer                                        FLASH_RUN/UserCode.o
+                                                  FLASH_RUN/UartInt.o
+                                                  FLASH_RUN/113-13801.o
+main                                              FLASH_RUN/113-13801.o
+                                                  FLASH_RUN/startup_stm32f10x_md.o
+previousTickVal                                   FLASH_RUN/UserCode.o
+uputInt                                           FLASH_RUN/UartInt.o
+                                                  FLASH_RUN/UserCode.o
+uputs                                             FLASH_RUN/Board.o
+                                                  FLASH_RUN/UserCode.o
+                                                  FLASH_RUN/113-13801.o
+write_comm                                        FLASH_RUN/Board.o
+                                                  ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Screen.o
+write_data                                        FLASH_RUN/Board.o
+                                                  ./libdso138.a(libdso138.o)
+                                                  FLASH_RUN/Screen.o

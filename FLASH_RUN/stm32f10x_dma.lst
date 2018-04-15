@@ -1,0 +1,2506 @@
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 2
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"stm32f10x_dma.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.DMA_DeInit,"ax",%progbits
+  16              		.align	1
+  17              		.p2align 2,,3
+  18              		.global	DMA_DeInit
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	DMA_DeInit:
+  25              	.LFB29:
+  26              		.file 1 "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c"
+   1:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+   2:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   ******************************************************************************
+   3:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @file    stm32f10x_dma.c
+   4:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @author  MCD Application Team
+   5:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @version V3.3.0
+   6:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @date    04/16/2010
+   7:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @brief   This file provides all the DMA firmware functions.
+   8:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   ******************************************************************************
+   9:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @copy
+  10:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *
+  11:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+  12:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
+  13:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
+  14:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
+  15:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
+  16:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  17:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *
+  18:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * <h2><center>&copy; COPYRIGHT 2010 STMicroelectronics</center></h2>
+  19:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */ 
+  20:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  21:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /* Includes ------------------------------------------------------------------*/
+  22:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #include "stm32f10x_dma.h"
+  23:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #include "stm32f10x_rcc.h"
+  24:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  25:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /** @addtogroup STM32F10x_StdPeriph_Driver
+  26:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @{
+  27:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+  28:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  29:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /** @defgroup DMA 
+  30:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @brief DMA driver modules
+  31:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @{
+  32:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */ 
+  33:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  34:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /** @defgroup DMA_Private_TypesDefinitions
+  35:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @{
+  36:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */ 
+  37:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+  38:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @}
+  39:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+  40:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  41:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /** @defgroup DMA_Private_Defines
+  42:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @{
+  43:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+  44:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  45:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /* DMA ENABLE mask */
+  46:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define CCR_ENABLE_Set          ((uint32_t)0x00000001)
+  47:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define CCR_ENABLE_Reset        ((uint32_t)0xFFFFFFFE)
+  48:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  49:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /* DMA1 Channelx interrupt pending bit masks */
+  50:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define DMA1_Channel1_IT_Mask    ((uint32_t)0x0000000F)
+  51:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define DMA1_Channel2_IT_Mask    ((uint32_t)0x000000F0)
+  52:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define DMA1_Channel3_IT_Mask    ((uint32_t)0x00000F00)
+  53:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define DMA1_Channel4_IT_Mask    ((uint32_t)0x0000F000)
+  54:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define DMA1_Channel5_IT_Mask    ((uint32_t)0x000F0000)
+  55:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define DMA1_Channel6_IT_Mask    ((uint32_t)0x00F00000)
+  56:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define DMA1_Channel7_IT_Mask    ((uint32_t)0x0F000000)
+  57:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  58:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /* DMA2 Channelx interrupt pending bit masks */
+  59:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define DMA2_Channel1_IT_Mask    ((uint32_t)0x0000000F)
+  60:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define DMA2_Channel2_IT_Mask    ((uint32_t)0x000000F0)
+  61:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define DMA2_Channel3_IT_Mask    ((uint32_t)0x00000F00)
+  62:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define DMA2_Channel4_IT_Mask    ((uint32_t)0x0000F000)
+  63:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define DMA2_Channel5_IT_Mask    ((uint32_t)0x000F0000)
+  64:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  65:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /* DMA2 FLAG mask */
+  66:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define FLAG_Mask                ((uint32_t)0x10000000)
+  67:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  68:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /* DMA registers Masks */
+  69:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** #define CCR_CLEAR_Mask           ((uint32_t)0xFFFF800F)
+  70:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  71:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+  72:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @}
+  73:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+  74:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  75:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /** @defgroup DMA_Private_Macros
+  76:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @{
+  77:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+  78:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  79:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+  80:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @}
+  81:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+  82:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  83:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /** @defgroup DMA_Private_Variables
+  84:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @{
+  85:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+  86:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  87:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+  88:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @}
+  89:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+  90:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  91:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /** @defgroup DMA_Private_FunctionPrototypes
+  92:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @{
+  93:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+  94:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  95:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+  96:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @}
+  97:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+  98:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+  99:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /** @defgroup DMA_Private_Functions
+ 100:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @{
+ 101:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+ 102:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 103:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+ 104:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @brief  Deinitializes the DMAy Channelx registers to their default reset
+ 105:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   values.
+ 106:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @param  DMAy_Channelx: where y can be 1 or 2 to select the DMA and
+ 107:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   x can be 1 to 7 for DMA1 and 1 to 5 for DMA2 to select the DMA Channel.
+ 108:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @retval None
+ 109:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+ 110:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** void DMA_DeInit(DMA_Channel_TypeDef* DMAy_Channelx)
+ 111:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** {
+  27              		.loc 1 111 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+ 112:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 113:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_ALL_PERIPH(DMAy_Channelx));
+  32              		.loc 1 113 0
+  33 0000 614B     		ldr	r3, .L24
+  34 0002 9842     		cmp	r0, r3
+  35 0004 45D0     		beq	.L2
+  36              		.loc 1 113 0 is_stmt 0 discriminator 1
+  37 0006 1433     		adds	r3, r3, #20
+  38 0008 9842     		cmp	r0, r3
+  39 000a 33D0     		beq	.L3
+  40              		.loc 1 113 0 discriminator 2
+  41 000c 1433     		adds	r3, r3, #20
+  42 000e 9842     		cmp	r0, r3
+  43 0010 5DD0     		beq	.L4
+  44              		.loc 1 113 0 discriminator 3
+  45 0012 1433     		adds	r3, r3, #20
+  46 0014 9842     		cmp	r0, r3
+  47 0016 69D0     		beq	.L5
+  48              		.loc 1 113 0 discriminator 4
+  49 0018 1433     		adds	r3, r3, #20
+  50 001a 9842     		cmp	r0, r3
+  51 001c 48D0     		beq	.L6
+  52              		.loc 1 113 0 discriminator 5
+  53 001e 1433     		adds	r3, r3, #20
+  54 0020 9842     		cmp	r0, r3
+  55 0022 72D0     		beq	.L7
+  56              		.loc 1 113 0 discriminator 6
+  57 0024 1433     		adds	r3, r3, #20
+  58 0026 9842     		cmp	r0, r3
+  59 0028 00F08280 		beq	.L8
+  60              		.loc 1 113 0 discriminator 7
+  61 002c 03F56273 		add	r3, r3, #904
+  62 0030 9842     		cmp	r0, r3
+  63 0032 00F08C80 		beq	.L9
+  64              		.loc 1 113 0 discriminator 8
+  65 0036 1433     		adds	r3, r3, #20
+  66 0038 9842     		cmp	r0, r3
+  67 003a 75D0     		beq	.L10
+  68              		.loc 1 113 0 discriminator 9
+  69 003c 1433     		adds	r3, r3, #20
+  70 003e 9842     		cmp	r0, r3
+  71 0040 00F08980 		beq	.L11
+  72              		.loc 1 113 0 discriminator 10
+  73 0044 1433     		adds	r3, r3, #20
+  74 0046 9842     		cmp	r0, r3
+  75 0048 00F09580 		beq	.L12
+  76              		.loc 1 113 0 discriminator 11
+  77 004c 1433     		adds	r3, r3, #20
+  78 004e 9842     		cmp	r0, r3
+  79 0050 00F09580 		beq	.L13
+ 111:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+  80              		.loc 1 111 0 is_stmt 1 discriminator 12
+  81 0054 10B5     		push	{r4, lr}
+  82              		.cfi_def_cfa_offset 8
+  83              		.cfi_offset 4, -8
+  84              		.cfi_offset 14, -4
+  85 0056 0446     		mov	r4, r0
+  86              		.loc 1 113 0 discriminator 12
+  87 0058 4C4B     		ldr	r3, .L24+4
+  88 005a 7121     		movs	r1, #113
+  89 005c 4C48     		ldr	r0, .L24+8
+  90              	.LVL1:
+  91 005e 9847     		blx	r3
+  92              	.LVL2:
+ 114:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Disable the selected DMAy Channelx */
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMAy_Channelx->CCR &= CCR_ENABLE_Reset;
+ 116:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMAy_Channelx->CCR  = 0;
+  93              		.loc 1 117 0 discriminator 12
+  94 0060 0023     		movs	r3, #0
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+  95              		.loc 1 115 0 discriminator 12
+  96 0062 2268     		ldr	r2, [r4]
+  97 0064 22F00102 		bic	r2, r2, #1
+  98 0068 2260     		str	r2, [r4]
+  99              		.loc 1 117 0 discriminator 12
+ 100 006a 2360     		str	r3, [r4]
+ 118:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 119:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx remaining bytes register */
+ 120:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMAy_Channelx->CNDTR = 0;
+ 101              		.loc 1 120 0 discriminator 12
+ 102 006c 6360     		str	r3, [r4, #4]
+ 121:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 122:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx peripheral address register */
+ 123:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMAy_Channelx->CPAR  = 0;
+ 103              		.loc 1 123 0 discriminator 12
+ 104 006e A360     		str	r3, [r4, #8]
+ 124:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 125:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx memory address register */
+ 126:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMAy_Channelx->CMAR = 0;
+ 105              		.loc 1 126 0 discriminator 12
+ 106 0070 E360     		str	r3, [r4, #12]
+ 127:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 128:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   if (DMAy_Channelx == DMA1_Channel1)
+ 129:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 130:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Reset interrupt pending bits for DMA1 Channel1 */
+ 131:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA1->IFCR |= DMA1_Channel1_IT_Mask;
+ 132:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 133:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else if (DMAy_Channelx == DMA1_Channel2)
+ 134:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 135:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Reset interrupt pending bits for DMA1 Channel2 */
+ 136:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA1->IFCR |= DMA1_Channel2_IT_Mask;
+ 137:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 138:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else if (DMAy_Channelx == DMA1_Channel3)
+ 139:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 140:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Reset interrupt pending bits for DMA1 Channel3 */
+ 141:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA1->IFCR |= DMA1_Channel3_IT_Mask;
+ 142:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 143:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else if (DMAy_Channelx == DMA1_Channel4)
+ 144:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 145:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Reset interrupt pending bits for DMA1 Channel4 */
+ 146:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA1->IFCR |= DMA1_Channel4_IT_Mask;
+ 147:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 148:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else if (DMAy_Channelx == DMA1_Channel5)
+ 149:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 150:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Reset interrupt pending bits for DMA1 Channel5 */
+ 151:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA1->IFCR |= DMA1_Channel5_IT_Mask;
+ 152:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 153:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else if (DMAy_Channelx == DMA1_Channel6)
+ 154:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 155:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Reset interrupt pending bits for DMA1 Channel6 */
+ 156:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA1->IFCR |= DMA1_Channel6_IT_Mask;
+ 157:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 158:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else if (DMAy_Channelx == DMA1_Channel7)
+ 159:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 160:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Reset interrupt pending bits for DMA1 Channel7 */
+ 161:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA1->IFCR |= DMA1_Channel7_IT_Mask;
+ 162:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 163:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else if (DMAy_Channelx == DMA2_Channel1)
+ 164:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 165:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Reset interrupt pending bits for DMA2 Channel1 */
+ 166:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA2->IFCR |= DMA2_Channel1_IT_Mask;
+ 167:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 168:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else if (DMAy_Channelx == DMA2_Channel2)
+ 169:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 170:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Reset interrupt pending bits for DMA2 Channel2 */
+ 171:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA2->IFCR |= DMA2_Channel2_IT_Mask;
+ 172:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 173:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else if (DMAy_Channelx == DMA2_Channel3)
+ 174:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 175:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Reset interrupt pending bits for DMA2 Channel3 */
+ 176:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA2->IFCR |= DMA2_Channel3_IT_Mask;
+ 177:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 178:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else if (DMAy_Channelx == DMA2_Channel4)
+ 179:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 180:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Reset interrupt pending bits for DMA2 Channel4 */
+ 181:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA2->IFCR |= DMA2_Channel4_IT_Mask;
+ 182:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 183:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else
+ 184:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   { 
+ 185:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     if (DMAy_Channelx == DMA2_Channel5)
+ 186:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     {
+ 187:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****       /* Reset interrupt pending bits for DMA2 Channel5 */
+ 188:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****       DMA2->IFCR |= DMA2_Channel5_IT_Mask;
+ 189:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     }
+ 190:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 191:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** }
+ 107              		.loc 1 191 0 discriminator 12
+ 108 0072 10BD     		pop	{r4, pc}
+ 109              	.LVL3:
+ 110              	.L3:
+ 111              		.cfi_def_cfa_offset 0
+ 112              		.cfi_restore 4
+ 113              		.cfi_restore 14
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 114              		.loc 1 117 0
+ 115 0074 0023     		movs	r3, #0
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 116              		.loc 1 115 0
+ 117 0076 0268     		ldr	r2, [r0]
+ 136:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 118              		.loc 1 136 0
+ 119 0078 4649     		ldr	r1, .L24+12
+ 120              	.L22:
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 121              		.loc 1 115 0
+ 122 007a 22F00102 		bic	r2, r2, #1
+ 123 007e 0260     		str	r2, [r0]
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 124              		.loc 1 117 0
+ 125 0080 0360     		str	r3, [r0]
+ 120:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 126              		.loc 1 120 0
+ 127 0082 4360     		str	r3, [r0, #4]
+ 123:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 128              		.loc 1 123 0
+ 129 0084 8360     		str	r3, [r0, #8]
+ 126:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 130              		.loc 1 126 0
+ 131 0086 C360     		str	r3, [r0, #12]
+ 171:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 132              		.loc 1 171 0
+ 133 0088 4B68     		ldr	r3, [r1, #4]
+ 134 008a 43F0F003 		orr	r3, r3, #240
+ 135 008e 4B60     		str	r3, [r1, #4]
+ 136 0090 7047     		bx	lr
+ 137              	.L2:
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 138              		.loc 1 117 0
+ 139 0092 0023     		movs	r3, #0
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 140              		.loc 1 115 0
+ 141 0094 0268     		ldr	r2, [r0]
+ 131:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 142              		.loc 1 131 0
+ 143 0096 3F49     		ldr	r1, .L24+12
+ 144              	.L19:
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 145              		.loc 1 115 0
+ 146 0098 22F00102 		bic	r2, r2, #1
+ 147 009c 0260     		str	r2, [r0]
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 148              		.loc 1 117 0
+ 149 009e 0360     		str	r3, [r0]
+ 120:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 150              		.loc 1 120 0
+ 151 00a0 4360     		str	r3, [r0, #4]
+ 123:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 152              		.loc 1 123 0
+ 153 00a2 8360     		str	r3, [r0, #8]
+ 126:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 154              		.loc 1 126 0
+ 155 00a4 C360     		str	r3, [r0, #12]
+ 166:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 156              		.loc 1 166 0
+ 157 00a6 4B68     		ldr	r3, [r1, #4]
+ 158 00a8 43F00F03 		orr	r3, r3, #15
+ 159 00ac 4B60     		str	r3, [r1, #4]
+ 160 00ae 7047     		bx	lr
+ 161              	.L6:
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 162              		.loc 1 117 0
+ 163 00b0 0023     		movs	r3, #0
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 164              		.loc 1 115 0
+ 165 00b2 0268     		ldr	r2, [r0]
+ 151:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 166              		.loc 1 151 0
+ 167 00b4 3749     		ldr	r1, .L24+12
+ 168              	.L21:
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 169              		.loc 1 115 0
+ 170 00b6 22F00102 		bic	r2, r2, #1
+ 171 00ba 0260     		str	r2, [r0]
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 172              		.loc 1 117 0
+ 173 00bc 0360     		str	r3, [r0]
+ 120:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 174              		.loc 1 120 0
+ 175 00be 4360     		str	r3, [r0, #4]
+ 123:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 176              		.loc 1 123 0
+ 177 00c0 8360     		str	r3, [r0, #8]
+ 126:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 178              		.loc 1 126 0
+ 179 00c2 C360     		str	r3, [r0, #12]
+ 151:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 180              		.loc 1 151 0
+ 181 00c4 4B68     		ldr	r3, [r1, #4]
+ 182 00c6 43F47023 		orr	r3, r3, #983040
+ 183 00ca 4B60     		str	r3, [r1, #4]
+ 184 00cc 7047     		bx	lr
+ 185              	.L4:
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 186              		.loc 1 117 0
+ 187 00ce 0023     		movs	r3, #0
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 188              		.loc 1 115 0
+ 189 00d0 0268     		ldr	r2, [r0]
+ 141:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 190              		.loc 1 141 0
+ 191 00d2 3049     		ldr	r1, .L24+12
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 192              		.loc 1 115 0
+ 193 00d4 22F00102 		bic	r2, r2, #1
+ 194 00d8 0260     		str	r2, [r0]
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 195              		.loc 1 117 0
+ 196 00da 0360     		str	r3, [r0]
+ 120:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 197              		.loc 1 120 0
+ 198 00dc 4360     		str	r3, [r0, #4]
+ 123:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 199              		.loc 1 123 0
+ 200 00de 8360     		str	r3, [r0, #8]
+ 126:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 201              		.loc 1 126 0
+ 202 00e0 C360     		str	r3, [r0, #12]
+ 141:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 203              		.loc 1 141 0
+ 204 00e2 4B68     		ldr	r3, [r1, #4]
+ 205 00e4 43F47063 		orr	r3, r3, #3840
+ 206 00e8 4B60     		str	r3, [r1, #4]
+ 207 00ea 7047     		bx	lr
+ 208              	.L5:
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 209              		.loc 1 117 0
+ 210 00ec 0023     		movs	r3, #0
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 211              		.loc 1 115 0
+ 212 00ee 0268     		ldr	r2, [r0]
+ 146:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 213              		.loc 1 146 0
+ 214 00f0 2849     		ldr	r1, .L24+12
+ 215              	.L20:
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 216              		.loc 1 115 0
+ 217 00f2 22F00102 		bic	r2, r2, #1
+ 218 00f6 0260     		str	r2, [r0]
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 219              		.loc 1 117 0
+ 220 00f8 0360     		str	r3, [r0]
+ 120:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 221              		.loc 1 120 0
+ 222 00fa 4360     		str	r3, [r0, #4]
+ 123:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 223              		.loc 1 123 0
+ 224 00fc 8360     		str	r3, [r0, #8]
+ 126:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 225              		.loc 1 126 0
+ 226 00fe C360     		str	r3, [r0, #12]
+ 146:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 227              		.loc 1 146 0
+ 228 0100 4B68     		ldr	r3, [r1, #4]
+ 229 0102 43F47043 		orr	r3, r3, #61440
+ 230 0106 4B60     		str	r3, [r1, #4]
+ 231 0108 7047     		bx	lr
+ 232              	.L7:
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 233              		.loc 1 117 0
+ 234 010a 0023     		movs	r3, #0
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 235              		.loc 1 115 0
+ 236 010c 0268     		ldr	r2, [r0]
+ 156:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 237              		.loc 1 156 0
+ 238 010e 2149     		ldr	r1, .L24+12
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 239              		.loc 1 115 0
+ 240 0110 22F00102 		bic	r2, r2, #1
+ 241 0114 0260     		str	r2, [r0]
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 242              		.loc 1 117 0
+ 243 0116 0360     		str	r3, [r0]
+ 120:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 244              		.loc 1 120 0
+ 245 0118 4360     		str	r3, [r0, #4]
+ 123:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 246              		.loc 1 123 0
+ 247 011a 8360     		str	r3, [r0, #8]
+ 126:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 248              		.loc 1 126 0
+ 249 011c C360     		str	r3, [r0, #12]
+ 156:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 250              		.loc 1 156 0
+ 251 011e 4B68     		ldr	r3, [r1, #4]
+ 252 0120 43F47003 		orr	r3, r3, #15728640
+ 253 0124 4B60     		str	r3, [r1, #4]
+ 254 0126 7047     		bx	lr
+ 255              	.L10:
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 256              		.loc 1 117 0
+ 257 0128 0023     		movs	r3, #0
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 258              		.loc 1 115 0
+ 259 012a 0268     		ldr	r2, [r0]
+ 171:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 260              		.loc 1 171 0
+ 261 012c 1A49     		ldr	r1, .L24+16
+ 262 012e A4E7     		b	.L22
+ 263              	.L8:
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 264              		.loc 1 117 0
+ 265 0130 0023     		movs	r3, #0
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 266              		.loc 1 115 0
+ 267 0132 0268     		ldr	r2, [r0]
+ 161:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 268              		.loc 1 161 0
+ 269 0134 1749     		ldr	r1, .L24+12
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 270              		.loc 1 115 0
+ 271 0136 22F00102 		bic	r2, r2, #1
+ 272 013a 0260     		str	r2, [r0]
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 273              		.loc 1 117 0
+ 274 013c 0360     		str	r3, [r0]
+ 120:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 275              		.loc 1 120 0
+ 276 013e 4360     		str	r3, [r0, #4]
+ 123:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 277              		.loc 1 123 0
+ 278 0140 8360     		str	r3, [r0, #8]
+ 126:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 279              		.loc 1 126 0
+ 280 0142 C360     		str	r3, [r0, #12]
+ 161:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 281              		.loc 1 161 0
+ 282 0144 4B68     		ldr	r3, [r1, #4]
+ 283 0146 43F07063 		orr	r3, r3, #251658240
+ 284 014a 4B60     		str	r3, [r1, #4]
+ 285 014c 7047     		bx	lr
+ 286              	.L9:
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 287              		.loc 1 117 0
+ 288 014e 0023     		movs	r3, #0
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 289              		.loc 1 115 0
+ 290 0150 0268     		ldr	r2, [r0]
+ 166:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 291              		.loc 1 166 0
+ 292 0152 1149     		ldr	r1, .L24+16
+ 293 0154 A0E7     		b	.L19
+ 294              	.L11:
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 295              		.loc 1 117 0
+ 296 0156 0022     		movs	r2, #0
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 297              		.loc 1 115 0
+ 298 0158 104B     		ldr	r3, .L24+20
+ 176:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 299              		.loc 1 176 0
+ 300 015a 0F48     		ldr	r0, .L24+16
+ 301              	.LVL4:
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 302              		.loc 1 115 0
+ 303 015c 1968     		ldr	r1, [r3]
+ 304 015e 21F00101 		bic	r1, r1, #1
+ 305 0162 1960     		str	r1, [r3]
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 306              		.loc 1 117 0
+ 307 0164 1A60     		str	r2, [r3]
+ 120:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 308              		.loc 1 120 0
+ 309 0166 5A60     		str	r2, [r3, #4]
+ 123:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 310              		.loc 1 123 0
+ 311 0168 9A60     		str	r2, [r3, #8]
+ 126:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 312              		.loc 1 126 0
+ 313 016a DA60     		str	r2, [r3, #12]
+ 176:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 314              		.loc 1 176 0
+ 315 016c 4368     		ldr	r3, [r0, #4]
+ 316 016e 43F47063 		orr	r3, r3, #3840
+ 317 0172 4360     		str	r3, [r0, #4]
+ 318 0174 7047     		bx	lr
+ 319              	.LVL5:
+ 320              	.L12:
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 321              		.loc 1 117 0
+ 322 0176 0023     		movs	r3, #0
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 323              		.loc 1 115 0
+ 324 0178 0268     		ldr	r2, [r0]
+ 181:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 325              		.loc 1 181 0
+ 326 017a 0749     		ldr	r1, .L24+16
+ 327 017c B9E7     		b	.L20
+ 328              	.L13:
+ 117:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 329              		.loc 1 117 0
+ 330 017e 0023     		movs	r3, #0
+ 115:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Reset DMAy Channelx control register */
+ 331              		.loc 1 115 0
+ 332 0180 0268     		ldr	r2, [r0]
+ 188:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     }
+ 333              		.loc 1 188 0
+ 334 0182 0549     		ldr	r1, .L24+16
+ 335 0184 97E7     		b	.L21
+ 336              	.L25:
+ 337 0186 00BF     		.align	2
+ 338              	.L24:
+ 339 0188 08000240 		.word	1073872904
+ 340 018c 00000000 		.word	assert_failed
+ 341 0190 00000000 		.word	.LC0
+ 342 0194 00000240 		.word	1073872896
+ 343 0198 00040240 		.word	1073873920
+ 344 019c 30040240 		.word	1073873968
+ 345              		.cfi_endproc
+ 346              	.LFE29:
+ 348              		.section	.text.DMA_Init,"ax",%progbits
+ 349              		.align	1
+ 350              		.p2align 2,,3
+ 351              		.global	DMA_Init
+ 352              		.syntax unified
+ 353              		.thumb
+ 354              		.thumb_func
+ 355              		.fpu softvfp
+ 357              	DMA_Init:
+ 358              	.LFB30:
+ 192:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 193:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+ 194:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @brief  Initializes the DMAy Channelx according to the specified
+ 195:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   parameters in the DMA_InitStruct.
+ 196:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @param  DMAy_Channelx: where y can be 1 or 2 to select the DMA and 
+ 197:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   x can be 1 to 7 for DMA1 and 1 to 5 for DMA2 to select the DMA Channel.
+ 198:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @param  DMA_InitStruct: pointer to a DMA_InitTypeDef structure that
+ 199:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   contains the configuration information for the specified DMA Channel.
+ 200:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @retval None
+ 201:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+ 202:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** void DMA_Init(DMA_Channel_TypeDef* DMAy_Channelx, DMA_InitTypeDef* DMA_InitStruct)
+ 203:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** {
+ 359              		.loc 1 203 0
+ 360              		.cfi_startproc
+ 361              		@ args = 0, pretend = 0, frame = 0
+ 362              		@ frame_needed = 0, uses_anonymous_args = 0
+ 363              	.LVL6:
+ 204:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   uint32_t tmpreg = 0;
+ 205:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 206:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 207:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_ALL_PERIPH(DMAy_Channelx));
+ 364              		.loc 1 207 0
+ 365 0000 554B     		ldr	r3, .L77
+ 203:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   uint32_t tmpreg = 0;
+ 366              		.loc 1 203 0
+ 367 0002 70B5     		push	{r4, r5, r6, lr}
+ 368              		.cfi_def_cfa_offset 16
+ 369              		.cfi_offset 4, -16
+ 370              		.cfi_offset 5, -12
+ 371              		.cfi_offset 6, -8
+ 372              		.cfi_offset 14, -4
+ 373              		.loc 1 207 0
+ 374 0004 9842     		cmp	r0, r3
+ 203:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   uint32_t tmpreg = 0;
+ 375              		.loc 1 203 0
+ 376 0006 0546     		mov	r5, r0
+ 377 0008 0C46     		mov	r4, r1
+ 378              		.loc 1 207 0
+ 379 000a 25D0     		beq	.L27
+ 380              		.loc 1 207 0 is_stmt 0 discriminator 1
+ 381 000c 1433     		adds	r3, r3, #20
+ 382 000e 9842     		cmp	r0, r3
+ 383 0010 22D0     		beq	.L27
+ 384              		.loc 1 207 0 discriminator 2
+ 385 0012 1433     		adds	r3, r3, #20
+ 386 0014 9842     		cmp	r0, r3
+ 387 0016 1FD0     		beq	.L27
+ 388              		.loc 1 207 0 discriminator 3
+ 389 0018 1433     		adds	r3, r3, #20
+ 390 001a 9842     		cmp	r0, r3
+ 391 001c 1CD0     		beq	.L27
+ 392              		.loc 1 207 0 discriminator 4
+ 393 001e 1433     		adds	r3, r3, #20
+ 394 0020 9842     		cmp	r0, r3
+ 395 0022 19D0     		beq	.L27
+ 396              		.loc 1 207 0 discriminator 5
+ 397 0024 1433     		adds	r3, r3, #20
+ 398 0026 9842     		cmp	r0, r3
+ 399 0028 16D0     		beq	.L27
+ 400              		.loc 1 207 0 discriminator 6
+ 401 002a 1433     		adds	r3, r3, #20
+ 402 002c 9842     		cmp	r0, r3
+ 403 002e 13D0     		beq	.L27
+ 404              		.loc 1 207 0 discriminator 7
+ 405 0030 03F56273 		add	r3, r3, #904
+ 406 0034 9842     		cmp	r0, r3
+ 407 0036 0FD0     		beq	.L27
+ 408              		.loc 1 207 0 discriminator 8
+ 409 0038 1433     		adds	r3, r3, #20
+ 410 003a 9842     		cmp	r0, r3
+ 411 003c 0CD0     		beq	.L27
+ 412              		.loc 1 207 0 discriminator 9
+ 413 003e 1433     		adds	r3, r3, #20
+ 414 0040 9842     		cmp	r0, r3
+ 415 0042 09D0     		beq	.L27
+ 416              		.loc 1 207 0 discriminator 10
+ 417 0044 1433     		adds	r3, r3, #20
+ 418 0046 9842     		cmp	r0, r3
+ 419 0048 06D0     		beq	.L27
+ 420              		.loc 1 207 0 discriminator 11
+ 421 004a 1433     		adds	r3, r3, #20
+ 422 004c 9842     		cmp	r0, r3
+ 423 004e 03D0     		beq	.L27
+ 424              		.loc 1 207 0 discriminator 12
+ 425 0050 CF21     		movs	r1, #207
+ 426              	.LVL7:
+ 427 0052 4248     		ldr	r0, .L77+4
+ 428              	.LVL8:
+ 429 0054 424B     		ldr	r3, .L77+8
+ 430 0056 9847     		blx	r3
+ 431              	.LVL9:
+ 432              	.L27:
+ 208:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_DIR(DMA_InitStruct->DMA_DIR));
+ 433              		.loc 1 208 0 is_stmt 1
+ 434 0058 A368     		ldr	r3, [r4, #8]
+ 435 005a 33F01003 		bics	r3, r3, #16
+ 436 005e 5ED1     		bne	.L68
+ 437              	.L28:
+ 209:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_BUFFER_SIZE(DMA_InitStruct->DMA_BufferSize));
+ 438              		.loc 1 209 0
+ 439 0060 4FF6FE72 		movw	r2, #65534
+ 440 0064 E368     		ldr	r3, [r4, #12]
+ 441 0066 013B     		subs	r3, r3, #1
+ 442 0068 9342     		cmp	r3, r2
+ 443 006a 3DD8     		bhi	.L69
+ 210:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_PERIPHERAL_INC_STATE(DMA_InitStruct->DMA_PeripheralInc));
+ 444              		.loc 1 210 0
+ 445 006c 2369     		ldr	r3, [r4, #16]
+ 446 006e 33F04003 		bics	r3, r3, #64
+ 447 0072 41D1     		bne	.L70
+ 448              	.L30:
+ 211:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_MEMORY_INC_STATE(DMA_InitStruct->DMA_MemoryInc));   
+ 449              		.loc 1 211 0
+ 450 0074 6369     		ldr	r3, [r4, #20]
+ 451 0076 33F08003 		bics	r3, r3, #128
+ 452 007a 45D1     		bne	.L71
+ 453              	.L31:
+ 212:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_PERIPHERAL_DATA_SIZE(DMA_InitStruct->DMA_PeripheralDataSize));
+ 454              		.loc 1 212 0
+ 455 007c A369     		ldr	r3, [r4, #24]
+ 456 007e 33F48072 		bics	r2, r3, #256
+ 457 0082 02D0     		beq	.L32
+ 458              		.loc 1 212 0 is_stmt 0 discriminator 2
+ 459 0084 B3F5007F 		cmp	r3, #512
+ 460 0088 5BD1     		bne	.L72
+ 461              	.L32:
+ 213:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_MEMORY_DATA_SIZE(DMA_InitStruct->DMA_MemoryDataSize));
+ 462              		.loc 1 213 0 is_stmt 1
+ 463 008a E369     		ldr	r3, [r4, #28]
+ 464 008c 33F48062 		bics	r2, r3, #1024
+ 465 0090 02D0     		beq	.L33
+ 466              		.loc 1 213 0 is_stmt 0 discriminator 2
+ 467 0092 B3F5006F 		cmp	r3, #2048
+ 468 0096 59D1     		bne	.L73
+ 469              	.L33:
+ 214:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_MODE(DMA_InitStruct->DMA_Mode));
+ 470              		.loc 1 214 0 is_stmt 1
+ 471 0098 236A     		ldr	r3, [r4, #32]
+ 472 009a 33F02003 		bics	r3, r3, #32
+ 473 009e 43D1     		bne	.L74
+ 215:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_PRIORITY(DMA_InitStruct->DMA_Priority));
+ 474              		.loc 1 215 0
+ 475 00a0 636A     		ldr	r3, [r4, #36]
+ 476 00a2 33F44053 		bics	r3, r3, #12288
+ 477 00a6 47D1     		bne	.L75
+ 478              	.L35:
+ 216:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_M2M_STATE(DMA_InitStruct->DMA_M2M));
+ 479              		.loc 1 216 0
+ 480 00a8 A16A     		ldr	r1, [r4, #40]
+ 481 00aa 31F48043 		bics	r3, r1, #16384
+ 482 00ae 30D1     		bne	.L76
+ 483              	.L36:
+ 484 00b0 206A     		ldr	r0, [r4, #32]
+ 485 00b2 A368     		ldr	r3, [r4, #8]
+ 486 00b4 2269     		ldr	r2, [r4, #16]
+ 487 00b6 0343     		orrs	r3, r3, r0
+ 488 00b8 6069     		ldr	r0, [r4, #20]
+ 489 00ba 1343     		orrs	r3, r3, r2
+ 490 00bc A269     		ldr	r2, [r4, #24]
+ 491 00be 0343     		orrs	r3, r3, r0
+ 492 00c0 E069     		ldr	r0, [r4, #28]
+ 493 00c2 1343     		orrs	r3, r3, r2
+ 217:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 218:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /*--------------------------- DMAy Channelx CCR Configuration -----------------*/
+ 219:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Get the DMAy_Channelx CCR value */
+ 220:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   tmpreg = DMAy_Channelx->CCR;
+ 494              		.loc 1 220 0
+ 495 00c4 2A68     		ldr	r2, [r5]
+ 496              	.LVL10:
+ 497 00c6 0343     		orrs	r3, r3, r0
+ 498 00c8 606A     		ldr	r0, [r4, #36]
+ 221:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Clear MEM2MEM, PL, MSIZE, PSIZE, MINC, PINC, CIRC and DIR bits */
+ 222:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   tmpreg &= CCR_CLEAR_Mask;
+ 499              		.loc 1 222 0
+ 500 00ca 22F4FF42 		bic	r2, r2, #32640
+ 501              	.LVL11:
+ 502 00ce 0343     		orrs	r3, r3, r0
+ 503 00d0 22F07002 		bic	r2, r2, #112
+ 223:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Configure DMAy Channelx: data transfer, data size, priority level and mode */
+ 224:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Set DIR bit according to DMA_DIR value */
+ 225:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Set CIRC bit according to DMA_Mode value */
+ 226:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Set PINC bit according to DMA_PeripheralInc value */
+ 227:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Set MINC bit according to DMA_MemoryInc value */
+ 228:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Set PSIZE bits according to DMA_PeripheralDataSize value */
+ 229:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Set MSIZE bits according to DMA_MemoryDataSize value */
+ 230:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Set PL bits according to DMA_Priority value */
+ 231:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Set the MEM2MEM bit according to DMA_M2M value */
+ 232:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   tmpreg |= DMA_InitStruct->DMA_DIR | DMA_InitStruct->DMA_Mode |
+ 233:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****             DMA_InitStruct->DMA_PeripheralInc | DMA_InitStruct->DMA_MemoryInc |
+ 234:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****             DMA_InitStruct->DMA_PeripheralDataSize | DMA_InitStruct->DMA_MemoryDataSize |
+ 235:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****             DMA_InitStruct->DMA_Priority | DMA_InitStruct->DMA_M2M;
+ 236:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 237:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Write to DMAy Channelx CCR */
+ 238:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMAy_Channelx->CCR = tmpreg;
+ 239:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 240:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /*--------------------------- DMAy Channelx CNDTR Configuration ---------------*/
+ 241:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Write to DMAy Channelx CNDTR */
+ 242:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMAy_Channelx->CNDTR = DMA_InitStruct->DMA_BufferSize;
+ 504              		.loc 1 242 0
+ 505 00d4 E668     		ldr	r6, [r4, #12]
+ 506 00d6 1343     		orrs	r3, r3, r2
+ 232:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****             DMA_InitStruct->DMA_PeripheralInc | DMA_InitStruct->DMA_MemoryInc |
+ 507              		.loc 1 232 0
+ 508 00d8 0B43     		orrs	r3, r3, r1
+ 509              	.LVL12:
+ 243:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 244:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /*--------------------------- DMAy Channelx CPAR Configuration ----------------*/
+ 245:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Write to DMAy Channelx CPAR */
+ 246:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMAy_Channelx->CPAR = DMA_InitStruct->DMA_PeripheralBaseAddr;
+ 247:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 248:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /*--------------------------- DMAy Channelx CMAR Configuration ----------------*/
+ 249:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Write to DMAy Channelx CMAR */
+ 250:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMAy_Channelx->CMAR = DMA_InitStruct->DMA_MemoryBaseAddr;
+ 510              		.loc 1 250 0
+ 511 00da D4E90002 		ldrd	r0, r2, [r4]
+ 238:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 512              		.loc 1 238 0
+ 513 00de 2B60     		str	r3, [r5]
+ 242:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 514              		.loc 1 242 0
+ 515 00e0 6E60     		str	r6, [r5, #4]
+ 246:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 516              		.loc 1 246 0
+ 517 00e2 A860     		str	r0, [r5, #8]
+ 518              		.loc 1 250 0
+ 519 00e4 EA60     		str	r2, [r5, #12]
+ 251:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** }
+ 520              		.loc 1 251 0
+ 521 00e6 70BD     		pop	{r4, r5, r6, pc}
+ 522              	.LVL13:
+ 523              	.L69:
+ 209:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_PERIPHERAL_INC_STATE(DMA_InitStruct->DMA_PeripheralInc));
+ 524              		.loc 1 209 0 discriminator 1
+ 525 00e8 1D4B     		ldr	r3, .L77+8
+ 526 00ea D121     		movs	r1, #209
+ 527 00ec 1B48     		ldr	r0, .L77+4
+ 528 00ee 9847     		blx	r3
+ 529              	.LVL14:
+ 210:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_MEMORY_INC_STATE(DMA_InitStruct->DMA_MemoryInc));   
+ 530              		.loc 1 210 0 discriminator 1
+ 531 00f0 2369     		ldr	r3, [r4, #16]
+ 532 00f2 33F04003 		bics	r3, r3, #64
+ 533 00f6 BDD0     		beq	.L30
+ 534              	.L70:
+ 210:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_MEMORY_INC_STATE(DMA_InitStruct->DMA_MemoryInc));   
+ 535              		.loc 1 210 0 is_stmt 0 discriminator 2
+ 536 00f8 194B     		ldr	r3, .L77+8
+ 537 00fa D221     		movs	r1, #210
+ 538 00fc 1748     		ldr	r0, .L77+4
+ 539 00fe 9847     		blx	r3
+ 540              	.LVL15:
+ 211:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_PERIPHERAL_DATA_SIZE(DMA_InitStruct->DMA_PeripheralDataSize));
+ 541              		.loc 1 211 0 is_stmt 1 discriminator 2
+ 542 0100 6369     		ldr	r3, [r4, #20]
+ 543 0102 33F08003 		bics	r3, r3, #128
+ 544 0106 B9D0     		beq	.L31
+ 545              	.L71:
+ 546 0108 D321     		movs	r1, #211
+ 547 010a 154B     		ldr	r3, .L77+8
+ 548 010c 1348     		ldr	r0, .L77+4
+ 549 010e 9847     		blx	r3
+ 550              	.LVL16:
+ 551 0110 B4E7     		b	.L31
+ 552              	.L76:
+ 216:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 553              		.loc 1 216 0 discriminator 2
+ 554 0112 D821     		movs	r1, #216
+ 555 0114 1148     		ldr	r0, .L77+4
+ 556 0116 124B     		ldr	r3, .L77+8
+ 557 0118 9847     		blx	r3
+ 558              	.LVL17:
+ 559 011a A16A     		ldr	r1, [r4, #40]
+ 560 011c C8E7     		b	.L36
+ 561              	.L68:
+ 208:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_BUFFER_SIZE(DMA_InitStruct->DMA_BufferSize));
+ 562              		.loc 1 208 0 discriminator 2
+ 563 011e D021     		movs	r1, #208
+ 564 0120 0F4B     		ldr	r3, .L77+8
+ 565 0122 0E48     		ldr	r0, .L77+4
+ 566 0124 9847     		blx	r3
+ 567              	.LVL18:
+ 568 0126 9BE7     		b	.L28
+ 569              	.L74:
+ 214:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_PRIORITY(DMA_InitStruct->DMA_Priority));
+ 570              		.loc 1 214 0 discriminator 2
+ 571 0128 0D4B     		ldr	r3, .L77+8
+ 572 012a D621     		movs	r1, #214
+ 573 012c 0B48     		ldr	r0, .L77+4
+ 574 012e 9847     		blx	r3
+ 575              	.LVL19:
+ 215:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_M2M_STATE(DMA_InitStruct->DMA_M2M));
+ 576              		.loc 1 215 0 discriminator 2
+ 577 0130 636A     		ldr	r3, [r4, #36]
+ 578 0132 33F44053 		bics	r3, r3, #12288
+ 579 0136 B7D0     		beq	.L35
+ 580              	.L75:
+ 215:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_M2M_STATE(DMA_InitStruct->DMA_M2M));
+ 581              		.loc 1 215 0 is_stmt 0 discriminator 4
+ 582 0138 D721     		movs	r1, #215
+ 583 013a 094B     		ldr	r3, .L77+8
+ 584 013c 0748     		ldr	r0, .L77+4
+ 585 013e 9847     		blx	r3
+ 586              	.LVL20:
+ 587 0140 B2E7     		b	.L35
+ 588              	.L72:
+ 212:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_MEMORY_DATA_SIZE(DMA_InitStruct->DMA_MemoryDataSize));
+ 589              		.loc 1 212 0 is_stmt 1 discriminator 3
+ 590 0142 D421     		movs	r1, #212
+ 591 0144 064B     		ldr	r3, .L77+8
+ 592 0146 0548     		ldr	r0, .L77+4
+ 593 0148 9847     		blx	r3
+ 594              	.LVL21:
+ 595 014a 9EE7     		b	.L32
+ 596              	.L73:
+ 213:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_MODE(DMA_InitStruct->DMA_Mode));
+ 597              		.loc 1 213 0 discriminator 3
+ 598 014c D521     		movs	r1, #213
+ 599 014e 044B     		ldr	r3, .L77+8
+ 600 0150 0248     		ldr	r0, .L77+4
+ 601 0152 9847     		blx	r3
+ 602              	.LVL22:
+ 603 0154 A0E7     		b	.L33
+ 604              	.L78:
+ 605 0156 00BF     		.align	2
+ 606              	.L77:
+ 607 0158 08000240 		.word	1073872904
+ 608 015c 00000000 		.word	.LC0
+ 609 0160 00000000 		.word	assert_failed
+ 610              		.cfi_endproc
+ 611              	.LFE30:
+ 613              		.section	.text.DMA_StructInit,"ax",%progbits
+ 614              		.align	1
+ 615              		.p2align 2,,3
+ 616              		.global	DMA_StructInit
+ 617              		.syntax unified
+ 618              		.thumb
+ 619              		.thumb_func
+ 620              		.fpu softvfp
+ 622              	DMA_StructInit:
+ 623              	.LFB31:
+ 252:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 253:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+ 254:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @brief  Fills each DMA_InitStruct member with its default value.
+ 255:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @param  DMA_InitStruct : pointer to a DMA_InitTypeDef structure which will
+ 256:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   be initialized.
+ 257:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @retval None
+ 258:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+ 259:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** void DMA_StructInit(DMA_InitTypeDef* DMA_InitStruct)
+ 260:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** {
+ 624              		.loc 1 260 0
+ 625              		.cfi_startproc
+ 626              		@ args = 0, pretend = 0, frame = 0
+ 627              		@ frame_needed = 0, uses_anonymous_args = 0
+ 628              		@ link register save eliminated.
+ 629              	.LVL23:
+ 261:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /*-------------- Reset DMA init structure parameters values ------------------*/
+ 262:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Initialize the DMA_PeripheralBaseAddr member */
+ 263:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMA_InitStruct->DMA_PeripheralBaseAddr = 0;
+ 630              		.loc 1 263 0
+ 631 0000 0023     		movs	r3, #0
+ 264:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Initialize the DMA_MemoryBaseAddr member */
+ 265:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMA_InitStruct->DMA_MemoryBaseAddr = 0;
+ 632              		.loc 1 265 0
+ 633 0002 C0E90033 		strd	r3, r3, [r0]
+ 266:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Initialize the DMA_DIR member */
+ 267:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMA_InitStruct->DMA_DIR = DMA_DIR_PeripheralSRC;
+ 268:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Initialize the DMA_BufferSize member */
+ 269:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMA_InitStruct->DMA_BufferSize = 0;
+ 634              		.loc 1 269 0
+ 635 0006 C0E90233 		strd	r3, r3, [r0, #8]
+ 270:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Initialize the DMA_PeripheralInc member */
+ 271:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMA_InitStruct->DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+ 272:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Initialize the DMA_MemoryInc member */
+ 273:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMA_InitStruct->DMA_MemoryInc = DMA_MemoryInc_Disable;
+ 636              		.loc 1 273 0
+ 637 000a C0E90433 		strd	r3, r3, [r0, #16]
+ 274:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Initialize the DMA_PeripheralDataSize member */
+ 275:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMA_InitStruct->DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+ 276:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Initialize the DMA_MemoryDataSize member */
+ 277:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMA_InitStruct->DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+ 638              		.loc 1 277 0
+ 639 000e C0E90633 		strd	r3, r3, [r0, #24]
+ 278:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Initialize the DMA_Mode member */
+ 279:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMA_InitStruct->DMA_Mode = DMA_Mode_Normal;
+ 280:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Initialize the DMA_Priority member */
+ 281:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMA_InitStruct->DMA_Priority = DMA_Priority_Low;
+ 640              		.loc 1 281 0
+ 641 0012 C0E90833 		strd	r3, r3, [r0, #32]
+ 282:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Initialize the DMA_M2M member */
+ 283:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   DMA_InitStruct->DMA_M2M = DMA_M2M_Disable;
+ 642              		.loc 1 283 0
+ 643 0016 8362     		str	r3, [r0, #40]
+ 284:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** }
+ 644              		.loc 1 284 0
+ 645 0018 7047     		bx	lr
+ 646              		.cfi_endproc
+ 647              	.LFE31:
+ 649 001a 00BF     		.section	.text.DMA_Cmd,"ax",%progbits
+ 650              		.align	1
+ 651              		.p2align 2,,3
+ 652              		.global	DMA_Cmd
+ 653              		.syntax unified
+ 654              		.thumb
+ 655              		.thumb_func
+ 656              		.fpu softvfp
+ 658              	DMA_Cmd:
+ 659              	.LFB32:
+ 285:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 286:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+ 287:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @brief  Enables or disables the specified DMAy Channelx.
+ 288:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @param  DMAy_Channelx: where y can be 1 or 2 to select the DMA and 
+ 289:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   x can be 1 to 7 for DMA1 and 1 to 5 for DMA2 to select the DMA Channel.
+ 290:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @param  NewState: new state of the DMAy Channelx. 
+ 291:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 292:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @retval None
+ 293:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+ 294:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** void DMA_Cmd(DMA_Channel_TypeDef* DMAy_Channelx, FunctionalState NewState)
+ 295:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** {
+ 660              		.loc 1 295 0
+ 661              		.cfi_startproc
+ 662              		@ args = 0, pretend = 0, frame = 0
+ 663              		@ frame_needed = 0, uses_anonymous_args = 0
+ 664              	.LVL24:
+ 665 0000 38B5     		push	{r3, r4, r5, lr}
+ 666              		.cfi_def_cfa_offset 16
+ 667              		.cfi_offset 3, -16
+ 668              		.cfi_offset 4, -12
+ 669              		.cfi_offset 5, -8
+ 670              		.cfi_offset 14, -4
+ 296:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 297:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_ALL_PERIPH(DMAy_Channelx));
+ 671              		.loc 1 297 0
+ 672 0002 1F4B     		ldr	r3, .L88
+ 295:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 673              		.loc 1 295 0
+ 674 0004 0446     		mov	r4, r0
+ 675              		.loc 1 297 0
+ 676 0006 9842     		cmp	r0, r3
+ 295:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 677              		.loc 1 295 0
+ 678 0008 0D46     		mov	r5, r1
+ 679              		.loc 1 297 0
+ 680 000a 26D0     		beq	.L81
+ 681              		.loc 1 297 0 is_stmt 0 discriminator 1
+ 682 000c 1433     		adds	r3, r3, #20
+ 683 000e 9842     		cmp	r0, r3
+ 684 0010 23D0     		beq	.L81
+ 685              		.loc 1 297 0 discriminator 2
+ 686 0012 1433     		adds	r3, r3, #20
+ 687 0014 9842     		cmp	r0, r3
+ 688 0016 20D0     		beq	.L81
+ 689              		.loc 1 297 0 discriminator 3
+ 690 0018 1433     		adds	r3, r3, #20
+ 691 001a 9842     		cmp	r0, r3
+ 692 001c 1DD0     		beq	.L81
+ 693              		.loc 1 297 0 discriminator 4
+ 694 001e 1433     		adds	r3, r3, #20
+ 695 0020 9842     		cmp	r0, r3
+ 696 0022 1AD0     		beq	.L81
+ 697              		.loc 1 297 0 discriminator 5
+ 698 0024 1433     		adds	r3, r3, #20
+ 699 0026 9842     		cmp	r0, r3
+ 700 0028 17D0     		beq	.L81
+ 701              		.loc 1 297 0 discriminator 6
+ 702 002a 1433     		adds	r3, r3, #20
+ 703 002c 9842     		cmp	r0, r3
+ 704 002e 14D0     		beq	.L81
+ 705              		.loc 1 297 0 discriminator 7
+ 706 0030 03F56273 		add	r3, r3, #904
+ 707 0034 9842     		cmp	r0, r3
+ 708 0036 10D0     		beq	.L81
+ 709              		.loc 1 297 0 discriminator 8
+ 710 0038 1433     		adds	r3, r3, #20
+ 711 003a 9842     		cmp	r0, r3
+ 712 003c 0DD0     		beq	.L81
+ 713              		.loc 1 297 0 discriminator 9
+ 714 003e 1433     		adds	r3, r3, #20
+ 715 0040 9842     		cmp	r0, r3
+ 716 0042 0AD0     		beq	.L81
+ 717              		.loc 1 297 0 discriminator 10
+ 718 0044 1433     		adds	r3, r3, #20
+ 719 0046 9842     		cmp	r0, r3
+ 720 0048 07D0     		beq	.L81
+ 721              		.loc 1 297 0 discriminator 11
+ 722 004a 1433     		adds	r3, r3, #20
+ 723 004c 9842     		cmp	r0, r3
+ 724 004e 04D0     		beq	.L81
+ 725              		.loc 1 297 0 discriminator 12
+ 726 0050 40F22911 		movw	r1, #297
+ 727              	.LVL25:
+ 728 0054 0B48     		ldr	r0, .L88+4
+ 729              	.LVL26:
+ 730 0056 0C4B     		ldr	r3, .L88+8
+ 731 0058 9847     		blx	r3
+ 732              	.LVL27:
+ 733              	.L81:
+ 298:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 734              		.loc 1 298 0 is_stmt 1
+ 735 005a 012D     		cmp	r5, #1
+ 736 005c 05D8     		bhi	.L87
+ 299:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 300:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   if (NewState != DISABLE)
+ 737              		.loc 1 300 0
+ 738 005e 4DB9     		cbnz	r5, .L83
+ 301:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 302:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Enable the selected DMAy Channelx */
+ 303:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMAy_Channelx->CCR |= CCR_ENABLE_Set;
+ 304:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 305:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else
+ 306:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 307:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Disable the selected DMAy Channelx */
+ 308:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMAy_Channelx->CCR &= CCR_ENABLE_Reset;
+ 739              		.loc 1 308 0
+ 740 0060 2368     		ldr	r3, [r4]
+ 741 0062 23F00103 		bic	r3, r3, #1
+ 742 0066 2360     		str	r3, [r4]
+ 309:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 310:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** }
+ 743              		.loc 1 310 0
+ 744 0068 38BD     		pop	{r3, r4, r5, pc}
+ 745              	.LVL28:
+ 746              	.L87:
+ 298:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 747              		.loc 1 298 0 discriminator 1
+ 748 006a 4FF49571 		mov	r1, #298
+ 749 006e 0548     		ldr	r0, .L88+4
+ 750 0070 054B     		ldr	r3, .L88+8
+ 751 0072 9847     		blx	r3
+ 752              	.LVL29:
+ 753              	.L83:
+ 303:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 754              		.loc 1 303 0
+ 755 0074 2368     		ldr	r3, [r4]
+ 756 0076 43F00103 		orr	r3, r3, #1
+ 757 007a 2360     		str	r3, [r4]
+ 758              		.loc 1 310 0
+ 759 007c 38BD     		pop	{r3, r4, r5, pc}
+ 760              	.LVL30:
+ 761              	.L89:
+ 762 007e 00BF     		.align	2
+ 763              	.L88:
+ 764 0080 08000240 		.word	1073872904
+ 765 0084 00000000 		.word	.LC0
+ 766 0088 00000000 		.word	assert_failed
+ 767              		.cfi_endproc
+ 768              	.LFE32:
+ 770              		.section	.text.DMA_ITConfig,"ax",%progbits
+ 771              		.align	1
+ 772              		.p2align 2,,3
+ 773              		.global	DMA_ITConfig
+ 774              		.syntax unified
+ 775              		.thumb
+ 776              		.thumb_func
+ 777              		.fpu softvfp
+ 779              	DMA_ITConfig:
+ 780              	.LFB33:
+ 311:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 312:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+ 313:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @brief  Enables or disables the specified DMAy Channelx interrupts.
+ 314:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @param  DMAy_Channelx: where y can be 1 or 2 to select the DMA and 
+ 315:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   x can be 1 to 7 for DMA1 and 1 to 5 for DMA2 to select the DMA Channel.
+ 316:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @param  DMA_IT: specifies the DMA interrupts sources to be enabled
+ 317:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   or disabled. 
+ 318:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   This parameter can be any combination of the following values:
+ 319:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA_IT_TC:  Transfer complete interrupt mask
+ 320:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA_IT_HT:  Half transfer interrupt mask
+ 321:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA_IT_TE:  Transfer error interrupt mask
+ 322:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @param  NewState: new state of the specified DMA interrupts.
+ 323:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 324:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @retval None
+ 325:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+ 326:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState)
+ 327:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** {
+ 781              		.loc 1 327 0
+ 782              		.cfi_startproc
+ 783              		@ args = 0, pretend = 0, frame = 0
+ 784              		@ frame_needed = 0, uses_anonymous_args = 0
+ 785              	.LVL31:
+ 328:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 329:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_ALL_PERIPH(DMAy_Channelx));
+ 786              		.loc 1 329 0
+ 787 0000 244B     		ldr	r3, .L100
+ 327:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 788              		.loc 1 327 0
+ 789 0002 70B5     		push	{r4, r5, r6, lr}
+ 790              		.cfi_def_cfa_offset 16
+ 791              		.cfi_offset 4, -16
+ 792              		.cfi_offset 5, -12
+ 793              		.cfi_offset 6, -8
+ 794              		.cfi_offset 14, -4
+ 795              		.loc 1 329 0
+ 796 0004 9842     		cmp	r0, r3
+ 327:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 797              		.loc 1 327 0
+ 798 0006 0446     		mov	r4, r0
+ 799 0008 0D46     		mov	r5, r1
+ 800 000a 1646     		mov	r6, r2
+ 801              		.loc 1 329 0
+ 802 000c 26D0     		beq	.L91
+ 803              		.loc 1 329 0 is_stmt 0 discriminator 1
+ 804 000e 1433     		adds	r3, r3, #20
+ 805 0010 9842     		cmp	r0, r3
+ 806 0012 23D0     		beq	.L91
+ 807              		.loc 1 329 0 discriminator 2
+ 808 0014 1433     		adds	r3, r3, #20
+ 809 0016 9842     		cmp	r0, r3
+ 810 0018 20D0     		beq	.L91
+ 811              		.loc 1 329 0 discriminator 3
+ 812 001a 1433     		adds	r3, r3, #20
+ 813 001c 9842     		cmp	r0, r3
+ 814 001e 1DD0     		beq	.L91
+ 815              		.loc 1 329 0 discriminator 4
+ 816 0020 1433     		adds	r3, r3, #20
+ 817 0022 9842     		cmp	r0, r3
+ 818 0024 1AD0     		beq	.L91
+ 819              		.loc 1 329 0 discriminator 5
+ 820 0026 1433     		adds	r3, r3, #20
+ 821 0028 9842     		cmp	r0, r3
+ 822 002a 17D0     		beq	.L91
+ 823              		.loc 1 329 0 discriminator 6
+ 824 002c 1433     		adds	r3, r3, #20
+ 825 002e 9842     		cmp	r0, r3
+ 826 0030 14D0     		beq	.L91
+ 827              		.loc 1 329 0 discriminator 7
+ 828 0032 03F56273 		add	r3, r3, #904
+ 829 0036 9842     		cmp	r0, r3
+ 830 0038 10D0     		beq	.L91
+ 831              		.loc 1 329 0 discriminator 8
+ 832 003a 1433     		adds	r3, r3, #20
+ 833 003c 9842     		cmp	r0, r3
+ 834 003e 0DD0     		beq	.L91
+ 835              		.loc 1 329 0 discriminator 9
+ 836 0040 1433     		adds	r3, r3, #20
+ 837 0042 9842     		cmp	r0, r3
+ 838 0044 0AD0     		beq	.L91
+ 839              		.loc 1 329 0 discriminator 10
+ 840 0046 1433     		adds	r3, r3, #20
+ 841 0048 9842     		cmp	r0, r3
+ 842 004a 07D0     		beq	.L91
+ 843              		.loc 1 329 0 discriminator 11
+ 844 004c 1433     		adds	r3, r3, #20
+ 845 004e 9842     		cmp	r0, r3
+ 846 0050 04D0     		beq	.L91
+ 847              		.loc 1 329 0 discriminator 12
+ 848 0052 40F24911 		movw	r1, #329
+ 849              	.LVL32:
+ 850 0056 1048     		ldr	r0, .L100+4
+ 851              	.LVL33:
+ 852 0058 104B     		ldr	r3, .L100+8
+ 853 005a 9847     		blx	r3
+ 854              	.LVL34:
+ 855              	.L91:
+ 330:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_CONFIG_IT(DMA_IT));
+ 856              		.loc 1 330 0 is_stmt 1
+ 857 005c 35F00E03 		bics	r3, r5, #14
+ 858 0060 08D1     		bne	.L92
+ 859              		.loc 1 330 0 is_stmt 0 discriminator 2
+ 860 0062 3DB1     		cbz	r5, .L92
+ 331:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 861              		.loc 1 331 0 is_stmt 1
+ 862 0064 012E     		cmp	r6, #1
+ 863 0066 0CD8     		bhi	.L99
+ 864              	.L94:
+ 332:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   if (NewState != DISABLE)
+ 865              		.loc 1 332 0
+ 866 0068 86B9     		cbnz	r6, .L95
+ 333:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 334:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Enable the selected DMA interrupts */
+ 335:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMAy_Channelx->CCR |= DMA_IT;
+ 336:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 337:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else
+ 338:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 339:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Disable the selected DMA interrupts */
+ 340:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMAy_Channelx->CCR &= ~DMA_IT;
+ 867              		.loc 1 340 0
+ 868 006a 2368     		ldr	r3, [r4]
+ 869 006c 23EA0505 		bic	r5, r3, r5
+ 870              	.LVL35:
+ 871 0070 2560     		str	r5, [r4]
+ 341:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 342:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** }
+ 872              		.loc 1 342 0
+ 873 0072 70BD     		pop	{r4, r5, r6, pc}
+ 874              	.LVL36:
+ 875              	.L92:
+ 330:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 876              		.loc 1 330 0 discriminator 3
+ 877 0074 4FF4A571 		mov	r1, #330
+ 878 0078 0748     		ldr	r0, .L100+4
+ 879 007a 084B     		ldr	r3, .L100+8
+ 880 007c 9847     		blx	r3
+ 881              	.LVL37:
+ 331:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   if (NewState != DISABLE)
+ 882              		.loc 1 331 0 discriminator 3
+ 883 007e 012E     		cmp	r6, #1
+ 884 0080 F2D9     		bls	.L94
+ 885              	.L99:
+ 331:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   if (NewState != DISABLE)
+ 886              		.loc 1 331 0 is_stmt 0 discriminator 1
+ 887 0082 40F24B11 		movw	r1, #331
+ 888 0086 0448     		ldr	r0, .L100+4
+ 889 0088 044B     		ldr	r3, .L100+8
+ 890 008a 9847     		blx	r3
+ 891              	.LVL38:
+ 892              	.L95:
+ 335:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 893              		.loc 1 335 0 is_stmt 1
+ 894 008c 2368     		ldr	r3, [r4]
+ 895 008e 1D43     		orrs	r5, r5, r3
+ 896              	.LVL39:
+ 897 0090 2560     		str	r5, [r4]
+ 898              		.loc 1 342 0
+ 899 0092 70BD     		pop	{r4, r5, r6, pc}
+ 900              	.LVL40:
+ 901              	.L101:
+ 902              		.align	2
+ 903              	.L100:
+ 904 0094 08000240 		.word	1073872904
+ 905 0098 00000000 		.word	.LC0
+ 906 009c 00000000 		.word	assert_failed
+ 907              		.cfi_endproc
+ 908              	.LFE33:
+ 910              		.section	.text.DMA_GetCurrDataCounter,"ax",%progbits
+ 911              		.align	1
+ 912              		.p2align 2,,3
+ 913              		.global	DMA_GetCurrDataCounter
+ 914              		.syntax unified
+ 915              		.thumb
+ 916              		.thumb_func
+ 917              		.fpu softvfp
+ 919              	DMA_GetCurrDataCounter:
+ 920              	.LFB34:
+ 343:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 344:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+ 345:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @brief  Returns the number of remaining data units in the current
+ 346:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   DMAy Channelx transfer.
+ 347:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @param  DMAy_Channelx: where y can be 1 or 2 to select the DMA and 
+ 348:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   x can be 1 to 7 for DMA1 and 1 to 5 for DMA2 to select the DMA Channel.
+ 349:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @retval The number of remaining data units in the current DMAy Channelx
+ 350:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   transfer.
+ 351:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+ 352:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** uint16_t DMA_GetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx)
+ 353:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** {
+ 921              		.loc 1 353 0
+ 922              		.cfi_startproc
+ 923              		@ args = 0, pretend = 0, frame = 0
+ 924              		@ frame_needed = 0, uses_anonymous_args = 0
+ 925              	.LVL41:
+ 354:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 355:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_ALL_PERIPH(DMAy_Channelx));
+ 926              		.loc 1 355 0
+ 927 0000 174B     		ldr	r3, .L105
+ 353:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 928              		.loc 1 353 0
+ 929 0002 10B5     		push	{r4, lr}
+ 930              		.cfi_def_cfa_offset 8
+ 931              		.cfi_offset 4, -8
+ 932              		.cfi_offset 14, -4
+ 933              		.loc 1 355 0
+ 934 0004 9842     		cmp	r0, r3
+ 353:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 935              		.loc 1 353 0
+ 936 0006 0446     		mov	r4, r0
+ 937              		.loc 1 355 0
+ 938 0008 26D0     		beq	.L103
+ 939              		.loc 1 355 0 is_stmt 0 discriminator 1
+ 940 000a 1433     		adds	r3, r3, #20
+ 941 000c 9842     		cmp	r0, r3
+ 942 000e 23D0     		beq	.L103
+ 943              		.loc 1 355 0 discriminator 2
+ 944 0010 1433     		adds	r3, r3, #20
+ 945 0012 9842     		cmp	r0, r3
+ 946 0014 20D0     		beq	.L103
+ 947              		.loc 1 355 0 discriminator 3
+ 948 0016 1433     		adds	r3, r3, #20
+ 949 0018 9842     		cmp	r0, r3
+ 950 001a 1DD0     		beq	.L103
+ 951              		.loc 1 355 0 discriminator 4
+ 952 001c 1433     		adds	r3, r3, #20
+ 953 001e 9842     		cmp	r0, r3
+ 954 0020 1AD0     		beq	.L103
+ 955              		.loc 1 355 0 discriminator 5
+ 956 0022 1433     		adds	r3, r3, #20
+ 957 0024 9842     		cmp	r0, r3
+ 958 0026 17D0     		beq	.L103
+ 959              		.loc 1 355 0 discriminator 6
+ 960 0028 1433     		adds	r3, r3, #20
+ 961 002a 9842     		cmp	r0, r3
+ 962 002c 14D0     		beq	.L103
+ 963              		.loc 1 355 0 discriminator 7
+ 964 002e 03F56273 		add	r3, r3, #904
+ 965 0032 9842     		cmp	r0, r3
+ 966 0034 10D0     		beq	.L103
+ 967              		.loc 1 355 0 discriminator 8
+ 968 0036 1433     		adds	r3, r3, #20
+ 969 0038 9842     		cmp	r0, r3
+ 970 003a 0DD0     		beq	.L103
+ 971              		.loc 1 355 0 discriminator 9
+ 972 003c 1433     		adds	r3, r3, #20
+ 973 003e 9842     		cmp	r0, r3
+ 974 0040 0AD0     		beq	.L103
+ 975              		.loc 1 355 0 discriminator 10
+ 976 0042 1433     		adds	r3, r3, #20
+ 977 0044 9842     		cmp	r0, r3
+ 978 0046 07D0     		beq	.L103
+ 979              		.loc 1 355 0 discriminator 11
+ 980 0048 1433     		adds	r3, r3, #20
+ 981 004a 9842     		cmp	r0, r3
+ 982 004c 04D0     		beq	.L103
+ 983              		.loc 1 355 0 discriminator 12
+ 984 004e 40F26311 		movw	r1, #355
+ 985 0052 0448     		ldr	r0, .L105+4
+ 986              	.LVL42:
+ 987 0054 044B     		ldr	r3, .L105+8
+ 988 0056 9847     		blx	r3
+ 989              	.LVL43:
+ 990              	.L103:
+ 356:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Return the number of remaining data units for DMAy Channelx */
+ 357:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   return ((uint16_t)(DMAy_Channelx->CNDTR));
+ 991              		.loc 1 357 0 is_stmt 1
+ 992 0058 6068     		ldr	r0, [r4, #4]
+ 358:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** }
+ 993              		.loc 1 358 0
+ 994 005a 80B2     		uxth	r0, r0
+ 995 005c 10BD     		pop	{r4, pc}
+ 996              	.LVL44:
+ 997              	.L106:
+ 998 005e 00BF     		.align	2
+ 999              	.L105:
+ 1000 0060 08000240 		.word	1073872904
+ 1001 0064 00000000 		.word	.LC0
+ 1002 0068 00000000 		.word	assert_failed
+ 1003              		.cfi_endproc
+ 1004              	.LFE34:
+ 1006              		.section	.text.DMA_GetFlagStatus,"ax",%progbits
+ 1007              		.align	1
+ 1008              		.p2align 2,,3
+ 1009              		.global	DMA_GetFlagStatus
+ 1010              		.syntax unified
+ 1011              		.thumb
+ 1012              		.thumb_func
+ 1013              		.fpu softvfp
+ 1015              	DMA_GetFlagStatus:
+ 1016              	.LFB35:
+ 359:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 360:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+ 361:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @brief  Checks whether the specified DMAy Channelx flag is set or not.
+ 362:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @param  DMA_FLAG: specifies the flag to check.
+ 363:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   This parameter can be one of the following values:
+ 364:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_GL1: DMA1 Channel1 global flag.
+ 365:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TC1: DMA1 Channel1 transfer complete flag.
+ 366:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_HT1: DMA1 Channel1 half transfer flag.
+ 367:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TE1: DMA1 Channel1 transfer error flag.
+ 368:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_GL2: DMA1 Channel2 global flag.
+ 369:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TC2: DMA1 Channel2 transfer complete flag.
+ 370:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_HT2: DMA1 Channel2 half transfer flag.
+ 371:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TE2: DMA1 Channel2 transfer error flag.
+ 372:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_GL3: DMA1 Channel3 global flag.
+ 373:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TC3: DMA1 Channel3 transfer complete flag.
+ 374:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_HT3: DMA1 Channel3 half transfer flag.
+ 375:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TE3: DMA1 Channel3 transfer error flag.
+ 376:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_GL4: DMA1 Channel4 global flag.
+ 377:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TC4: DMA1 Channel4 transfer complete flag.
+ 378:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_HT4: DMA1 Channel4 half transfer flag.
+ 379:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TE4: DMA1 Channel4 transfer error flag.
+ 380:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_GL5: DMA1 Channel5 global flag.
+ 381:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TC5: DMA1 Channel5 transfer complete flag.
+ 382:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_HT5: DMA1 Channel5 half transfer flag.
+ 383:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TE5: DMA1 Channel5 transfer error flag.
+ 384:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_GL6: DMA1 Channel6 global flag.
+ 385:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TC6: DMA1 Channel6 transfer complete flag.
+ 386:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_HT6: DMA1 Channel6 half transfer flag.
+ 387:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TE6: DMA1 Channel6 transfer error flag.
+ 388:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_GL7: DMA1 Channel7 global flag.
+ 389:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TC7: DMA1 Channel7 transfer complete flag.
+ 390:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_HT7: DMA1 Channel7 half transfer flag.
+ 391:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TE7: DMA1 Channel7 transfer error flag.
+ 392:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_GL1: DMA2 Channel1 global flag.
+ 393:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TC1: DMA2 Channel1 transfer complete flag.
+ 394:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_HT1: DMA2 Channel1 half transfer flag.
+ 395:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TE1: DMA2 Channel1 transfer error flag.
+ 396:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_GL2: DMA2 Channel2 global flag.
+ 397:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TC2: DMA2 Channel2 transfer complete flag.
+ 398:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_HT2: DMA2 Channel2 half transfer flag.
+ 399:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TE2: DMA2 Channel2 transfer error flag.
+ 400:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_GL3: DMA2 Channel3 global flag.
+ 401:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TC3: DMA2 Channel3 transfer complete flag.
+ 402:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_HT3: DMA2 Channel3 half transfer flag.
+ 403:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TE3: DMA2 Channel3 transfer error flag.
+ 404:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_GL4: DMA2 Channel4 global flag.
+ 405:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TC4: DMA2 Channel4 transfer complete flag.
+ 406:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_HT4: DMA2 Channel4 half transfer flag.
+ 407:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TE4: DMA2 Channel4 transfer error flag.
+ 408:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_GL5: DMA2 Channel5 global flag.
+ 409:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TC5: DMA2 Channel5 transfer complete flag.
+ 410:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_HT5: DMA2 Channel5 half transfer flag.
+ 411:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TE5: DMA2 Channel5 transfer error flag.
+ 412:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @retval The new state of DMA_FLAG (SET or RESET).
+ 413:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+ 414:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** FlagStatus DMA_GetFlagStatus(uint32_t DMA_FLAG)
+ 415:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** {
+ 1017              		.loc 1 415 0
+ 1018              		.cfi_startproc
+ 1019              		@ args = 0, pretend = 0, frame = 0
+ 1020              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1021              	.LVL45:
+ 416:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   FlagStatus bitstatus = RESET;
+ 417:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   uint32_t tmpreg = 0;
+ 418:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_GET_FLAG(DMA_FLAG));
+ 1022              		.loc 1 419 0
+ 1023 0000 431E     		subs	r3, r0, #1
+ 1024 0002 012B     		cmp	r3, #1
+ 415:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   FlagStatus bitstatus = RESET;
+ 1025              		.loc 1 415 0
+ 1026 0004 10B5     		push	{r4, lr}
+ 1027              		.cfi_def_cfa_offset 8
+ 1028              		.cfi_offset 4, -8
+ 1029              		.cfi_offset 14, -4
+ 415:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   FlagStatus bitstatus = RESET;
+ 1030              		.loc 1 415 0
+ 1031 0006 0446     		mov	r4, r0
+ 1032              		.loc 1 419 0
+ 1033 0008 40F28E80 		bls	.L108
+ 1034              		.loc 1 419 0 is_stmt 0 discriminator 1
+ 1035 000c 021F     		subs	r2, r0, #4
+ 1036 000e 1C2A     		cmp	r2, #28
+ 1037 0010 0AD8     		bhi	.L109
+ 1038 0012 4A4B     		ldr	r3, .L186
+ 1039 0014 D340     		lsrs	r3, r3, r2
+ 1040 0016 D907     		lsls	r1, r3, #31
+ 1041 0018 08D5     		bpl	.L110
+ 1042              	.LVL46:
+ 1043              	.L111:
+ 420:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 421:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Calculate the used DMA */
+ 422:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   if ((DMA_FLAG & FLAG_Mask) != (uint32_t)RESET)
+ 423:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 424:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Get DMA2 ISR register value */
+ 425:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     tmpreg = DMA2->ISR ;
+ 426:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 427:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else
+ 428:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 429:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Get DMA1 ISR register value */
+ 430:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     tmpreg = DMA1->ISR ;
+ 1044              		.loc 1 430 0 is_stmt 1
+ 1045 001a 494B     		ldr	r3, .L186+4
+ 1046 001c 1B68     		ldr	r3, [r3]
+ 1047              	.LVL47:
+ 1048              	.L114:
+ 431:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 432:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 433:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the status of the specified DMA flag */
+ 434:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   if ((tmpreg & DMA_FLAG) != (uint32_t)RESET)
+ 1049              		.loc 1 434 0
+ 1050 001e 2342     		tst	r3, r4
+ 435:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 436:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* DMA_FLAG is set */
+ 437:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     bitstatus = SET;
+ 438:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 439:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else
+ 440:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 441:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* DMA_FLAG is reset */
+ 442:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     bitstatus = RESET;
+ 443:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 444:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   
+ 445:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Return the DMA_FLAG status */
+ 446:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   return  bitstatus;
+ 447:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** }
+ 1051              		.loc 1 447 0
+ 1052 0020 14BF     		ite	ne
+ 1053 0022 0120     		movne	r0, #1
+ 1054 0024 0020     		moveq	r0, #0
+ 1055 0026 10BD     		pop	{r4, pc}
+ 1056              	.LVL48:
+ 1057              	.L109:
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1058              		.loc 1 419 0 discriminator 5
+ 1059 0028 4028     		cmp	r0, #64
+ 1060 002a F6D0     		beq	.L111
+ 1061              	.L110:
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1062              		.loc 1 419 0 is_stmt 0 discriminator 6
+ 1063 002c 802C     		cmp	r4, #128
+ 1064 002e F4D0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1065              		.loc 1 419 0 discriminator 7
+ 1066 0030 B4F5807F 		cmp	r4, #256
+ 1067 0034 F1D0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1068              		.loc 1 419 0 discriminator 8
+ 1069 0036 B4F5007F 		cmp	r4, #512
+ 1070 003a EED0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1071              		.loc 1 419 0 discriminator 9
+ 1072 003c B4F5806F 		cmp	r4, #1024
+ 1073 0040 EBD0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1074              		.loc 1 419 0 discriminator 10
+ 1075 0042 B4F5006F 		cmp	r4, #2048
+ 1076 0046 E8D0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1077              		.loc 1 419 0 discriminator 11
+ 1078 0048 B4F5805F 		cmp	r4, #4096
+ 1079 004c E5D0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1080              		.loc 1 419 0 discriminator 12
+ 1081 004e B4F5005F 		cmp	r4, #8192
+ 1082 0052 E2D0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1083              		.loc 1 419 0 discriminator 13
+ 1084 0054 B4F5804F 		cmp	r4, #16384
+ 1085 0058 DFD0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1086              		.loc 1 419 0 discriminator 14
+ 1087 005a B4F5004F 		cmp	r4, #32768
+ 1088 005e DCD0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1089              		.loc 1 419 0 discriminator 15
+ 1090 0060 B4F5803F 		cmp	r4, #65536
+ 1091 0064 D9D0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1092              		.loc 1 419 0 discriminator 16
+ 1093 0066 B4F5003F 		cmp	r4, #131072
+ 1094 006a D6D0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1095              		.loc 1 419 0 discriminator 17
+ 1096 006c B4F5802F 		cmp	r4, #262144
+ 1097 0070 D3D0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1098              		.loc 1 419 0 discriminator 18
+ 1099 0072 B4F5002F 		cmp	r4, #524288
+ 1100 0076 D0D0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1101              		.loc 1 419 0 discriminator 19
+ 1102 0078 B4F5801F 		cmp	r4, #1048576
+ 1103 007c CDD0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1104              		.loc 1 419 0 discriminator 20
+ 1105 007e B4F5001F 		cmp	r4, #2097152
+ 1106 0082 CAD0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1107              		.loc 1 419 0 discriminator 21
+ 1108 0084 B4F5800F 		cmp	r4, #4194304
+ 1109 0088 C7D0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1110              		.loc 1 419 0 discriminator 22
+ 1111 008a B4F5000F 		cmp	r4, #8388608
+ 1112 008e C4D0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1113              		.loc 1 419 0 discriminator 23
+ 1114 0090 B4F1807F 		cmp	r4, #16777216
+ 1115 0094 C1D0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1116              		.loc 1 419 0 discriminator 24
+ 1117 0096 B4F1007F 		cmp	r4, #33554432
+ 1118 009a BED0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1119              		.loc 1 419 0 discriminator 25
+ 1120 009c B4F1806F 		cmp	r4, #67108864
+ 1121 00a0 BBD0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1122              		.loc 1 419 0 discriminator 26
+ 1123 00a2 B4F1006F 		cmp	r4, #134217728
+ 1124 00a6 B8D0     		beq	.L111
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1125              		.loc 1 419 0 discriminator 27
+ 1126 00a8 04F17043 		add	r3, r4, #-268435456
+ 1127 00ac 013B     		subs	r3, r3, #1
+ 1128 00ae 1F2B     		cmp	r3, #31
+ 1129 00b0 40D8     		bhi	.L112
+ 1130 00b2 244A     		ldr	r2, .L186+8
+ 1131 00b4 22FA03F3 		lsr	r3, r2, r3
+ 1132 00b8 DA07     		lsls	r2, r3, #31
+ 1133 00ba 38D4     		bmi	.L115
+ 1134              	.L113:
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1135              		.loc 1 419 0 discriminator 34
+ 1136 00bc 224B     		ldr	r3, .L186+12
+ 1137 00be 9C42     		cmp	r4, r3
+ 1138 00c0 35D0     		beq	.L115
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1139              		.loc 1 419 0 discriminator 35
+ 1140 00c2 8033     		adds	r3, r3, #128
+ 1141 00c4 9C42     		cmp	r4, r3
+ 1142 00c6 32D0     		beq	.L115
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1143              		.loc 1 419 0 discriminator 36
+ 1144 00c8 03F58073 		add	r3, r3, #256
+ 1145 00cc 9C42     		cmp	r4, r3
+ 1146 00ce 2ED0     		beq	.L115
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1147              		.loc 1 419 0 discriminator 37
+ 1148 00d0 03F50073 		add	r3, r3, #512
+ 1149 00d4 9C42     		cmp	r4, r3
+ 1150 00d6 2AD0     		beq	.L115
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1151              		.loc 1 419 0 discriminator 38
+ 1152 00d8 03F58063 		add	r3, r3, #1024
+ 1153 00dc 9C42     		cmp	r4, r3
+ 1154 00de 26D0     		beq	.L115
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1155              		.loc 1 419 0 discriminator 39
+ 1156 00e0 B4F1102F 		cmp	r4, #268439552
+ 1157 00e4 23D0     		beq	.L115
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1158              		.loc 1 419 0 discriminator 40
+ 1159 00e6 03F5C053 		add	r3, r3, #6144
+ 1160 00ea 9C42     		cmp	r4, r3
+ 1161 00ec 1FD0     		beq	.L115
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1162              		.loc 1 419 0 discriminator 41
+ 1163 00ee 03F50053 		add	r3, r3, #8192
+ 1164 00f2 9C42     		cmp	r4, r3
+ 1165 00f4 1BD0     		beq	.L115
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1166              		.loc 1 419 0 discriminator 42
+ 1167 00f6 03F58043 		add	r3, r3, #16384
+ 1168 00fa 9C42     		cmp	r4, r3
+ 1169 00fc 17D0     		beq	.L115
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1170              		.loc 1 419 0 discriminator 43
+ 1171 00fe 03F50043 		add	r3, r3, #32768
+ 1172 0102 9C42     		cmp	r4, r3
+ 1173 0104 13D0     		beq	.L115
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1174              		.loc 1 419 0 discriminator 44
+ 1175 0106 03F58033 		add	r3, r3, #65536
+ 1176 010a 9C42     		cmp	r4, r3
+ 1177 010c 0FD0     		beq	.L115
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1178              		.loc 1 419 0 discriminator 45
+ 1179 010e 03F50033 		add	r3, r3, #131072
+ 1180 0112 9C42     		cmp	r4, r3
+ 1181 0114 0BD0     		beq	.L115
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1182              		.loc 1 419 0 discriminator 46
+ 1183 0116 03F58023 		add	r3, r3, #262144
+ 1184 011a 9C42     		cmp	r4, r3
+ 1185 011c 07D0     		beq	.L115
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1186              		.loc 1 419 0 discriminator 47
+ 1187 011e 40F2A311 		movw	r1, #419
+ 1188 0122 0A48     		ldr	r0, .L186+16
+ 1189              	.LVL49:
+ 1190 0124 0A4B     		ldr	r3, .L186+20
+ 1191 0126 9847     		blx	r3
+ 1192              	.LVL50:
+ 1193              	.L108:
+ 422:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 1194              		.loc 1 422 0 is_stmt 1
+ 1195 0128 E300     		lsls	r3, r4, #3
+ 1196 012a 7FF576AF 		bpl	.L111
+ 1197              	.L115:
+ 425:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 1198              		.loc 1 425 0
+ 1199 012e 094B     		ldr	r3, .L186+24
+ 1200 0130 1B68     		ldr	r3, [r3]
+ 1201              	.LVL51:
+ 1202 0132 74E7     		b	.L114
+ 1203              	.LVL52:
+ 1204              	.L112:
+ 419:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1205              		.loc 1 419 0 discriminator 33
+ 1206 0134 084B     		ldr	r3, .L186+28
+ 1207 0136 9C42     		cmp	r4, r3
+ 1208 0138 C0D1     		bne	.L113
+ 1209 013a F8E7     		b	.L115
+ 1210              	.L187:
+ 1211              		.align	2
+ 1212              	.L186:
+ 1213 013c 11100010 		.word	268439569
+ 1214 0140 00000240 		.word	1073872896
+ 1215 0144 8B800080 		.word	-2147450741
+ 1216 0148 80000010 		.word	268435584
+ 1217 014c 00000000 		.word	.LC0
+ 1218 0150 00000000 		.word	assert_failed
+ 1219 0154 00040240 		.word	1073873920
+ 1220 0158 40000010 		.word	268435520
+ 1221              		.cfi_endproc
+ 1222              	.LFE35:
+ 1224              		.section	.text.DMA_ClearFlag,"ax",%progbits
+ 1225              		.align	1
+ 1226              		.p2align 2,,3
+ 1227              		.global	DMA_ClearFlag
+ 1228              		.syntax unified
+ 1229              		.thumb
+ 1230              		.thumb_func
+ 1231              		.fpu softvfp
+ 1233              	DMA_ClearFlag:
+ 1234              	.LFB36:
+ 448:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 449:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+ 450:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @brief  Clears the DMAy Channelx's pending flags.
+ 451:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @param  DMA_FLAG: specifies the flag to clear.
+ 452:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   This parameter can be any combination (for the same DMA) of the following values:
+ 453:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_GL1: DMA1 Channel1 global flag.
+ 454:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TC1: DMA1 Channel1 transfer complete flag.
+ 455:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_HT1: DMA1 Channel1 half transfer flag.
+ 456:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TE1: DMA1 Channel1 transfer error flag.
+ 457:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_GL2: DMA1 Channel2 global flag.
+ 458:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TC2: DMA1 Channel2 transfer complete flag.
+ 459:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_HT2: DMA1 Channel2 half transfer flag.
+ 460:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TE2: DMA1 Channel2 transfer error flag.
+ 461:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_GL3: DMA1 Channel3 global flag.
+ 462:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TC3: DMA1 Channel3 transfer complete flag.
+ 463:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_HT3: DMA1 Channel3 half transfer flag.
+ 464:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TE3: DMA1 Channel3 transfer error flag.
+ 465:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_GL4: DMA1 Channel4 global flag.
+ 466:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TC4: DMA1 Channel4 transfer complete flag.
+ 467:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_HT4: DMA1 Channel4 half transfer flag.
+ 468:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TE4: DMA1 Channel4 transfer error flag.
+ 469:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_GL5: DMA1 Channel5 global flag.
+ 470:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TC5: DMA1 Channel5 transfer complete flag.
+ 471:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_HT5: DMA1 Channel5 half transfer flag.
+ 472:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TE5: DMA1 Channel5 transfer error flag.
+ 473:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_GL6: DMA1 Channel6 global flag.
+ 474:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TC6: DMA1 Channel6 transfer complete flag.
+ 475:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_HT6: DMA1 Channel6 half transfer flag.
+ 476:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TE6: DMA1 Channel6 transfer error flag.
+ 477:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_GL7: DMA1 Channel7 global flag.
+ 478:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TC7: DMA1 Channel7 transfer complete flag.
+ 479:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_HT7: DMA1 Channel7 half transfer flag.
+ 480:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_FLAG_TE7: DMA1 Channel7 transfer error flag.
+ 481:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_GL1: DMA2 Channel1 global flag.
+ 482:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TC1: DMA2 Channel1 transfer complete flag.
+ 483:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_HT1: DMA2 Channel1 half transfer flag.
+ 484:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TE1: DMA2 Channel1 transfer error flag.
+ 485:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_GL2: DMA2 Channel2 global flag.
+ 486:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TC2: DMA2 Channel2 transfer complete flag.
+ 487:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_HT2: DMA2 Channel2 half transfer flag.
+ 488:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TE2: DMA2 Channel2 transfer error flag.
+ 489:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_GL3: DMA2 Channel3 global flag.
+ 490:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TC3: DMA2 Channel3 transfer complete flag.
+ 491:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_HT3: DMA2 Channel3 half transfer flag.
+ 492:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TE3: DMA2 Channel3 transfer error flag.
+ 493:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_GL4: DMA2 Channel4 global flag.
+ 494:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TC4: DMA2 Channel4 transfer complete flag.
+ 495:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_HT4: DMA2 Channel4 half transfer flag.
+ 496:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TE4: DMA2 Channel4 transfer error flag.
+ 497:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_GL5: DMA2 Channel5 global flag.
+ 498:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TC5: DMA2 Channel5 transfer complete flag.
+ 499:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_HT5: DMA2 Channel5 half transfer flag.
+ 500:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_FLAG_TE5: DMA2 Channel5 transfer error flag.
+ 501:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @retval None
+ 502:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+ 503:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** void DMA_ClearFlag(uint32_t DMA_FLAG)
+ 504:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** {
+ 1235              		.loc 1 504 0
+ 1236              		.cfi_startproc
+ 1237              		@ args = 0, pretend = 0, frame = 0
+ 1238              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1239              	.LVL53:
+ 505:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 506:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_CLEAR_FLAG(DMA_FLAG));
+ 1240              		.loc 1 506 0
+ 1241 0000 10F0704F 		tst	r0, #-268435456
+ 504:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 1242              		.loc 1 504 0
+ 1243 0004 10B5     		push	{r4, lr}
+ 1244              		.cfi_def_cfa_offset 8
+ 1245              		.cfi_offset 4, -8
+ 1246              		.cfi_offset 14, -4
+ 504:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 1247              		.loc 1 504 0
+ 1248 0006 0446     		mov	r4, r0
+ 1249              		.loc 1 506 0
+ 1250 0008 0DD0     		beq	.L189
+ 1251              		.loc 1 506 0 is_stmt 0 discriminator 1
+ 1252 000a 0B4B     		ldr	r3, .L195
+ 1253 000c 0340     		ands	r3, r3, r0
+ 1254 000e 23B1     		cbz	r3, .L191
+ 1255              		.loc 1 506 0 discriminator 5
+ 1256 0010 4FF4FD71 		mov	r1, #506
+ 1257 0014 0948     		ldr	r0, .L195+4
+ 1258              	.LVL54:
+ 1259 0016 0A4B     		ldr	r3, .L195+8
+ 1260 0018 9847     		blx	r3
+ 1261              	.LVL55:
+ 1262              	.L191:
+ 507:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Calculate the used DMA */
+ 508:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 509:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   if ((DMA_FLAG & FLAG_Mask) != (uint32_t)RESET)
+ 1263              		.loc 1 509 0 is_stmt 1
+ 1264 001a E300     		lsls	r3, r4, #3
+ 510:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 511:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Clear the selected DMA flags */
+ 512:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA2->IFCR = DMA_FLAG;
+ 1265              		.loc 1 512 0
+ 1266 001c 4CBF     		ite	mi
+ 1267 001e 094B     		ldrmi	r3, .L195+12
+ 513:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 514:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else
+ 515:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 516:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Clear the selected DMA flags */
+ 517:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA1->IFCR = DMA_FLAG;
+ 1268              		.loc 1 517 0
+ 1269 0020 094B     		ldrpl	r3, .L195+16
+ 1270 0022 5C60     		str	r4, [r3, #4]
+ 518:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 519:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** }
+ 1271              		.loc 1 519 0
+ 1272 0024 10BD     		pop	{r4, pc}
+ 1273              	.LVL56:
+ 1274              	.L189:
+ 506:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Calculate the used DMA */
+ 1275              		.loc 1 506 0 discriminator 4
+ 1276 0026 0028     		cmp	r0, #0
+ 1277 0028 F7D1     		bne	.L191
+ 506:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Calculate the used DMA */
+ 1278              		.loc 1 506 0 is_stmt 0
+ 1279 002a 4FF4FD71 		mov	r1, #506
+ 1280 002e 044B     		ldr	r3, .L195+8
+ 1281 0030 0248     		ldr	r0, .L195+4
+ 1282              	.LVL57:
+ 1283 0032 9847     		blx	r3
+ 1284              	.LVL58:
+ 1285 0034 F1E7     		b	.L191
+ 1286              	.L196:
+ 1287 0036 00BF     		.align	2
+ 1288              	.L195:
+ 1289 0038 0000F0EF 		.word	-269484032
+ 1290 003c 00000000 		.word	.LC0
+ 1291 0040 00000000 		.word	assert_failed
+ 1292 0044 00040240 		.word	1073873920
+ 1293 0048 00000240 		.word	1073872896
+ 1294              		.cfi_endproc
+ 1295              	.LFE36:
+ 1297              		.section	.text.DMA_GetITStatus,"ax",%progbits
+ 1298              		.align	1
+ 1299              		.p2align 2,,3
+ 1300              		.global	DMA_GetITStatus
+ 1301              		.syntax unified
+ 1302              		.thumb
+ 1303              		.thumb_func
+ 1304              		.fpu softvfp
+ 1306              	DMA_GetITStatus:
+ 1307              	.LFB37:
+ 520:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 521:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+ 522:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @brief  Checks whether the specified DMAy Channelx interrupt has occurred or not.
+ 523:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @param  DMA_IT: specifies the DMA interrupt source to check. 
+ 524:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   This parameter can be one of the following values:
+ 525:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_GL1: DMA1 Channel1 global interrupt.
+ 526:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TC1: DMA1 Channel1 transfer complete interrupt.
+ 527:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_HT1: DMA1 Channel1 half transfer interrupt.
+ 528:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TE1: DMA1 Channel1 transfer error interrupt.
+ 529:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_GL2: DMA1 Channel2 global interrupt.
+ 530:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TC2: DMA1 Channel2 transfer complete interrupt.
+ 531:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_HT2: DMA1 Channel2 half transfer interrupt.
+ 532:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TE2: DMA1 Channel2 transfer error interrupt.
+ 533:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_GL3: DMA1 Channel3 global interrupt.
+ 534:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TC3: DMA1 Channel3 transfer complete interrupt.
+ 535:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_HT3: DMA1 Channel3 half transfer interrupt.
+ 536:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TE3: DMA1 Channel3 transfer error interrupt.
+ 537:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_GL4: DMA1 Channel4 global interrupt.
+ 538:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TC4: DMA1 Channel4 transfer complete interrupt.
+ 539:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_HT4: DMA1 Channel4 half transfer interrupt.
+ 540:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TE4: DMA1 Channel4 transfer error interrupt.
+ 541:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_GL5: DMA1 Channel5 global interrupt.
+ 542:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TC5: DMA1 Channel5 transfer complete interrupt.
+ 543:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_HT5: DMA1 Channel5 half transfer interrupt.
+ 544:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TE5: DMA1 Channel5 transfer error interrupt.
+ 545:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_GL6: DMA1 Channel6 global interrupt.
+ 546:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TC6: DMA1 Channel6 transfer complete interrupt.
+ 547:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_HT6: DMA1 Channel6 half transfer interrupt.
+ 548:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TE6: DMA1 Channel6 transfer error interrupt.
+ 549:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_GL7: DMA1 Channel7 global interrupt.
+ 550:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TC7: DMA1 Channel7 transfer complete interrupt.
+ 551:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_HT7: DMA1 Channel7 half transfer interrupt.
+ 552:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TE7: DMA1 Channel7 transfer error interrupt.
+ 553:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_GL1: DMA2 Channel1 global interrupt.
+ 554:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TC1: DMA2 Channel1 transfer complete interrupt.
+ 555:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_HT1: DMA2 Channel1 half transfer interrupt.
+ 556:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TE1: DMA2 Channel1 transfer error interrupt.
+ 557:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_GL2: DMA2 Channel2 global interrupt.
+ 558:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TC2: DMA2 Channel2 transfer complete interrupt.
+ 559:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_HT2: DMA2 Channel2 half transfer interrupt.
+ 560:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TE2: DMA2 Channel2 transfer error interrupt.
+ 561:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_GL3: DMA2 Channel3 global interrupt.
+ 562:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TC3: DMA2 Channel3 transfer complete interrupt.
+ 563:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_HT3: DMA2 Channel3 half transfer interrupt.
+ 564:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TE3: DMA2 Channel3 transfer error interrupt.
+ 565:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_GL4: DMA2 Channel4 global interrupt.
+ 566:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TC4: DMA2 Channel4 transfer complete interrupt.
+ 567:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_HT4: DMA2 Channel4 half transfer interrupt.
+ 568:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TE4: DMA2 Channel4 transfer error interrupt.
+ 569:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_GL5: DMA2 Channel5 global interrupt.
+ 570:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TC5: DMA2 Channel5 transfer complete interrupt.
+ 571:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_HT5: DMA2 Channel5 half transfer interrupt.
+ 572:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TE5: DMA2 Channel5 transfer error interrupt.
+ 573:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @retval The new state of DMA_IT (SET or RESET).
+ 574:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+ 575:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** ITStatus DMA_GetITStatus(uint32_t DMA_IT)
+ 576:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** {
+ 1308              		.loc 1 576 0 is_stmt 1
+ 1309              		.cfi_startproc
+ 1310              		@ args = 0, pretend = 0, frame = 0
+ 1311              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1312              	.LVL59:
+ 577:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   ITStatus bitstatus = RESET;
+ 578:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   uint32_t tmpreg = 0;
+ 579:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_GET_IT(DMA_IT));
+ 1313              		.loc 1 580 0
+ 1314 0000 431E     		subs	r3, r0, #1
+ 1315 0002 012B     		cmp	r3, #1
+ 576:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   ITStatus bitstatus = RESET;
+ 1316              		.loc 1 576 0
+ 1317 0004 10B5     		push	{r4, lr}
+ 1318              		.cfi_def_cfa_offset 8
+ 1319              		.cfi_offset 4, -8
+ 1320              		.cfi_offset 14, -4
+ 576:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   ITStatus bitstatus = RESET;
+ 1321              		.loc 1 576 0
+ 1322 0006 0446     		mov	r4, r0
+ 1323              		.loc 1 580 0
+ 1324 0008 40F28E80 		bls	.L198
+ 1325              		.loc 1 580 0 is_stmt 0 discriminator 1
+ 1326 000c 021F     		subs	r2, r0, #4
+ 1327 000e 1C2A     		cmp	r2, #28
+ 1328 0010 0AD8     		bhi	.L199
+ 1329 0012 4A4B     		ldr	r3, .L276
+ 1330 0014 D340     		lsrs	r3, r3, r2
+ 1331 0016 D907     		lsls	r1, r3, #31
+ 1332 0018 08D5     		bpl	.L200
+ 1333              	.LVL60:
+ 1334              	.L201:
+ 581:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 582:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Calculate the used DMA */
+ 583:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   if ((DMA_IT & FLAG_Mask) != (uint32_t)RESET)
+ 584:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 585:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Get DMA2 ISR register value */
+ 586:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     tmpreg = DMA2->ISR ;
+ 587:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 588:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else
+ 589:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 590:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Get DMA1 ISR register value */
+ 591:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     tmpreg = DMA1->ISR ;
+ 1335              		.loc 1 591 0 is_stmt 1
+ 1336 001a 494B     		ldr	r3, .L276+4
+ 1337 001c 1B68     		ldr	r3, [r3]
+ 1338              	.LVL61:
+ 1339              	.L204:
+ 592:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 593:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 594:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the status of the specified DMA interrupt */
+ 595:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   if ((tmpreg & DMA_IT) != (uint32_t)RESET)
+ 1340              		.loc 1 595 0
+ 1341 001e 2342     		tst	r3, r4
+ 596:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 597:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* DMA_IT is set */
+ 598:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     bitstatus = SET;
+ 599:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 600:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else
+ 601:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 602:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* DMA_IT is reset */
+ 603:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     bitstatus = RESET;
+ 604:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 605:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Return the DMA_IT status */
+ 606:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   return  bitstatus;
+ 607:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** }
+ 1342              		.loc 1 607 0
+ 1343 0020 14BF     		ite	ne
+ 1344 0022 0120     		movne	r0, #1
+ 1345 0024 0020     		moveq	r0, #0
+ 1346 0026 10BD     		pop	{r4, pc}
+ 1347              	.LVL62:
+ 1348              	.L199:
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1349              		.loc 1 580 0 discriminator 5
+ 1350 0028 4028     		cmp	r0, #64
+ 1351 002a F6D0     		beq	.L201
+ 1352              	.L200:
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1353              		.loc 1 580 0 is_stmt 0 discriminator 6
+ 1354 002c 802C     		cmp	r4, #128
+ 1355 002e F4D0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1356              		.loc 1 580 0 discriminator 7
+ 1357 0030 B4F5807F 		cmp	r4, #256
+ 1358 0034 F1D0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1359              		.loc 1 580 0 discriminator 8
+ 1360 0036 B4F5007F 		cmp	r4, #512
+ 1361 003a EED0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1362              		.loc 1 580 0 discriminator 9
+ 1363 003c B4F5806F 		cmp	r4, #1024
+ 1364 0040 EBD0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1365              		.loc 1 580 0 discriminator 10
+ 1366 0042 B4F5006F 		cmp	r4, #2048
+ 1367 0046 E8D0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1368              		.loc 1 580 0 discriminator 11
+ 1369 0048 B4F5805F 		cmp	r4, #4096
+ 1370 004c E5D0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1371              		.loc 1 580 0 discriminator 12
+ 1372 004e B4F5005F 		cmp	r4, #8192
+ 1373 0052 E2D0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1374              		.loc 1 580 0 discriminator 13
+ 1375 0054 B4F5804F 		cmp	r4, #16384
+ 1376 0058 DFD0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1377              		.loc 1 580 0 discriminator 14
+ 1378 005a B4F5004F 		cmp	r4, #32768
+ 1379 005e DCD0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1380              		.loc 1 580 0 discriminator 15
+ 1381 0060 B4F5803F 		cmp	r4, #65536
+ 1382 0064 D9D0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1383              		.loc 1 580 0 discriminator 16
+ 1384 0066 B4F5003F 		cmp	r4, #131072
+ 1385 006a D6D0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1386              		.loc 1 580 0 discriminator 17
+ 1387 006c B4F5802F 		cmp	r4, #262144
+ 1388 0070 D3D0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1389              		.loc 1 580 0 discriminator 18
+ 1390 0072 B4F5002F 		cmp	r4, #524288
+ 1391 0076 D0D0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1392              		.loc 1 580 0 discriminator 19
+ 1393 0078 B4F5801F 		cmp	r4, #1048576
+ 1394 007c CDD0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1395              		.loc 1 580 0 discriminator 20
+ 1396 007e B4F5001F 		cmp	r4, #2097152
+ 1397 0082 CAD0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1398              		.loc 1 580 0 discriminator 21
+ 1399 0084 B4F5800F 		cmp	r4, #4194304
+ 1400 0088 C7D0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1401              		.loc 1 580 0 discriminator 22
+ 1402 008a B4F5000F 		cmp	r4, #8388608
+ 1403 008e C4D0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1404              		.loc 1 580 0 discriminator 23
+ 1405 0090 B4F1807F 		cmp	r4, #16777216
+ 1406 0094 C1D0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1407              		.loc 1 580 0 discriminator 24
+ 1408 0096 B4F1007F 		cmp	r4, #33554432
+ 1409 009a BED0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1410              		.loc 1 580 0 discriminator 25
+ 1411 009c B4F1806F 		cmp	r4, #67108864
+ 1412 00a0 BBD0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1413              		.loc 1 580 0 discriminator 26
+ 1414 00a2 B4F1006F 		cmp	r4, #134217728
+ 1415 00a6 B8D0     		beq	.L201
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1416              		.loc 1 580 0 discriminator 27
+ 1417 00a8 04F17043 		add	r3, r4, #-268435456
+ 1418 00ac 013B     		subs	r3, r3, #1
+ 1419 00ae 1F2B     		cmp	r3, #31
+ 1420 00b0 40D8     		bhi	.L202
+ 1421 00b2 244A     		ldr	r2, .L276+8
+ 1422 00b4 22FA03F3 		lsr	r3, r2, r3
+ 1423 00b8 DA07     		lsls	r2, r3, #31
+ 1424 00ba 38D4     		bmi	.L205
+ 1425              	.L203:
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1426              		.loc 1 580 0 discriminator 34
+ 1427 00bc 224B     		ldr	r3, .L276+12
+ 1428 00be 9C42     		cmp	r4, r3
+ 1429 00c0 35D0     		beq	.L205
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1430              		.loc 1 580 0 discriminator 35
+ 1431 00c2 8033     		adds	r3, r3, #128
+ 1432 00c4 9C42     		cmp	r4, r3
+ 1433 00c6 32D0     		beq	.L205
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1434              		.loc 1 580 0 discriminator 36
+ 1435 00c8 03F58073 		add	r3, r3, #256
+ 1436 00cc 9C42     		cmp	r4, r3
+ 1437 00ce 2ED0     		beq	.L205
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1438              		.loc 1 580 0 discriminator 37
+ 1439 00d0 03F50073 		add	r3, r3, #512
+ 1440 00d4 9C42     		cmp	r4, r3
+ 1441 00d6 2AD0     		beq	.L205
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1442              		.loc 1 580 0 discriminator 38
+ 1443 00d8 03F58063 		add	r3, r3, #1024
+ 1444 00dc 9C42     		cmp	r4, r3
+ 1445 00de 26D0     		beq	.L205
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1446              		.loc 1 580 0 discriminator 39
+ 1447 00e0 B4F1102F 		cmp	r4, #268439552
+ 1448 00e4 23D0     		beq	.L205
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1449              		.loc 1 580 0 discriminator 40
+ 1450 00e6 03F5C053 		add	r3, r3, #6144
+ 1451 00ea 9C42     		cmp	r4, r3
+ 1452 00ec 1FD0     		beq	.L205
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1453              		.loc 1 580 0 discriminator 41
+ 1454 00ee 03F50053 		add	r3, r3, #8192
+ 1455 00f2 9C42     		cmp	r4, r3
+ 1456 00f4 1BD0     		beq	.L205
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1457              		.loc 1 580 0 discriminator 42
+ 1458 00f6 03F58043 		add	r3, r3, #16384
+ 1459 00fa 9C42     		cmp	r4, r3
+ 1460 00fc 17D0     		beq	.L205
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1461              		.loc 1 580 0 discriminator 43
+ 1462 00fe 03F50043 		add	r3, r3, #32768
+ 1463 0102 9C42     		cmp	r4, r3
+ 1464 0104 13D0     		beq	.L205
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1465              		.loc 1 580 0 discriminator 44
+ 1466 0106 03F58033 		add	r3, r3, #65536
+ 1467 010a 9C42     		cmp	r4, r3
+ 1468 010c 0FD0     		beq	.L205
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1469              		.loc 1 580 0 discriminator 45
+ 1470 010e 03F50033 		add	r3, r3, #131072
+ 1471 0112 9C42     		cmp	r4, r3
+ 1472 0114 0BD0     		beq	.L205
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1473              		.loc 1 580 0 discriminator 46
+ 1474 0116 03F58023 		add	r3, r3, #262144
+ 1475 011a 9C42     		cmp	r4, r3
+ 1476 011c 07D0     		beq	.L205
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1477              		.loc 1 580 0 discriminator 47
+ 1478 011e 4FF41171 		mov	r1, #580
+ 1479 0122 0A48     		ldr	r0, .L276+16
+ 1480              	.LVL63:
+ 1481 0124 0A4B     		ldr	r3, .L276+20
+ 1482 0126 9847     		blx	r3
+ 1483              	.LVL64:
+ 1484              	.L198:
+ 583:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 1485              		.loc 1 583 0 is_stmt 1
+ 1486 0128 E300     		lsls	r3, r4, #3
+ 1487 012a 7FF576AF 		bpl	.L201
+ 1488              	.L205:
+ 586:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 1489              		.loc 1 586 0
+ 1490 012e 094B     		ldr	r3, .L276+24
+ 1491 0130 1B68     		ldr	r3, [r3]
+ 1492              	.LVL65:
+ 1493 0132 74E7     		b	.L204
+ 1494              	.LVL66:
+ 1495              	.L202:
+ 580:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1496              		.loc 1 580 0 discriminator 33
+ 1497 0134 084B     		ldr	r3, .L276+28
+ 1498 0136 9C42     		cmp	r4, r3
+ 1499 0138 C0D1     		bne	.L203
+ 1500 013a F8E7     		b	.L205
+ 1501              	.L277:
+ 1502              		.align	2
+ 1503              	.L276:
+ 1504 013c 11100010 		.word	268439569
+ 1505 0140 00000240 		.word	1073872896
+ 1506 0144 8B800080 		.word	-2147450741
+ 1507 0148 80000010 		.word	268435584
+ 1508 014c 00000000 		.word	.LC0
+ 1509 0150 00000000 		.word	assert_failed
+ 1510 0154 00040240 		.word	1073873920
+ 1511 0158 40000010 		.word	268435520
+ 1512              		.cfi_endproc
+ 1513              	.LFE37:
+ 1515              		.section	.text.DMA_ClearITPendingBit,"ax",%progbits
+ 1516              		.align	1
+ 1517              		.p2align 2,,3
+ 1518              		.global	DMA_ClearITPendingBit
+ 1519              		.syntax unified
+ 1520              		.thumb
+ 1521              		.thumb_func
+ 1522              		.fpu softvfp
+ 1524              	DMA_ClearITPendingBit:
+ 1525              	.LFB38:
+ 608:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 609:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** /**
+ 610:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @brief  Clears the DMAy Channelx’s interrupt pending bits.
+ 611:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @param  DMA_IT: specifies the DMA interrupt pending bit to clear.
+ 612:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *   This parameter can be any combination (for the same DMA) of the following values:
+ 613:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_GL1: DMA1 Channel1 global interrupt.
+ 614:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TC1: DMA1 Channel1 transfer complete interrupt.
+ 615:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_HT1: DMA1 Channel1 half transfer interrupt.
+ 616:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TE1: DMA1 Channel1 transfer error interrupt.
+ 617:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_GL2: DMA1 Channel2 global interrupt.
+ 618:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TC2: DMA1 Channel2 transfer complete interrupt.
+ 619:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_HT2: DMA1 Channel2 half transfer interrupt.
+ 620:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TE2: DMA1 Channel2 transfer error interrupt.
+ 621:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_GL3: DMA1 Channel3 global interrupt.
+ 622:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TC3: DMA1 Channel3 transfer complete interrupt.
+ 623:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_HT3: DMA1 Channel3 half transfer interrupt.
+ 624:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TE3: DMA1 Channel3 transfer error interrupt.
+ 625:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_GL4: DMA1 Channel4 global interrupt.
+ 626:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TC4: DMA1 Channel4 transfer complete interrupt.
+ 627:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_HT4: DMA1 Channel4 half transfer interrupt.
+ 628:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TE4: DMA1 Channel4 transfer error interrupt.
+ 629:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_GL5: DMA1 Channel5 global interrupt.
+ 630:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TC5: DMA1 Channel5 transfer complete interrupt.
+ 631:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_HT5: DMA1 Channel5 half transfer interrupt.
+ 632:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TE5: DMA1 Channel5 transfer error interrupt.
+ 633:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_GL6: DMA1 Channel6 global interrupt.
+ 634:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TC6: DMA1 Channel6 transfer complete interrupt.
+ 635:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_HT6: DMA1 Channel6 half transfer interrupt.
+ 636:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TE6: DMA1 Channel6 transfer error interrupt.
+ 637:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_GL7: DMA1 Channel7 global interrupt.
+ 638:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TC7: DMA1 Channel7 transfer complete interrupt.
+ 639:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_HT7: DMA1 Channel7 half transfer interrupt.
+ 640:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA1_IT_TE7: DMA1 Channel7 transfer error interrupt.
+ 641:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_GL1: DMA2 Channel1 global interrupt.
+ 642:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TC1: DMA2 Channel1 transfer complete interrupt.
+ 643:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_HT1: DMA2 Channel1 half transfer interrupt.
+ 644:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TE1: DMA2 Channel1 transfer error interrupt.
+ 645:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_GL2: DMA2 Channel2 global interrupt.
+ 646:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TC2: DMA2 Channel2 transfer complete interrupt.
+ 647:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_HT2: DMA2 Channel2 half transfer interrupt.
+ 648:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TE2: DMA2 Channel2 transfer error interrupt.
+ 649:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_GL3: DMA2 Channel3 global interrupt.
+ 650:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TC3: DMA2 Channel3 transfer complete interrupt.
+ 651:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_HT3: DMA2 Channel3 half transfer interrupt.
+ 652:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TE3: DMA2 Channel3 transfer error interrupt.
+ 653:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_GL4: DMA2 Channel4 global interrupt.
+ 654:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TC4: DMA2 Channel4 transfer complete interrupt.
+ 655:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_HT4: DMA2 Channel4 half transfer interrupt.
+ 656:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TE4: DMA2 Channel4 transfer error interrupt.
+ 657:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_GL5: DMA2 Channel5 global interrupt.
+ 658:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TC5: DMA2 Channel5 transfer complete interrupt.
+ 659:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_HT5: DMA2 Channel5 half transfer interrupt.
+ 660:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   *     @arg DMA2_IT_TE5: DMA2 Channel5 transfer error interrupt.
+ 661:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   * @retval None
+ 662:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   */
+ 663:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** void DMA_ClearITPendingBit(uint32_t DMA_IT)
+ 664:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** {
+ 1526              		.loc 1 664 0
+ 1527              		.cfi_startproc
+ 1528              		@ args = 0, pretend = 0, frame = 0
+ 1529              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1530              	.LVL67:
+ 665:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 666:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   assert_param(IS_DMA_CLEAR_IT(DMA_IT));
+ 1531              		.loc 1 666 0
+ 1532 0000 10F0704F 		tst	r0, #-268435456
+ 664:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 1533              		.loc 1 664 0
+ 1534 0004 10B5     		push	{r4, lr}
+ 1535              		.cfi_def_cfa_offset 8
+ 1536              		.cfi_offset 4, -8
+ 1537              		.cfi_offset 14, -4
+ 664:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Check the parameters */
+ 1538              		.loc 1 664 0
+ 1539 0006 0446     		mov	r4, r0
+ 1540              		.loc 1 666 0
+ 1541 0008 0DD0     		beq	.L279
+ 1542              		.loc 1 666 0 is_stmt 0 discriminator 1
+ 1543 000a 0B4B     		ldr	r3, .L285
+ 1544 000c 0340     		ands	r3, r3, r0
+ 1545 000e 23B1     		cbz	r3, .L281
+ 1546              		.loc 1 666 0 discriminator 5
+ 1547 0010 40F29A21 		movw	r1, #666
+ 1548 0014 0948     		ldr	r0, .L285+4
+ 1549              	.LVL68:
+ 1550 0016 0A4B     		ldr	r3, .L285+8
+ 1551 0018 9847     		blx	r3
+ 1552              	.LVL69:
+ 1553              	.L281:
+ 667:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 668:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   /* Calculate the used DMA */
+ 669:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   if ((DMA_IT & FLAG_Mask) != (uint32_t)RESET)
+ 1554              		.loc 1 669 0 is_stmt 1
+ 1555 001a E300     		lsls	r3, r4, #3
+ 670:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 671:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Clear the selected DMA interrupt pending bits */
+ 672:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA2->IFCR = DMA_IT;
+ 1556              		.loc 1 672 0
+ 1557 001c 4CBF     		ite	mi
+ 1558 001e 094B     		ldrmi	r3, .L285+12
+ 673:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 674:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   else
+ 675:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   {
+ 676:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     /* Clear the selected DMA interrupt pending bits */
+ 677:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****     DMA1->IFCR = DMA_IT;
+ 1559              		.loc 1 677 0
+ 1560 0020 094B     		ldrpl	r3, .L285+16
+ 1561 0022 5C60     		str	r4, [r3, #4]
+ 678:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c ****   }
+ 679:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** }
+ 1562              		.loc 1 679 0
+ 1563 0024 10BD     		pop	{r4, pc}
+ 1564              	.LVL70:
+ 1565              	.L279:
+ 666:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1566              		.loc 1 666 0 discriminator 4
+ 1567 0026 0028     		cmp	r0, #0
+ 1568 0028 F7D1     		bne	.L281
+ 666:Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c **** 
+ 1569              		.loc 1 666 0 is_stmt 0
+ 1570 002a 40F29A21 		movw	r1, #666
+ 1571 002e 044B     		ldr	r3, .L285+8
+ 1572 0030 0248     		ldr	r0, .L285+4
+ 1573              	.LVL71:
+ 1574 0032 9847     		blx	r3
+ 1575              	.LVL72:
+ 1576 0034 F1E7     		b	.L281
+ 1577              	.L286:
+ 1578 0036 00BF     		.align	2
+ 1579              	.L285:
+ 1580 0038 0000F0EF 		.word	-269484032
+ 1581 003c 00000000 		.word	.LC0
+ 1582 0040 00000000 		.word	assert_failed
+ 1583 0044 00040240 		.word	1073873920
+ 1584 0048 00000240 		.word	1073872896
+ 1585              		.cfi_endproc
+ 1586              	.LFE38:
+ 1588              		.section	.rodata.DMA_DeInit.str1.4,"aMS",%progbits,1
+ 1589              		.align	2
+ 1590              	.LC0:
+ 1591 0000 4C696272 		.ascii	"Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_"
+ 1591      61726965 
+ 1591      732F5354 
+ 1591      4D333246 
+ 1591      3130785F 
+ 1592 0033 646D612E 		.ascii	"dma.c\000"
+ 1592      6300
+ 1593              		.text
+ 1594              	.Letext0:
+ 1595              		.file 2 "/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default
+ 1596              		.file 3 "/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 1597              		.file 4 "./Libraries/CMSIS/CM3/CoreSupport/core_cm3.h"
+ 1598              		.file 5 "./Libraries/CMSIS/CM3/CoreSupport/system_stm32f10x.h"
+ 1599              		.file 6 "./Libraries/CMSIS/CM3/CoreSupport/stm32f10x.h"
+ 1600              		.file 7 "./Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_dma.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 stm32f10x_dma.c
+     /tmp/ccIQzZe8.s:16     .text.DMA_DeInit:0000000000000000 $t
+     /tmp/ccIQzZe8.s:24     .text.DMA_DeInit:0000000000000000 DMA_DeInit
+     /tmp/ccIQzZe8.s:339    .text.DMA_DeInit:0000000000000188 $d
+     /tmp/ccIQzZe8.s:349    .text.DMA_Init:0000000000000000 $t
+     /tmp/ccIQzZe8.s:357    .text.DMA_Init:0000000000000000 DMA_Init
+     /tmp/ccIQzZe8.s:607    .text.DMA_Init:0000000000000158 $d
+     /tmp/ccIQzZe8.s:614    .text.DMA_StructInit:0000000000000000 $t
+     /tmp/ccIQzZe8.s:622    .text.DMA_StructInit:0000000000000000 DMA_StructInit
+     /tmp/ccIQzZe8.s:650    .text.DMA_Cmd:0000000000000000 $t
+     /tmp/ccIQzZe8.s:658    .text.DMA_Cmd:0000000000000000 DMA_Cmd
+     /tmp/ccIQzZe8.s:764    .text.DMA_Cmd:0000000000000080 $d
+     /tmp/ccIQzZe8.s:771    .text.DMA_ITConfig:0000000000000000 $t
+     /tmp/ccIQzZe8.s:779    .text.DMA_ITConfig:0000000000000000 DMA_ITConfig
+     /tmp/ccIQzZe8.s:904    .text.DMA_ITConfig:0000000000000094 $d
+     /tmp/ccIQzZe8.s:911    .text.DMA_GetCurrDataCounter:0000000000000000 $t
+     /tmp/ccIQzZe8.s:919    .text.DMA_GetCurrDataCounter:0000000000000000 DMA_GetCurrDataCounter
+     /tmp/ccIQzZe8.s:1000   .text.DMA_GetCurrDataCounter:0000000000000060 $d
+     /tmp/ccIQzZe8.s:1007   .text.DMA_GetFlagStatus:0000000000000000 $t
+     /tmp/ccIQzZe8.s:1015   .text.DMA_GetFlagStatus:0000000000000000 DMA_GetFlagStatus
+     /tmp/ccIQzZe8.s:1213   .text.DMA_GetFlagStatus:000000000000013c $d
+     /tmp/ccIQzZe8.s:1225   .text.DMA_ClearFlag:0000000000000000 $t
+     /tmp/ccIQzZe8.s:1233   .text.DMA_ClearFlag:0000000000000000 DMA_ClearFlag
+     /tmp/ccIQzZe8.s:1289   .text.DMA_ClearFlag:0000000000000038 $d
+     /tmp/ccIQzZe8.s:1298   .text.DMA_GetITStatus:0000000000000000 $t
+     /tmp/ccIQzZe8.s:1306   .text.DMA_GetITStatus:0000000000000000 DMA_GetITStatus
+     /tmp/ccIQzZe8.s:1504   .text.DMA_GetITStatus:000000000000013c $d
+     /tmp/ccIQzZe8.s:1516   .text.DMA_ClearITPendingBit:0000000000000000 $t
+     /tmp/ccIQzZe8.s:1524   .text.DMA_ClearITPendingBit:0000000000000000 DMA_ClearITPendingBit
+     /tmp/ccIQzZe8.s:1580   .text.DMA_ClearITPendingBit:0000000000000038 $d
+     /tmp/ccIQzZe8.s:1589   .rodata.DMA_DeInit.str1.4:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+assert_failed

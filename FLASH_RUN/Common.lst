@@ -1,0 +1,107 @@
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 2
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"Common.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.Delay,"ax",%progbits
+  16              		.align	1
+  17              		.p2align 2,,3
+  18              		.global	Delay
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	Delay:
+  25              	.LFB0:
+  26              		.file 1 "Common.c"
+   1:Common.c      **** //////////////////////////////////////////////////////////////////////////////
+   2:Common.c      **** //
+   3:Common.c      **** // 	Filename:	Common.c
+   4:Common.c      **** //	Version:		
+   5:Common.c      **** //	Data:		
+   6:Common.c      **** //
+   7:Common.c      **** //	Author:		Liu, Zemin
+   8:Common.c      **** //	Company:	JYE Tech
+   9:Common.c      **** //
+  10:Common.c      **** //-----------------------------------------------------------------------------
+  11:Common.c      **** //
+  12:Common.c      **** // 	Target: 		STM32F103C8 
+  13:Common.c      **** // 	Tool chain: 	CodeSourcery G++
+  14:Common.c      **** //
+  15:Common.c      **** //
+  16:Common.c      **** //-----------------------------------------------------------------------------
+  17:Common.c      **** //	Required files:
+  18:Common.c      **** //
+  19:Common.c      **** //-----------------------------------------------------------------------------
+  20:Common.c      **** //	Notes:
+  21:Common.c      **** //
+  22:Common.c      **** //
+  23:Common.c      **** //-----------------------------------------------------------------------------
+  24:Common.c      **** //	Revision History:
+  25:Common.c      **** //
+  26:Common.c      **** ///////////////////////////////////////////////////////////////////////////////
+  27:Common.c      **** //
+  28:Common.c      **** //-----------------------------------------------------------------------------
+  29:Common.c      **** // 	Includes
+  30:Common.c      **** //-----------------------------------------------------------------------------
+  31:Common.c      **** 
+  32:Common.c      **** #include	"Common.h"
+  33:Common.c      **** 
+  34:Common.c      **** void	Delay(volatile U16 count)
+  35:Common.c      **** {
+  27              		.loc 1 35 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 8
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32              	.LVL0:
+  33 0000 82B0     		sub	sp, sp, #8
+  34              		.cfi_def_cfa_offset 8
+  35              		.loc 1 35 0
+  36 0002 ADF80600 		strh	r0, [sp, #6]	@ movhi
+  36:Common.c      ****  while(count) {
+  37              		.loc 1 36 0
+  38 0006 BDF80630 		ldrh	r3, [sp, #6]
+  39 000a 9BB2     		uxth	r3, r3
+  40 000c 53B1     		cbz	r3, .L1
+  41              	.L3:
+  37:Common.c      ****  	count--;
+  42              		.loc 1 37 0
+  43 000e BDF80630 		ldrh	r3, [sp, #6]
+  44 0012 013B     		subs	r3, r3, #1
+  45 0014 9BB2     		uxth	r3, r3
+  46 0016 ADF80630 		strh	r3, [sp, #6]	@ movhi
+  36:Common.c      ****  while(count) {
+  47              		.loc 1 36 0
+  48 001a BDF80630 		ldrh	r3, [sp, #6]
+  49 001e 9BB2     		uxth	r3, r3
+  50 0020 002B     		cmp	r3, #0
+  51 0022 F4D1     		bne	.L3
+  52              	.L1:
+  38:Common.c      ****  	}
+  39:Common.c      **** }
+  53              		.loc 1 39 0
+  54 0024 02B0     		add	sp, sp, #8
+  55              		.cfi_def_cfa_offset 0
+  56              		@ sp needed
+  57 0026 7047     		bx	lr
+  58              		.cfi_endproc
+  59              	.LFE0:
+  61              		.text
+  62              	.Letext0:
+  63              		.file 2 "Common.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Common.c
+     /tmp/ccooyKXd.s:16     .text.Delay:0000000000000000 $t
+     /tmp/ccooyKXd.s:24     .text.Delay:0000000000000000 Delay
+
+NO UNDEFINED SYMBOLS

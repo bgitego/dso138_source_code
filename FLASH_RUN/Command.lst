@@ -1,0 +1,3284 @@
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 2
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"Command.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.DoKeyOkH.part.0,"ax",%progbits
+  16              		.align	1
+  17              		.p2align 2,,3
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	DoKeyOkH.part.0:
+  24              	.LFB43:
+  25              		.file 1 "Command.c"
+   1:Command.c     **** //////////////////////////////////////////////////////////////////////////////
+   2:Command.c     **** //
+   3:Command.c     **** // 	Filename:	Command.c
+   4:Command.c     **** //	Version:		
+   5:Command.c     **** //	Data:		
+   6:Command.c     **** //
+   7:Command.c     **** //	Author:		Liu, Zemin
+   8:Command.c     **** //	Company:	JYE Tech
+   9:Command.c     **** //
+  10:Command.c     **** //-----------------------------------------------------------------------------
+  11:Command.c     **** //
+  12:Command.c     **** // 	Target: 		STM32F103C8 
+  13:Command.c     **** // 	Tool chain: 	CodeSourcery G++
+  14:Command.c     **** //
+  15:Command.c     **** //-----------------------------------------------------------------------------
+  16:Command.c     **** //	Required files:
+  17:Command.c     **** //
+  18:Command.c     **** //-----------------------------------------------------------------------------
+  19:Command.c     **** //	Notes:
+  20:Command.c     **** //
+  21:Command.c     **** //
+  22:Command.c     **** //-----------------------------------------------------------------------------
+  23:Command.c     **** //	Revision History:
+  24:Command.c     **** //
+  25:Command.c     **** ///////////////////////////////////////////////////////////////////////////////
+  26:Command.c     **** #include "stm32f10x.h"
+  27:Command.c     **** #include "stm32f10x_conf.h"
+  28:Command.c     **** 
+  29:Command.c     **** #include "Common.h"
+  30:Command.c     **** #include "Board.h"
+  31:Command.c     **** #include "Command.h"
+  32:Command.c     **** #include	"libdso138.h"
+  33:Command.c     **** #include	"Screen.h"
+  34:Command.c     **** #include 	"Eeprom.h"
+  35:Command.c     **** 
+  36:Command.c     **** // ===========================================================
+  37:Command.c     **** // 	File Scope Global variables
+  38:Command.c     **** // ===========================================================
+  39:Command.c     **** //
+  40:Command.c     **** const 	KeyScanCode KScanCodeTab[9] = {
+  41:Command.c     **** //	scan code	key code		key param
+  42:Command.c     **** 	{0x7FFF, 	KC_SW1,		'1'},		// 1
+  43:Command.c     **** 	{0xBFFF, 	KC_SW2,		'2'},		// 2
+  44:Command.c     **** 	{0xDFFF, 	KC_SW3,		'3'},		// 3
+  45:Command.c     **** 	{0xEFFF, 	KC_SW4,		'4'},		// 4
+  46:Command.c     **** 	{0x7FFE, 	KC_SW1H,	'5'},		// 5
+  47:Command.c     **** 	{0xBFFE, 	KC_SW2H,	'6'},		// 6
+  48:Command.c     **** 	{0xDFFE, 	KC_SW3H,	'7'},		// 7
+  49:Command.c     **** 	{0xEFFE, 	KC_SW4H,	'8'},		// 8
+  50:Command.c     **** 	{0, 			0,			0}		
+  51:Command.c     **** 	};
+  52:Command.c     **** 
+  53:Command.c     **** KEYPAD	Keypad;
+  54:Command.c     **** U8	VSenPrev, CplPrev;
+  55:Command.c     **** U16	Flags;
+  56:Command.c     **** 
+  57:Command.c     **** 
+  58:Command.c     **** // ===========================================================
+  59:Command.c     **** //	Function Definitions
+  60:Command.c     **** // ===========================================================
+  61:Command.c     **** //
+  62:Command.c     **** void	AppInit()
+  63:Command.c     **** {
+  64:Command.c     ****  U16 tmp0;
+  65:Command.c     **** 
+  66:Command.c     **** // =============================
+  67:Command.c     **** // Note: DSO_Init() must be executed for proper capture engine running
+  68:Command.c     ****  
+  69:Command.c     ****  DSO_Init();
+  70:Command.c     **** 
+  71:Command.c     **** // =============================
+  72:Command.c     **** 
+  73:Command.c     ****  // Check EEPROM for valid settings
+  74:Command.c     ****  EE_ReadVariable(Addr_SettingStatus, &tmp0);
+  75:Command.c     ****  if(tmp0 == SettingStatus_Initialized) {
+  76:Command.c     **** 	// Load saved settings
+  77:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_Vpos], &tmp0);
+  78:Command.c     **** 	SetVPos(tmp0);
+  79:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_Vsen], &tmp0);
+  80:Command.c     **** 	SetVSen(tmp0);
+  81:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_Cpl], &tmp0);
+  82:Command.c     **** 	SetCpl(tmp0);
+  83:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_TimeBase], &tmp0);
+  84:Command.c     **** 	SetTimeBase(tmp0);
+  85:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_TrigMode], &tmp0);
+  86:Command.c     **** 	SetTrigMode(tmp0);
+  87:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_TrigEdge], &tmp0);
+  88:Command.c     **** 	SetTrigEdge(tmp0);
+  89:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_TrigLvl], &tmp0);
+  90:Command.c     **** 	SetTrigLvl(tmp0);
+  91:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_RecLen], &tmp0);
+  92:Command.c     **** 	SetRecLen(tmp0);
+  93:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_HPos], &tmp0);
+  94:Command.c     **** 	SetHPos(tmp0);
+  95:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_VPosOfs], &tmp0);
+  96:Command.c     **** 	SetVPosOfs(tmp0);
+  97:Command.c     ****  	}
+  98:Command.c     ****  else {
+  99:Command.c     **** 	// Load default settings and initialize EEPROM
+ 100:Command.c     ****  	SetVPos(0);
+ 101:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_Vpos], 0);
+ 102:Command.c     ****  	SetVSen(VS_05V);
+ 103:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_Vsen], VS_05V);
+ 104:Command.c     ****  	SetCpl(CP_DC);
+ 105:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_Cpl], CP_DC);
+ 106:Command.c     ****  	SetTimeBase(TB_1ms);
+ 107:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_TimeBase], TB_1ms);
+ 108:Command.c     ****  	SetTrigMode(TM_Auto);
+ 109:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_TrigMode], TM_Auto);
+ 110:Command.c     ****  	SetTrigEdge(TE_Falling);
+ 111:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_TrigEdge], TE_Falling);
+ 112:Command.c     ****  	SetTrigLvl(0);
+ 113:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_TrigLvl], 0);
+ 114:Command.c     ****  	SetRecLen(SampleBufSizeMax);
+ 115:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_RecLen], SampleBufSizeMax);
+ 116:Command.c     ****  	SetHPos(GetRecLen()/2 - WDsize/2);
+ 117:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_HPos], GetRecLen()/2 - WDsize/2);
+ 118:Command.c     **** 	SetVPosOfs(0);
+ 119:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_VPosOfs], 0);
+ 120:Command.c     **** 
+ 121:Command.c     **** 	// Mark down EEPROM has been initialized
+ 122:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_SettingStatus], SettingStatus_Initialized);
+ 123:Command.c     **** 
+ 124:Command.c     ****  	}
+ 125:Command.c     **** 
+ 126:Command.c     ****  OutputTLvl();
+ 127:Command.c     **** 
+ 128:Command.c     ****  // Misc initialization
+ 129:Command.c     ****  TimerKeyScan = 1;
+ 130:Command.c     **** 
+ 131:Command.c     ****  Keypad.KDebounceVal = KD_val;
+ 132:Command.c     ****  
+ 133:Command.c     **** }
+ 134:Command.c     **** 
+ 135:Command.c     **** void	KeyProc(void)
+ 136:Command.c     **** {
+ 137:Command.c     ****  switch(Keypad.KeyCode) {
+ 138:Command.c     **** 	case KC_SW1:
+ 139:Command.c     **** 		DoKeyOk();
+ 140:Command.c     **** 	default:	
+ 141:Command.c     **** 		break;
+ 142:Command.c     **** 		
+ 143:Command.c     **** 	case KC_SW2:
+ 144:Command.c     **** 		DoKeyInc();
+ 145:Command.c     **** 		break;
+ 146:Command.c     **** 
+ 147:Command.c     **** 	case KC_SW3:
+ 148:Command.c     **** 		DoKeyDec();
+ 149:Command.c     **** 		break;
+ 150:Command.c     **** 
+ 151:Command.c     **** 	case KC_SW4:
+ 152:Command.c     **** 		DoKeySel();
+ 153:Command.c     **** 		break;
+ 154:Command.c     **** 
+ 155:Command.c     **** 	case KC_SW1H:
+ 156:Command.c     **** 		DoKeyOkH();
+ 157:Command.c     **** 		break;
+ 158:Command.c     **** 
+ 159:Command.c     **** 	case KC_SW2H:
+ 160:Command.c     **** 		DoKeyIncH();
+ 161:Command.c     **** 		break;
+ 162:Command.c     **** 
+ 163:Command.c     **** 	case KC_SW3H:
+ 164:Command.c     **** 		DoKeyDecH();
+ 165:Command.c     **** 		break;
+ 166:Command.c     **** 
+ 167:Command.c     **** 	case KC_SW4H:
+ 168:Command.c     **** 		DoKeySelH();
+ 169:Command.c     **** 		break;
+ 170:Command.c     **** 
+ 171:Command.c     ****  	}
+ 172:Command.c     **** }
+ 173:Command.c     **** 
+ 174:Command.c     **** 
+ 175:Command.c     **** void KeyScan(void)
+ 176:Command.c     **** {
+ 177:Command.c     ****  U16	tmp1;
+ 178:Command.c     ****  U8	tmp2, tmp3;
+ 179:Command.c     **** 
+ 180:Command.c     ****  Keypad.KScanBuf = NoKey;
+ 181:Command.c     ****  // Read buttons
+ 182:Command.c     ****  tmp1 = (PB_Port & PB_Bits) | ~PB_Bits;
+ 183:Command.c     ****  if(tmp1 != NoKey) {
+ 184:Command.c     **** 	Keypad.KScanBuf = tmp1;
+ 185:Command.c     ****  	}
+ 186:Command.c     **** 
+ 187:Command.c     ****  
+ 188:Command.c     ****  // -- Debouncing
+ 189:Command.c     ****  if((Keypad.KScanBuf == NoKey) || (Keypad.KScanBuf != Keypad.KScanCode)) {
+ 190:Command.c     ****  	Keypad.KScanCode = Keypad.KScanBuf;
+ 191:Command.c     **** 	Keypad.KCount = 0;
+ 192:Command.c     **** 	Keypad.KHCount = 0;
+ 193:Command.c     **** 	Keypad.KTimeChk = KH_val;
+ 194:Command.c     ****  	}
+ 195:Command.c     ****  else {
+ 196:Command.c     **** 	Keypad.KCount++;
+ 197:Command.c     **** 	if(Keypad.KCount > Keypad.KDebounceVal) {
+ 198:Command.c     **** 		if(Keypad.KCount == Keypad.KDebounceVal + 3) {
+ 199:Command.c     **** 			Keypad.KCount = Keypad.KDebounceVal;
+ 200:Command.c     **** 			if(++Keypad.KHCount == Keypad.KTimeChk) {
+ 201:Command.c     **** 				// Key hold detected
+ 202:Command.c     **** 				Keypad.KScanCode &= 0xFFFE;
+ 203:Command.c     **** 				KeyConvert((KeyScanCode *)KScanCodeTab, Keypad.KScanCode);
+ 204:Command.c     **** 				// Change KTimeChk for key repeat
+ 205:Command.c     **** 				Keypad.KTimeChk += KR_Time;
+ 206:Command.c     **** 				}
+ 207:Command.c     **** 			}
+ 208:Command.c     **** 		}
+ 209:Command.c     **** 	else if(Keypad.KCount == Keypad.KDebounceVal) {
+ 210:Command.c     **** 		// Key push detected
+ 211:Command.c     **** 		KeyConvert((KeyScanCode *)KScanCodeTab, Keypad.KScanCode);
+ 212:Command.c     **** 		}
+ 213:Command.c     **** 	}
+ 214:Command.c     **** 
+ 215:Command.c     **** #define	Threshold_High		0x0900
+ 216:Command.c     **** #define	Threshold_Low		0x0300
+ 217:Command.c     **** 
+ 218:Command.c     ****  // Read switch SEN1
+ 219:Command.c     ****  tmp1 = ADC_Poll(ADC2, 2);
+ 220:Command.c     ****  tmp2 = 0;
+ 221:Command.c     ****  if(tmp1 > Threshold_High) {
+ 222:Command.c     ****  	tmp2 = 2;
+ 223:Command.c     ****  	}
+ 224:Command.c     ****  else if(tmp1 > Threshold_Low) {
+ 225:Command.c     ****  	tmp2 = 1;
+ 226:Command.c     ****  	}
+ 227:Command.c     **** 
+ 228:Command.c     ****  // Read switch SEN2
+ 229:Command.c     ****  tmp1 = ADC_Poll(ADC2, 1);
+ 230:Command.c     ****  tmp3 = 0;
+ 231:Command.c     ****  if(tmp1 > Threshold_High) {
+ 232:Command.c     ****  	tmp3 = 2;
+ 233:Command.c     ****  	}
+ 234:Command.c     ****  else if(tmp1 > Threshold_Low) {
+ 235:Command.c     ****  	tmp3 = 1;
+ 236:Command.c     ****  	}
+ 237:Command.c     **** 
+ 238:Command.c     ****  // Determine VSen setting
+ 239:Command.c     ****  tmp2 = 3 * tmp2 + tmp3 + VSenMin;
+ 240:Command.c     ****  if(tmp2 != VSenPrev) {
+ 241:Command.c     ****  	SetVSen(tmp2);
+ 242:Command.c     **** 	VSenPrev = tmp2;
+ 243:Command.c     ****  	UpdateDisp(Disp_Param);
+ 244:Command.c     ****  	}
+ 245:Command.c     ****  
+ 246:Command.c     ****  // Read switch Cpl
+ 247:Command.c     ****  tmp1 = ADC_Poll(ADC2, 3);
+ 248:Command.c     ****  tmp2 = 0;
+ 249:Command.c     ****  if(tmp1 > Threshold_High) {
+ 250:Command.c     ****  	tmp2 = 2;
+ 251:Command.c     ****  	}
+ 252:Command.c     ****  else if(tmp1 > Threshold_Low) {
+ 253:Command.c     ****  	tmp2 = 1;
+ 254:Command.c     ****  	}
+ 255:Command.c     ****  tmp2 = 2 - tmp2;
+ 256:Command.c     ****  
+ 257:Command.c     ****  // Determine Cpl setting
+ 258:Command.c     ****  if(tmp2 != CplPrev) {
+ 259:Command.c     **** 	SetCpl(tmp2);
+ 260:Command.c     **** 	CplPrev = tmp2;
+ 261:Command.c     ****  	UpdateDisp(Disp_Param);
+ 262:Command.c     ****  	}
+ 263:Command.c     ****  }
+ 264:Command.c     **** 
+ 265:Command.c     **** void	KeyConvert(KeyScanCode *KSCTab, U16 KSCode)
+ 266:Command.c     **** {
+ 267:Command.c     ****  U16 tmp1;
+ 268:Command.c     ****  
+ 269:Command.c     ****  while((tmp1 = *(U16 *)(KSCTab + 0))) {
+ 270:Command.c     **** 	if(tmp1 == KSCode) {
+ 271:Command.c     **** 		// -- Match found
+ 272:Command.c     **** 		Keypad.KeyCode = *(U8 *)((U8 *)KSCTab + 2);
+ 273:Command.c     **** 		Keypad.KeyCodeBuf = Keypad.KeyCode;
+ 274:Command.c     **** 		Keypad.KeyParam = *(U8 *)((U8 *)KSCTab + 3);
+ 275:Command.c     **** 		return;
+ 276:Command.c     **** 		}
+ 277:Command.c     **** 	else {
+ 278:Command.c     **** 		// -- Proceed to next entry
+ 279:Command.c     **** 		KSCTab = (KeyScanCode *)((U8 *)KSCTab + sizeof(KeyScanCode));
+ 280:Command.c     **** 		}
+ 281:Command.c     **** 	
+ 282:Command.c     ****  	}
+ 283:Command.c     **** }
+ 284:Command.c     **** 
+ 285:Command.c     **** void	DoKeyOk(void)
+ 286:Command.c     **** {
+ 287:Command.c     ****  U16 tmp;
+ 288:Command.c     ****  
+ 289:Command.c     ****  tmp = GetDsoStatus();
+ 290:Command.c     ****  // Toggle HOLD state
+ 291:Command.c     ****  BitXor(tmp, DSO_Hold);
+ 292:Command.c     **** 
+ 293:Command.c     ****  if(BitTest(tmp, DSO_Hold)) {
+ 294:Command.c     ****  	// Set HOLD 
+ 295:Command.c     ****  	SetHold();
+ 296:Command.c     ****  	// Stop capture
+ 297:Command.c     ****  	StopCapture();
+ 298:Command.c     ****  	}
+ 299:Command.c     ****  else {
+ 300:Command.c     ****  	// Clear HOLD
+ 301:Command.c     ****  	ClrHold();
+ 302:Command.c     ****  	// Start capture at exit of HOLD
+ 303:Command.c     **** 	StartCapture();
+ 304:Command.c     ****  	}
+ 305:Command.c     ****  
+ 306:Command.c     ****  UpdateDisp(Disp_Param);
+ 307:Command.c     **** }
+ 308:Command.c     **** 
+ 309:Command.c     **** void	DoKeyInc(void)
+ 310:Command.c     **** {
+ 311:Command.c     ****  S8	tmp0;
+ 312:Command.c     ****  S16	tmp1;
+ 313:Command.c     ****  
+ 314:Command.c     ****  switch(GetFocus()) {
+ 315:Command.c     **** 	case FC_Timebase:
+ 316:Command.c     ****  		tmp0 = GetTimebase();
+ 317:Command.c     ****  		tmp0++;
+ 318:Command.c     ****  		tmp0 = SetTimeBase(tmp0);
+ 319:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TimeBase], tmp0);
+ 320:Command.c     **** 		if(tmp0 >= TB_20ms) {
+ 321:Command.c     **** 			// Restart capture
+ 322:Command.c     **** 			StartCapture();
+ 323:Command.c     **** 			}
+ 324:Command.c     **** 		else {
+ 325:Command.c     **** 			// Change sampling rate only
+ 326:Command.c     **** 			UpdateTimebase();
+ 327:Command.c     **** 			}
+ 328:Command.c     **** 		// Make key debounce time shorter for these TB's 
+ 329:Command.c     **** 		if((tmp0 < TB_20ms) && (tmp0 > TB_1s)) {
+ 330:Command.c     **** 			Keypad.KDebounceVal = KD_val1;
+ 331:Command.c     **** 			}
+ 332:Command.c     **** 		else {
+ 333:Command.c     **** 			Keypad.KDebounceVal = KD_val;
+ 334:Command.c     **** 			}
+ 335:Command.c     **** 	default:	
+ 336:Command.c     **** 		break;
+ 337:Command.c     **** 		
+ 338:Command.c     **** 	case FC_TrigMode:
+ 339:Command.c     ****  		tmp0 = GetTrigMode();
+ 340:Command.c     ****  		tmp0++;
+ 341:Command.c     ****  		tmp0 = SetTrigMode(tmp0);
+ 342:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TrigMode], tmp0);
+ 343:Command.c     **** 		// Restart capture. 
+ 344:Command.c     **** 		StartCapture();
+ 345:Command.c     **** 		break;
+ 346:Command.c     **** 
+ 347:Command.c     **** 	case FC_TrigEdge:
+ 348:Command.c     ****  		tmp0 = GetTrigEdge();
+ 349:Command.c     ****  		tmp0++;
+ 350:Command.c     ****  		tmp0 = SetTrigEdge(tmp0);
+ 351:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TrigEdge], tmp0);
+ 352:Command.c     **** 		break;
+ 353:Command.c     **** 		
+ 354:Command.c     **** 	case FC_VPos:
+ 355:Command.c     ****  		tmp1 = GetVPos();
+ 356:Command.c     ****  		tmp1++;
+ 357:Command.c     ****  		tmp1 = SetVPos(tmp1);
+ 358:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_Vpos], tmp1);
+ 359:Command.c     ****  		UpdateDisp(Disp_Trace);
+ 360:Command.c     **** 		break;
+ 361:Command.c     **** 
+ 362:Command.c     **** 	case FC_TrigLvl:
+ 363:Command.c     ****  		tmp1 = GetTrigLvl();
+ 364:Command.c     ****  		tmp1++;
+ 365:Command.c     ****  		tmp1 = SetTrigLvl(tmp1);
+ 366:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TrigLvl], tmp1);
+ 367:Command.c     **** 		OutputTLvl();
+ 368:Command.c     **** 		break;
+ 369:Command.c     **** 		
+ 370:Command.c     **** 	case FC_HPos:
+ 371:Command.c     **** 		// Move waveform right
+ 372:Command.c     ****  		tmp1 = GetHPos();
+ 373:Command.c     ****  		tmp1--;
+ 374:Command.c     ****  		tmp1 = SetHPos(tmp1);
+ 375:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_HPos], tmp1);
+ 376:Command.c     ****  		UpdateDisp(Disp_Trace);
+ 377:Command.c     **** 		break;
+ 378:Command.c     **** 		
+ 379:Command.c     ****  	}
+ 380:Command.c     ****  
+ 381:Command.c     ****  UpdateDisp(Disp_Param);
+ 382:Command.c     **** }
+ 383:Command.c     **** 
+ 384:Command.c     **** void	DoKeyDec(void)
+ 385:Command.c     **** {
+ 386:Command.c     ****  S8	tmp0;
+ 387:Command.c     ****  S16	tmp1;
+ 388:Command.c     ****  
+ 389:Command.c     ****  switch(GetFocus()) {
+ 390:Command.c     **** 	case FC_Timebase:
+ 391:Command.c     ****  		tmp0 = GetTimebase();
+ 392:Command.c     ****  		tmp0--;
+ 393:Command.c     ****  		tmp0 = SetTimeBase(tmp0);
+ 394:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TimeBase], tmp0);
+ 395:Command.c     **** 		if(tmp0 >= TB_50ms) {
+ 396:Command.c     **** 			// Restart capture
+ 397:Command.c     **** //			UartPutc('7', USART1);
+ 398:Command.c     **** 			StartCapture();
+ 399:Command.c     **** //			UartPutc('1', USART1);
+ 400:Command.c     **** 			}
+ 401:Command.c     **** 		else {
+ 402:Command.c     **** 			// Change sampling rate only
+ 403:Command.c     **** 			UpdateTimebase();
+ 404:Command.c     **** 			
+ 405:Command.c     **** 			}
+ 406:Command.c     **** /*		
+ 407:Command.c     **** 		// Make key debounce time shorter for these TB's 
+ 408:Command.c     **** 		if((tmp0 < TB_20ms) && (tmp0 > TB_1s)) {
+ 409:Command.c     **** 			Delay(50000);	// To avoid same keypress repeated
+ 410:Command.c     **** 			Keypad.KDebounceVal = KD_val1;
+ 411:Command.c     **** 			}
+ 412:Command.c     **** 		else {
+ 413:Command.c     **** 			Keypad.KDebounceVal = KD_val;
+ 414:Command.c     **** 			}
+ 415:Command.c     **** */		
+ 416:Command.c     **** 	default:	
+ 417:Command.c     **** 		break;
+ 418:Command.c     **** 		
+ 419:Command.c     **** 	case FC_TrigMode:
+ 420:Command.c     ****  		tmp0 = GetTrigMode();
+ 421:Command.c     ****  		tmp0--;
+ 422:Command.c     ****  		tmp0 = SetTrigMode(tmp0);
+ 423:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TrigMode], tmp0);
+ 424:Command.c     **** 		// Restart capture. 
+ 425:Command.c     **** 		StartCapture();
+ 426:Command.c     **** 		break;
+ 427:Command.c     **** 
+ 428:Command.c     **** 	case FC_TrigEdge:
+ 429:Command.c     ****  		tmp0 = GetTrigEdge();
+ 430:Command.c     ****  		tmp0--;
+ 431:Command.c     ****  		tmp0 = SetTrigEdge(tmp0);
+ 432:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TrigEdge], tmp0);
+ 433:Command.c     **** 		break;
+ 434:Command.c     **** 		
+ 435:Command.c     **** 	case FC_VPos:
+ 436:Command.c     ****  		tmp1 = GetVPos();
+ 437:Command.c     ****  		tmp1--;
+ 438:Command.c     ****  		tmp1 = SetVPos(tmp1);
+ 439:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_Vpos], tmp1);
+ 440:Command.c     ****  		UpdateDisp(Disp_Trace);
+ 441:Command.c     **** 		break;
+ 442:Command.c     **** 
+ 443:Command.c     **** 	case FC_TrigLvl:
+ 444:Command.c     ****  		tmp1 = GetTrigLvl();
+ 445:Command.c     ****  		tmp1--;
+ 446:Command.c     ****  		tmp1 = SetTrigLvl(tmp1);
+ 447:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TrigLvl], tmp1);
+ 448:Command.c     **** 		OutputTLvl();
+ 449:Command.c     **** 		break;
+ 450:Command.c     **** 		
+ 451:Command.c     **** 	case FC_HPos:
+ 452:Command.c     **** 		// Move waveform left
+ 453:Command.c     ****  		tmp1 = GetHPos();
+ 454:Command.c     ****  		tmp1++;
+ 455:Command.c     ****  		tmp1 = SetHPos(tmp1);
+ 456:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_HPos], tmp1);
+ 457:Command.c     ****  		UpdateDisp(Disp_Trace);
+ 458:Command.c     **** 		break;
+ 459:Command.c     **** 		
+ 460:Command.c     ****  	}
+ 461:Command.c     ****  
+ 462:Command.c     ****  UpdateDisp(Disp_Param);
+ 463:Command.c     **** }
+ 464:Command.c     **** 
+ 465:Command.c     **** void	DoKeySel(void)
+ 466:Command.c     **** {
+ 467:Command.c     ****  U8 tmp;
+ 468:Command.c     **** 
+ 469:Command.c     ****  tmp = GetFocus();
+ 470:Command.c     ****  tmp++;
+ 471:Command.c     ****  if(tmp >= FC_Max) {
+ 472:Command.c     ****  	tmp = 0;
+ 473:Command.c     ****  	}
+ 474:Command.c     ****  SetFocus(tmp);
+ 475:Command.c     **** 
+ 476:Command.c     ****  UpdateDisp(Disp_Param);
+ 477:Command.c     **** }
+ 478:Command.c     **** 
+ 479:Command.c     **** void	DoKeyOkH(void)
+  26              		.loc 1 479 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30 0000 10B5     		push	{r4, lr}
+  31              		.cfi_def_cfa_offset 8
+  32              		.cfi_offset 4, -8
+  33              		.cfi_offset 14, -4
+ 480:Command.c     **** {
+ 481:Command.c     ****  S16 tmp1;
+ 482:Command.c     ****  
+ 483:Command.c     ****  if(GetFocus() == FC_VPos) {
+ 484:Command.c     **** 	// Do VPos alignment
+ 485:Command.c     **** 	tmp1 = (S16)(GetAverage() - WWindowMidValue);
+  34              		.loc 1 485 0
+  35 0002 074B     		ldr	r3, .L4
+  36 0004 9847     		blx	r3
+  37              	.LVL0:
+  38 0006 A0F50060 		sub	r0, r0, #2048
+  39 000a 84B2     		uxth	r4, r0
+  40              	.LVL1:
+ 486:Command.c     **** 	SetVPosOfs(tmp1);
+  41              		.loc 1 486 0
+  42 000c 20B2     		sxth	r0, r4
+  43 000e 054B     		ldr	r3, .L4+4
+  44 0010 9847     		blx	r3
+  45              	.LVL2:
+ 487:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_VPosOfs], tmp1);
+  46              		.loc 1 487 0
+  47 0012 054B     		ldr	r3, .L4+8
+  48 0014 2146     		mov	r1, r4
+ 488:Command.c     ****  	}
+ 489:Command.c     **** }
+  49              		.loc 1 489 0
+  50 0016 BDE81040 		pop	{r4, lr}
+  51              		.cfi_restore 14
+  52              		.cfi_restore 4
+  53              		.cfi_def_cfa_offset 0
+  54              	.LVL3:
+ 487:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_VPosOfs], tmp1);
+  55              		.loc 1 487 0
+  56 001a 5889     		ldrh	r0, [r3, #10]
+  57 001c 034B     		ldr	r3, .L4+12
+  58 001e 1847     		bx	r3
+  59              	.LVL4:
+  60              	.L5:
+  61              		.align	2
+  62              	.L4:
+  63 0020 00000000 		.word	GetAverage
+  64 0024 00000000 		.word	SetVPosOfs
+  65 0028 00000000 		.word	VirtAddVarTab
+  66 002c 00000000 		.word	EE_WriteVariable
+  67              		.cfi_endproc
+  68              	.LFE43:
+  70              		.section	.text.AppInit,"ax",%progbits
+  71              		.align	1
+  72              		.p2align 2,,3
+  73              		.global	AppInit
+  74              		.syntax unified
+  75              		.thumb
+  76              		.thumb_func
+  77              		.fpu softvfp
+  79              	AppInit:
+  80              	.LFB29:
+  63:Command.c     ****  U16 tmp0;
+  81              		.loc 1 63 0
+  82              		.cfi_startproc
+  83              		@ args = 0, pretend = 0, frame = 8
+  84              		@ frame_needed = 0, uses_anonymous_args = 0
+  85 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  86              		.cfi_def_cfa_offset 24
+  87              		.cfi_offset 4, -24
+  88              		.cfi_offset 5, -20
+  89              		.cfi_offset 6, -16
+  90              		.cfi_offset 7, -12
+  91              		.cfi_offset 8, -8
+  92              		.cfi_offset 14, -4
+  75:Command.c     **** 	// Load saved settings
+  93              		.loc 1 75 0
+  94 0004 4FF2C536 		movw	r6, #62405
+  63:Command.c     ****  U16 tmp0;
+  95              		.loc 1 63 0
+  96 0008 82B0     		sub	sp, sp, #8
+  97              		.cfi_def_cfa_offset 32
+  69:Command.c     **** 
+  98              		.loc 1 69 0
+  99 000a 594B     		ldr	r3, .L11
+ 100 000c 9847     		blx	r3
+ 101              	.LVL5:
+  74:Command.c     ****  if(tmp0 == SettingStatus_Initialized) {
+ 102              		.loc 1 74 0
+ 103 000e 594C     		ldr	r4, .L11+4
+ 104 0010 0DF10601 		add	r1, sp, #6
+ 105 0014 0B20     		movs	r0, #11
+ 106 0016 A047     		blx	r4
+ 107              	.LVL6:
+  75:Command.c     **** 	// Load saved settings
+ 108              		.loc 1 75 0
+ 109 0018 BDF80630 		ldrh	r3, [sp, #6]
+  77:Command.c     **** 	SetVPos(tmp0);
+ 110              		.loc 1 77 0
+ 111 001c 564D     		ldr	r5, .L11+8
+  75:Command.c     **** 	// Load saved settings
+ 112              		.loc 1 75 0
+ 113 001e B342     		cmp	r3, r6
+ 114 0020 55D0     		beq	.L10
+ 100:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_Vpos], 0);
+ 115              		.loc 1 100 0
+ 116 0022 564B     		ldr	r3, .L11+12
+ 117 0024 0020     		movs	r0, #0
+ 101:Command.c     ****  	SetVSen(VS_05V);
+ 118              		.loc 1 101 0
+ 119 0026 564C     		ldr	r4, .L11+16
+ 100:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_Vpos], 0);
+ 120              		.loc 1 100 0
+ 121 0028 9847     		blx	r3
+ 122              	.LVL7:
+ 101:Command.c     ****  	SetVSen(VS_05V);
+ 123              		.loc 1 101 0
+ 124 002a 0021     		movs	r1, #0
+ 125 002c 2889     		ldrh	r0, [r5, #8]
+ 126 002e A047     		blx	r4
+ 127              	.LVL8:
+ 102:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_Vsen], VS_05V);
+ 128              		.loc 1 102 0
+ 129 0030 544B     		ldr	r3, .L11+20
+ 130 0032 0720     		movs	r0, #7
+ 131 0034 9847     		blx	r3
+ 132              	.LVL9:
+ 103:Command.c     ****  	SetCpl(CP_DC);
+ 133              		.loc 1 103 0
+ 134 0036 0721     		movs	r1, #7
+ 135 0038 A888     		ldrh	r0, [r5, #4]
+ 136 003a A047     		blx	r4
+ 137              	.LVL10:
+ 104:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_Cpl], CP_DC);
+ 138              		.loc 1 104 0
+ 139 003c 524B     		ldr	r3, .L11+24
+ 140 003e 0020     		movs	r0, #0
+ 141 0040 9847     		blx	r3
+ 142              	.LVL11:
+ 105:Command.c     ****  	SetTimeBase(TB_1ms);
+ 143              		.loc 1 105 0
+ 144 0042 0021     		movs	r1, #0
+ 145 0044 E888     		ldrh	r0, [r5, #6]
+ 146 0046 A047     		blx	r4
+ 147              	.LVL12:
+ 106:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_TimeBase], TB_1ms);
+ 148              		.loc 1 106 0
+ 149 0048 504B     		ldr	r3, .L11+28
+ 150 004a 1220     		movs	r0, #18
+ 151 004c 9847     		blx	r3
+ 152              	.LVL13:
+ 107:Command.c     ****  	SetTrigMode(TM_Auto);
+ 153              		.loc 1 107 0
+ 154 004e 1221     		movs	r1, #18
+ 155 0050 2888     		ldrh	r0, [r5]
+ 156 0052 A047     		blx	r4
+ 157              	.LVL14:
+ 108:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_TrigMode], TM_Auto);
+ 158              		.loc 1 108 0
+ 159 0054 4E4B     		ldr	r3, .L11+32
+ 160 0056 0020     		movs	r0, #0
+ 161 0058 9847     		blx	r3
+ 162              	.LVL15:
+ 109:Command.c     ****  	SetTrigEdge(TE_Falling);
+ 163              		.loc 1 109 0
+ 164 005a 0021     		movs	r1, #0
+ 165 005c A889     		ldrh	r0, [r5, #12]
+ 166 005e A047     		blx	r4
+ 167              	.LVL16:
+ 110:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_TrigEdge], TE_Falling);
+ 168              		.loc 1 110 0
+ 169 0060 4C4B     		ldr	r3, .L11+36
+ 170 0062 0020     		movs	r0, #0
+ 171 0064 9847     		blx	r3
+ 172              	.LVL17:
+ 111:Command.c     ****  	SetTrigLvl(0);
+ 173              		.loc 1 111 0
+ 174 0066 0021     		movs	r1, #0
+ 175 0068 E889     		ldrh	r0, [r5, #14]
+ 176 006a A047     		blx	r4
+ 177              	.LVL18:
+ 112:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_TrigLvl], 0);
+ 178              		.loc 1 112 0
+ 179 006c 4A4B     		ldr	r3, .L11+40
+ 180 006e 0020     		movs	r0, #0
+ 181 0070 9847     		blx	r3
+ 182              	.LVL19:
+ 113:Command.c     ****  	SetRecLen(SampleBufSizeMax);
+ 183              		.loc 1 113 0
+ 184 0072 0021     		movs	r1, #0
+ 185 0074 288A     		ldrh	r0, [r5, #16]
+ 186 0076 A047     		blx	r4
+ 187              	.LVL20:
+ 114:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_RecLen], SampleBufSizeMax);
+ 188              		.loc 1 114 0
+ 189 0078 484B     		ldr	r3, .L11+44
+ 190 007a 4FF48060 		mov	r0, #1024
+ 191 007e 9847     		blx	r3
+ 192              	.LVL21:
+ 116:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_HPos], GetRecLen()/2 - WDsize/2);
+ 193              		.loc 1 116 0
+ 194 0080 474F     		ldr	r7, .L11+48
+ 115:Command.c     ****  	SetHPos(GetRecLen()/2 - WDsize/2);
+ 195              		.loc 1 115 0
+ 196 0082 4FF48061 		mov	r1, #1024
+ 197 0086 A88A     		ldrh	r0, [r5, #20]
+ 198 0088 A047     		blx	r4
+ 199              	.LVL22:
+ 116:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_HPos], GetRecLen()/2 - WDsize/2);
+ 200              		.loc 1 116 0
+ 201 008a B847     		blx	r7
+ 202              	.LVL23:
+ 203 008c 4008     		lsrs	r0, r0, #1
+ 204 008e 9638     		subs	r0, r0, #150
+ 205 0090 444B     		ldr	r3, .L11+52
+ 206 0092 00B2     		sxth	r0, r0
+ 207 0094 9847     		blx	r3
+ 208              	.LVL24:
+ 117:Command.c     **** 	SetVPosOfs(0);
+ 209              		.loc 1 117 0
+ 210 0096 B5F80280 		ldrh	r8, [r5, #2]
+ 211 009a B847     		blx	r7
+ 212              	.LVL25:
+ 213 009c 4108     		lsrs	r1, r0, #1
+ 214 009e 9639     		subs	r1, r1, #150
+ 215 00a0 89B2     		uxth	r1, r1
+ 216 00a2 4046     		mov	r0, r8
+ 217 00a4 A047     		blx	r4
+ 218              	.LVL26:
+ 118:Command.c     **** 	EE_WriteVariable(VirtAddVarTab[Addr_VPosOfs], 0);
+ 219              		.loc 1 118 0
+ 220 00a6 404B     		ldr	r3, .L11+56
+ 221 00a8 0020     		movs	r0, #0
+ 222 00aa 9847     		blx	r3
+ 223              	.LVL27:
+ 119:Command.c     **** 
+ 224              		.loc 1 119 0
+ 225 00ac 0021     		movs	r1, #0
+ 226 00ae 6889     		ldrh	r0, [r5, #10]
+ 227 00b0 A047     		blx	r4
+ 228              	.LVL28:
+ 122:Command.c     **** 
+ 229              		.loc 1 122 0
+ 230 00b2 3146     		mov	r1, r6
+ 231 00b4 E88A     		ldrh	r0, [r5, #22]
+ 232 00b6 A047     		blx	r4
+ 233              	.LVL29:
+ 234              	.L8:
+ 126:Command.c     **** 
+ 235              		.loc 1 126 0
+ 236 00b8 3C4B     		ldr	r3, .L11+60
+ 237 00ba 9847     		blx	r3
+ 238              	.LVL30:
+ 129:Command.c     **** 
+ 239              		.loc 1 129 0
+ 240 00bc 0120     		movs	r0, #1
+ 131:Command.c     ****  
+ 241              		.loc 1 131 0
+ 242 00be 0222     		movs	r2, #2
+ 129:Command.c     **** 
+ 243              		.loc 1 129 0
+ 244 00c0 3B49     		ldr	r1, .L11+64
+ 131:Command.c     ****  
+ 245              		.loc 1 131 0
+ 246 00c2 3C4B     		ldr	r3, .L11+68
+ 129:Command.c     **** 
+ 247              		.loc 1 129 0
+ 248 00c4 0880     		strh	r0, [r1]	@ movhi
+ 131:Command.c     ****  
+ 249              		.loc 1 131 0
+ 250 00c6 DA81     		strh	r2, [r3, #14]	@ movhi
+ 133:Command.c     **** 
+ 251              		.loc 1 133 0
+ 252 00c8 02B0     		add	sp, sp, #8
+ 253              		.cfi_remember_state
+ 254              		.cfi_def_cfa_offset 24
+ 255              		@ sp needed
+ 256 00ca BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 257              	.L10:
+ 258              		.cfi_restore_state
+  77:Command.c     **** 	SetVPos(tmp0);
+ 259              		.loc 1 77 0
+ 260 00ce 0DF10601 		add	r1, sp, #6
+ 261 00d2 2889     		ldrh	r0, [r5, #8]
+ 262 00d4 A047     		blx	r4
+ 263              	.LVL31:
+  78:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_Vsen], &tmp0);
+ 264              		.loc 1 78 0
+ 265 00d6 294B     		ldr	r3, .L11+12
+ 266 00d8 BDF90600 		ldrsh	r0, [sp, #6]
+ 267 00dc 9847     		blx	r3
+ 268              	.LVL32:
+  79:Command.c     **** 	SetVSen(tmp0);
+ 269              		.loc 1 79 0
+ 270 00de 0DF10601 		add	r1, sp, #6
+ 271 00e2 A888     		ldrh	r0, [r5, #4]
+ 272 00e4 A047     		blx	r4
+ 273              	.LVL33:
+  80:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_Cpl], &tmp0);
+ 274              		.loc 1 80 0
+ 275 00e6 274B     		ldr	r3, .L11+20
+ 276 00e8 9DF90600 		ldrsb	r0, [sp, #6]
+ 277 00ec 9847     		blx	r3
+ 278              	.LVL34:
+  81:Command.c     **** 	SetCpl(tmp0);
+ 279              		.loc 1 81 0
+ 280 00ee 0DF10601 		add	r1, sp, #6
+ 281 00f2 E888     		ldrh	r0, [r5, #6]
+ 282 00f4 A047     		blx	r4
+ 283              	.LVL35:
+  82:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_TimeBase], &tmp0);
+ 284              		.loc 1 82 0
+ 285 00f6 244B     		ldr	r3, .L11+24
+ 286 00f8 9DF90600 		ldrsb	r0, [sp, #6]
+ 287 00fc 9847     		blx	r3
+ 288              	.LVL36:
+  83:Command.c     **** 	SetTimeBase(tmp0);
+ 289              		.loc 1 83 0
+ 290 00fe 0DF10601 		add	r1, sp, #6
+ 291 0102 2888     		ldrh	r0, [r5]
+ 292 0104 A047     		blx	r4
+ 293              	.LVL37:
+  84:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_TrigMode], &tmp0);
+ 294              		.loc 1 84 0
+ 295 0106 214B     		ldr	r3, .L11+28
+ 296 0108 9DF90600 		ldrsb	r0, [sp, #6]
+ 297 010c 9847     		blx	r3
+ 298              	.LVL38:
+  85:Command.c     **** 	SetTrigMode(tmp0);
+ 299              		.loc 1 85 0
+ 300 010e 0DF10601 		add	r1, sp, #6
+ 301 0112 A889     		ldrh	r0, [r5, #12]
+ 302 0114 A047     		blx	r4
+ 303              	.LVL39:
+  86:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_TrigEdge], &tmp0);
+ 304              		.loc 1 86 0
+ 305 0116 1E4B     		ldr	r3, .L11+32
+ 306 0118 9DF90600 		ldrsb	r0, [sp, #6]
+ 307 011c 9847     		blx	r3
+ 308              	.LVL40:
+  87:Command.c     **** 	SetTrigEdge(tmp0);
+ 309              		.loc 1 87 0
+ 310 011e 0DF10601 		add	r1, sp, #6
+ 311 0122 E889     		ldrh	r0, [r5, #14]
+ 312 0124 A047     		blx	r4
+ 313              	.LVL41:
+  88:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_TrigLvl], &tmp0);
+ 314              		.loc 1 88 0
+ 315 0126 1B4B     		ldr	r3, .L11+36
+ 316 0128 9DF90600 		ldrsb	r0, [sp, #6]
+ 317 012c 9847     		blx	r3
+ 318              	.LVL42:
+  89:Command.c     **** 	SetTrigLvl(tmp0);
+ 319              		.loc 1 89 0
+ 320 012e 0DF10601 		add	r1, sp, #6
+ 321 0132 288A     		ldrh	r0, [r5, #16]
+ 322 0134 A047     		blx	r4
+ 323              	.LVL43:
+  90:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_RecLen], &tmp0);
+ 324              		.loc 1 90 0
+ 325 0136 184B     		ldr	r3, .L11+40
+ 326 0138 BDF90600 		ldrsh	r0, [sp, #6]
+ 327 013c 9847     		blx	r3
+ 328              	.LVL44:
+  91:Command.c     **** 	SetRecLen(tmp0);
+ 329              		.loc 1 91 0
+ 330 013e 0DF10601 		add	r1, sp, #6
+ 331 0142 A88A     		ldrh	r0, [r5, #20]
+ 332 0144 A047     		blx	r4
+ 333              	.LVL45:
+  92:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_HPos], &tmp0);
+ 334              		.loc 1 92 0
+ 335 0146 154B     		ldr	r3, .L11+44
+ 336 0148 BDF80600 		ldrh	r0, [sp, #6]
+ 337 014c 9847     		blx	r3
+ 338              	.LVL46:
+  93:Command.c     **** 	SetHPos(tmp0);
+ 339              		.loc 1 93 0
+ 340 014e 0DF10601 		add	r1, sp, #6
+ 341 0152 6888     		ldrh	r0, [r5, #2]
+ 342 0154 A047     		blx	r4
+ 343              	.LVL47:
+  94:Command.c     **** 	EE_ReadVariable(VirtAddVarTab[Addr_VPosOfs], &tmp0);
+ 344              		.loc 1 94 0
+ 345 0156 134B     		ldr	r3, .L11+52
+ 346 0158 BDF90600 		ldrsh	r0, [sp, #6]
+ 347 015c 9847     		blx	r3
+ 348              	.LVL48:
+  95:Command.c     **** 	SetVPosOfs(tmp0);
+ 349              		.loc 1 95 0
+ 350 015e 0DF10601 		add	r1, sp, #6
+ 351 0162 6889     		ldrh	r0, [r5, #10]
+ 352 0164 A047     		blx	r4
+ 353              	.LVL49:
+  96:Command.c     ****  	}
+ 354              		.loc 1 96 0
+ 355 0166 BDF90600 		ldrsh	r0, [sp, #6]
+ 356 016a 0F4B     		ldr	r3, .L11+56
+ 357 016c 9847     		blx	r3
+ 358              	.LVL50:
+ 359 016e A3E7     		b	.L8
+ 360              	.L12:
+ 361              		.align	2
+ 362              	.L11:
+ 363 0170 00000000 		.word	DSO_Init
+ 364 0174 00000000 		.word	EE_ReadVariable
+ 365 0178 00000000 		.word	VirtAddVarTab
+ 366 017c 00000000 		.word	SetVPos
+ 367 0180 00000000 		.word	EE_WriteVariable
+ 368 0184 00000000 		.word	SetVSen
+ 369 0188 00000000 		.word	SetCpl
+ 370 018c 00000000 		.word	SetTimeBase
+ 371 0190 00000000 		.word	SetTrigMode
+ 372 0194 00000000 		.word	SetTrigEdge
+ 373 0198 00000000 		.word	SetTrigLvl
+ 374 019c 00000000 		.word	SetRecLen
+ 375 01a0 00000000 		.word	GetRecLen
+ 376 01a4 00000000 		.word	SetHPos
+ 377 01a8 00000000 		.word	SetVPosOfs
+ 378 01ac 00000000 		.word	OutputTLvl
+ 379 01b0 00000000 		.word	TimerKeyScan
+ 380 01b4 00000000 		.word	Keypad
+ 381              		.cfi_endproc
+ 382              	.LFE29:
+ 384              		.section	.text.KeyScan,"ax",%progbits
+ 385              		.align	1
+ 386              		.p2align 2,,3
+ 387              		.global	KeyScan
+ 388              		.syntax unified
+ 389              		.thumb
+ 390              		.thumb_func
+ 391              		.fpu softvfp
+ 393              	KeyScan:
+ 394              	.LFB31:
+ 176:Command.c     ****  U16	tmp1;
+ 395              		.loc 1 176 0
+ 396              		.cfi_startproc
+ 397              		@ args = 0, pretend = 0, frame = 0
+ 398              		@ frame_needed = 0, uses_anonymous_args = 0
+ 182:Command.c     ****  if(tmp1 != NoKey) {
+ 399              		.loc 1 182 0
+ 400 0000 4E4B     		ldr	r3, .L39
+ 180:Command.c     ****  // Read buttons
+ 401              		.loc 1 180 0
+ 402 0002 4FF6FF71 		movw	r1, #65535
+ 182:Command.c     ****  if(tmp1 != NoKey) {
+ 403              		.loc 1 182 0
+ 404 0006 9B68     		ldr	r3, [r3, #8]
+ 180:Command.c     ****  // Read buttons
+ 405              		.loc 1 180 0
+ 406 0008 4D4A     		ldr	r2, .L39+4
+ 182:Command.c     ****  if(tmp1 != NoKey) {
+ 407              		.loc 1 182 0
+ 408 000a 6FEA1333 		mvn	r3, r3, lsr #12
+ 409 000e 6FEA0333 		mvn	r3, r3, lsl #12
+ 410 0012 9BB2     		uxth	r3, r3
+ 411              	.LVL51:
+ 183:Command.c     **** 	Keypad.KScanBuf = tmp1;
+ 412              		.loc 1 183 0
+ 413 0014 8B42     		cmp	r3, r1
+ 176:Command.c     ****  U16	tmp1;
+ 414              		.loc 1 176 0
+ 415 0016 70B5     		push	{r4, r5, r6, lr}
+ 416              		.cfi_def_cfa_offset 16
+ 417              		.cfi_offset 4, -16
+ 418              		.cfi_offset 5, -12
+ 419              		.cfi_offset 6, -8
+ 420              		.cfi_offset 14, -4
+ 180:Command.c     ****  // Read buttons
+ 421              		.loc 1 180 0
+ 422 0018 5180     		strh	r1, [r2, #2]	@ movhi
+ 183:Command.c     **** 	Keypad.KScanBuf = tmp1;
+ 423              		.loc 1 183 0
+ 424 001a 03D0     		beq	.L14
+ 189:Command.c     ****  	Keypad.KScanCode = Keypad.KScanBuf;
+ 425              		.loc 1 189 0
+ 426 001c 9188     		ldrh	r1, [r2, #4]
+ 184:Command.c     ****  	}
+ 427              		.loc 1 184 0
+ 428 001e 5380     		strh	r3, [r2, #2]	@ movhi
+ 189:Command.c     ****  	Keypad.KScanCode = Keypad.KScanBuf;
+ 429              		.loc 1 189 0
+ 430 0020 9942     		cmp	r1, r3
+ 431 0022 4AD0     		beq	.L15
+ 432              	.L14:
+ 191:Command.c     **** 	Keypad.KHCount = 0;
+ 433              		.loc 1 191 0
+ 434 0024 0021     		movs	r1, #0
+ 193:Command.c     ****  	}
+ 435              		.loc 1 193 0
+ 436 0026 1420     		movs	r0, #20
+ 190:Command.c     **** 	Keypad.KCount = 0;
+ 437              		.loc 1 190 0
+ 438 0028 9380     		strh	r3, [r2, #4]	@ movhi
+ 191:Command.c     **** 	Keypad.KHCount = 0;
+ 439              		.loc 1 191 0
+ 440 002a 9181     		strh	r1, [r2, #12]	@ movhi
+ 192:Command.c     **** 	Keypad.KTimeChk = KH_val;
+ 441              		.loc 1 192 0
+ 442 002c 1182     		strh	r1, [r2, #16]	@ movhi
+ 193:Command.c     ****  	}
+ 443              		.loc 1 193 0
+ 444 002e 5082     		strh	r0, [r2, #18]	@ movhi
+ 445              	.LVL52:
+ 446              	.L16:
+ 219:Command.c     ****  tmp2 = 0;
+ 447              		.loc 1 219 0
+ 448 0030 0221     		movs	r1, #2
+ 449 0032 4448     		ldr	r0, .L39+8
+ 450 0034 444D     		ldr	r5, .L39+12
+ 451 0036 A847     		blx	r5
+ 452              	.LVL53:
+ 221:Command.c     ****  	tmp2 = 2;
+ 453              		.loc 1 221 0
+ 454 0038 B0F5106F 		cmp	r0, #2304
+ 455 003c 33D8     		bhi	.L31
+ 456 003e B0F5407F 		cmp	r0, #768
+ 457 0042 8CBF     		ite	hi
+ 458 0044 0724     		movhi	r4, #7
+ 459 0046 0424     		movls	r4, #4
+ 460              	.L25:
+ 461              	.LVL54:
+ 229:Command.c     ****  tmp3 = 0;
+ 462              		.loc 1 229 0
+ 463 0048 0121     		movs	r1, #1
+ 464 004a 3E48     		ldr	r0, .L39+8
+ 465              	.LVL55:
+ 466 004c A847     		blx	r5
+ 467              	.LVL56:
+ 231:Command.c     ****  	tmp3 = 2;
+ 468              		.loc 1 231 0
+ 469 004e B0F5106F 		cmp	r0, #2304
+ 470 0052 30D8     		bhi	.L32
+ 232:Command.c     ****  	}
+ 471              		.loc 1 232 0
+ 472 0054 B0F5407F 		cmp	r0, #768
+ 473 0058 94BF     		ite	ls
+ 474 005a 0020     		movls	r0, #0
+ 475              	.LVL57:
+ 476 005c 0120     		movhi	r0, #1
+ 477              	.L26:
+ 478              	.LVL58:
+ 240:Command.c     ****  	SetVSen(tmp2);
+ 479              		.loc 1 240 0
+ 480 005e 3B4E     		ldr	r6, .L39+16
+ 239:Command.c     ****  if(tmp2 != VSenPrev) {
+ 481              		.loc 1 239 0
+ 482 0060 0444     		add	r4, r4, r0
+ 483              	.LVL59:
+ 240:Command.c     ****  	SetVSen(tmp2);
+ 484              		.loc 1 240 0
+ 485 0062 3378     		ldrb	r3, [r6]	@ zero_extendqisi2
+ 486 0064 A342     		cmp	r3, r4
+ 487 0066 06D0     		beq	.L27
+ 241:Command.c     **** 	VSenPrev = tmp2;
+ 488              		.loc 1 241 0
+ 489 0068 394B     		ldr	r3, .L39+20
+ 490 006a 2046     		mov	r0, r4
+ 491              	.LVL60:
+ 492 006c 9847     		blx	r3
+ 493              	.LVL61:
+ 243:Command.c     ****  	}
+ 494              		.loc 1 243 0
+ 495 006e 0220     		movs	r0, #2
+ 496 0070 384B     		ldr	r3, .L39+24
+ 242:Command.c     ****  	UpdateDisp(Disp_Param);
+ 497              		.loc 1 242 0
+ 498 0072 3470     		strb	r4, [r6]
+ 243:Command.c     ****  	}
+ 499              		.loc 1 243 0
+ 500 0074 9847     		blx	r3
+ 501              	.LVL62:
+ 502              	.L27:
+ 247:Command.c     ****  tmp2 = 0;
+ 503              		.loc 1 247 0
+ 504 0076 0321     		movs	r1, #3
+ 505 0078 3248     		ldr	r0, .L39+8
+ 506 007a A847     		blx	r5
+ 507              	.LVL63:
+ 249:Command.c     ****  	tmp2 = 2;
+ 508              		.loc 1 249 0
+ 509 007c B0F5106F 		cmp	r0, #2304
+ 510 0080 13D8     		bhi	.L33
+ 511 0082 B0F5407F 		cmp	r0, #768
+ 512 0086 8CBF     		ite	hi
+ 513 0088 0124     		movhi	r4, #1
+ 514 008a 0224     		movls	r4, #2
+ 515              	.LVL64:
+ 258:Command.c     **** 	SetCpl(tmp2);
+ 516              		.loc 1 258 0
+ 517 008c 324D     		ldr	r5, .L39+28
+ 518 008e 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 519 0090 A342     		cmp	r3, r4
+ 520 0092 0FD0     		beq	.L13
+ 521              	.L37:
+ 259:Command.c     **** 	CplPrev = tmp2;
+ 522              		.loc 1 259 0
+ 523 0094 60B2     		sxtb	r0, r4
+ 524              	.LVL65:
+ 525 0096 314B     		ldr	r3, .L39+32
+ 526 0098 9847     		blx	r3
+ 527              	.LVL66:
+ 260:Command.c     ****  	UpdateDisp(Disp_Param);
+ 528              		.loc 1 260 0
+ 529 009a 2C70     		strb	r4, [r5]
+ 261:Command.c     ****  	}
+ 530              		.loc 1 261 0
+ 531 009c 0220     		movs	r0, #2
+ 263:Command.c     **** 
+ 532              		.loc 1 263 0
+ 533 009e BDE87040 		pop	{r4, r5, r6, lr}
+ 534              		.cfi_remember_state
+ 535              		.cfi_restore 14
+ 536              		.cfi_restore 6
+ 537              		.cfi_restore 5
+ 538              		.cfi_restore 4
+ 539              		.cfi_def_cfa_offset 0
+ 261:Command.c     ****  	}
+ 540              		.loc 1 261 0
+ 541 00a2 2C4B     		ldr	r3, .L39+24
+ 542 00a4 1847     		bx	r3	@ indirect register sibling call
+ 543              	.LVL67:
+ 544              	.L31:
+ 545              		.cfi_restore_state
+ 546 00a6 0A24     		movs	r4, #10
+ 547 00a8 CEE7     		b	.L25
+ 548              	.L33:
+ 549 00aa 0024     		movs	r4, #0
+ 550              	.LVL68:
+ 258:Command.c     **** 	SetCpl(tmp2);
+ 551              		.loc 1 258 0
+ 552 00ac 2A4D     		ldr	r5, .L39+28
+ 553 00ae 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 554 00b0 A342     		cmp	r3, r4
+ 555 00b2 EFD1     		bne	.L37
+ 556              	.L13:
+ 263:Command.c     **** 
+ 557              		.loc 1 263 0
+ 558 00b4 70BD     		pop	{r4, r5, r6, pc}
+ 559              	.LVL69:
+ 560              	.L32:
+ 232:Command.c     ****  	}
+ 561              		.loc 1 232 0
+ 562 00b6 0220     		movs	r0, #2
+ 563              	.LVL70:
+ 564 00b8 D1E7     		b	.L26
+ 565              	.LVL71:
+ 566              	.L15:
+ 196:Command.c     **** 	if(Keypad.KCount > Keypad.KDebounceVal) {
+ 567              		.loc 1 196 0
+ 568 00ba 9389     		ldrh	r3, [r2, #12]
+ 569              	.LVL72:
+ 197:Command.c     **** 		if(Keypad.KCount == Keypad.KDebounceVal + 3) {
+ 570              		.loc 1 197 0
+ 571 00bc D089     		ldrh	r0, [r2, #14]
+ 196:Command.c     **** 	if(Keypad.KCount > Keypad.KDebounceVal) {
+ 572              		.loc 1 196 0
+ 573 00be 0133     		adds	r3, r3, #1
+ 574 00c0 9BB2     		uxth	r3, r3
+ 197:Command.c     **** 		if(Keypad.KCount == Keypad.KDebounceVal + 3) {
+ 575              		.loc 1 197 0
+ 576 00c2 8342     		cmp	r3, r0
+ 196:Command.c     **** 	if(Keypad.KCount > Keypad.KDebounceVal) {
+ 577              		.loc 1 196 0
+ 578 00c4 9381     		strh	r3, [r2, #12]	@ movhi
+ 197:Command.c     **** 		if(Keypad.KCount == Keypad.KDebounceVal + 3) {
+ 579              		.loc 1 197 0
+ 580 00c6 1AD9     		bls	.L17
+ 198:Command.c     **** 			Keypad.KCount = Keypad.KDebounceVal;
+ 581              		.loc 1 198 0
+ 582 00c8 C41C     		adds	r4, r0, #3
+ 583 00ca A342     		cmp	r3, r4
+ 584 00cc B0D1     		bne	.L16
+ 200:Command.c     **** 				// Key hold detected
+ 585              		.loc 1 200 0
+ 586 00ce 148A     		ldrh	r4, [r2, #16]
+ 587 00d0 558A     		ldrh	r5, [r2, #18]
+ 588 00d2 631C     		adds	r3, r4, #1
+ 589 00d4 9BB2     		uxth	r3, r3
+ 590 00d6 9D42     		cmp	r5, r3
+ 199:Command.c     **** 			if(++Keypad.KHCount == Keypad.KTimeChk) {
+ 591              		.loc 1 199 0
+ 592 00d8 9081     		strh	r0, [r2, #12]	@ movhi
+ 200:Command.c     **** 				// Key hold detected
+ 593              		.loc 1 200 0
+ 594 00da 1382     		strh	r3, [r2, #16]	@ movhi
+ 595 00dc A8D1     		bne	.L16
+ 596              	.LBB10:
+ 597              	.LBB11:
+ 269:Command.c     **** 	if(tmp1 == KSCode) {
+ 598              		.loc 1 269 0
+ 599 00de 4BF6FF73 		movw	r3, #49151
+ 600              	.LBE11:
+ 601              	.LBE10:
+ 202:Command.c     **** 				KeyConvert((KeyScanCode *)KScanCodeTab, Keypad.KScanCode);
+ 602              		.loc 1 202 0
+ 603 00e2 21F00101 		bic	r1, r1, #1
+ 604 00e6 88B2     		uxth	r0, r1
+ 605 00e8 1D49     		ldr	r1, .L39+36
+ 606 00ea 9080     		strh	r0, [r2, #4]	@ movhi
+ 607              	.LVL73:
+ 608              	.L21:
+ 609              	.LBB14:
+ 610              	.LBB12:
+ 270:Command.c     **** 		// -- Match found
+ 611              		.loc 1 270 0
+ 612 00ec 9842     		cmp	r0, r3
+ 613 00ee 1BD0     		beq	.L38
+ 269:Command.c     **** 	if(tmp1 == KSCode) {
+ 614              		.loc 1 269 0
+ 615 00f0 31F8043F 		ldrh	r3, [r1, #4]!
+ 616              	.LVL74:
+ 617 00f4 002B     		cmp	r3, #0
+ 618 00f6 F9D1     		bne	.L21
+ 619              	.LVL75:
+ 620              	.L20:
+ 621              	.LBE12:
+ 622              	.LBE14:
+ 205:Command.c     **** 				}
+ 623              		.loc 1 205 0
+ 624 00f8 0234     		adds	r4, r4, #2
+ 625 00fa 5482     		strh	r4, [r2, #18]	@ movhi
+ 626 00fc 98E7     		b	.L16
+ 627              	.L17:
+ 209:Command.c     **** 		// Key push detected
+ 628              		.loc 1 209 0
+ 629 00fe 97D1     		bne	.L16
+ 630              	.LVL76:
+ 631              	.LBB15:
+ 632              	.LBB16:
+ 270:Command.c     **** 		// -- Match found
+ 633              		.loc 1 270 0
+ 634 0100 47F6FF73 		movw	r3, #32767
+ 635 0104 9942     		cmp	r1, r3
+ 636 0106 15D0     		beq	.L30
+ 269:Command.c     **** 	if(tmp1 == KSCode) {
+ 637              		.loc 1 269 0
+ 638 0108 4BF6FF73 		movw	r3, #49151
+ 639 010c 1448     		ldr	r0, .L39+36
+ 640 010e 03E0     		b	.L24
+ 641              	.LVL77:
+ 642              	.L23:
+ 643 0110 30F8043F 		ldrh	r3, [r0, #4]!
+ 644              	.LVL78:
+ 645 0114 002B     		cmp	r3, #0
+ 646 0116 8BD0     		beq	.L16
+ 647              	.LVL79:
+ 648              	.L24:
+ 270:Command.c     **** 		// -- Match found
+ 649              		.loc 1 270 0
+ 650 0118 9942     		cmp	r1, r3
+ 651 011a F9D1     		bne	.L23
+ 652 011c 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 653 011e C178     		ldrb	r1, [r0, #3]	@ zero_extendqisi2
+ 654              	.LVL80:
+ 655              	.L22:
+ 272:Command.c     **** 		Keypad.KeyCodeBuf = Keypad.KeyCode;
+ 656              		.loc 1 272 0
+ 657 0120 D380     		strh	r3, [r2, #6]	@ movhi
+ 273:Command.c     **** 		Keypad.KeyParam = *(U8 *)((U8 *)KSCTab + 3);
+ 658              		.loc 1 273 0
+ 659 0122 5381     		strh	r3, [r2, #10]	@ movhi
+ 274:Command.c     **** 		return;
+ 660              		.loc 1 274 0
+ 661 0124 1181     		strh	r1, [r2, #8]	@ movhi
+ 662 0126 83E7     		b	.L16
+ 663              	.LVL81:
+ 664              	.L38:
+ 665              	.LBE16:
+ 666              	.LBE15:
+ 667              	.LBB18:
+ 668              	.LBB13:
+ 272:Command.c     **** 		Keypad.KeyCodeBuf = Keypad.KeyCode;
+ 669              		.loc 1 272 0
+ 670 0128 8B78     		ldrb	r3, [r1, #2]	@ zero_extendqisi2
+ 274:Command.c     **** 		return;
+ 671              		.loc 1 274 0
+ 672 012a C978     		ldrb	r1, [r1, #3]	@ zero_extendqisi2
+ 673              	.LVL82:
+ 272:Command.c     **** 		Keypad.KeyCodeBuf = Keypad.KeyCode;
+ 674              		.loc 1 272 0
+ 675 012c D380     		strh	r3, [r2, #6]	@ movhi
+ 273:Command.c     **** 		Keypad.KeyParam = *(U8 *)((U8 *)KSCTab + 3);
+ 676              		.loc 1 273 0
+ 677 012e 5381     		strh	r3, [r2, #10]	@ movhi
+ 274:Command.c     **** 		return;
+ 678              		.loc 1 274 0
+ 679 0130 1181     		strh	r1, [r2, #8]	@ movhi
+ 680 0132 E1E7     		b	.L20
+ 681              	.LVL83:
+ 682              	.L30:
+ 683              	.LBE13:
+ 684              	.LBE18:
+ 685              	.LBB19:
+ 686              	.LBB17:
+ 270:Command.c     **** 		// -- Match found
+ 687              		.loc 1 270 0
+ 688 0134 3121     		movs	r1, #49
+ 689 0136 0123     		movs	r3, #1
+ 690 0138 F2E7     		b	.L22
+ 691              	.L40:
+ 692 013a 00BF     		.align	2
+ 693              	.L39:
+ 694 013c 000C0140 		.word	1073810432
+ 695 0140 00000000 		.word	Keypad
+ 696 0144 00280140 		.word	1073817600
+ 697 0148 00000000 		.word	ADC_Poll
+ 698 014c 00000000 		.word	VSenPrev
+ 699 0150 00000000 		.word	SetVSen
+ 700 0154 00000000 		.word	UpdateDisp
+ 701 0158 00000000 		.word	CplPrev
+ 702 015c 00000000 		.word	SetCpl
+ 703 0160 04000000 		.word	.LANCHOR0+4
+ 704              	.LBE17:
+ 705              	.LBE19:
+ 706              		.cfi_endproc
+ 707              	.LFE31:
+ 709              		.section	.text.KeyConvert,"ax",%progbits
+ 710              		.align	1
+ 711              		.p2align 2,,3
+ 712              		.global	KeyConvert
+ 713              		.syntax unified
+ 714              		.thumb
+ 715              		.thumb_func
+ 716              		.fpu softvfp
+ 718              	KeyConvert:
+ 719              	.LFB32:
+ 266:Command.c     ****  U16 tmp1;
+ 720              		.loc 1 266 0
+ 721              		.cfi_startproc
+ 722              		@ args = 0, pretend = 0, frame = 0
+ 723              		@ frame_needed = 0, uses_anonymous_args = 0
+ 724              		@ link register save eliminated.
+ 725              	.LVL84:
+ 269:Command.c     **** 	if(tmp1 == KSCode) {
+ 726              		.loc 1 269 0
+ 727 0000 0388     		ldrh	r3, [r0]
+ 728              	.LVL85:
+ 729 0002 43B1     		cbz	r3, .L41
+ 270:Command.c     **** 		// -- Match found
+ 730              		.loc 1 270 0
+ 731 0004 9942     		cmp	r1, r3
+ 732 0006 02D1     		bne	.L44
+ 733 0008 06E0     		b	.L43
+ 734              	.LVL86:
+ 735              	.L45:
+ 736 000a 8B42     		cmp	r3, r1
+ 737 000c 04D0     		beq	.L43
+ 738              	.LVL87:
+ 739              	.L44:
+ 269:Command.c     **** 	if(tmp1 == KSCode) {
+ 740              		.loc 1 269 0
+ 741 000e 30F8043F 		ldrh	r3, [r0, #4]!
+ 742              	.LVL88:
+ 743 0012 002B     		cmp	r3, #0
+ 744 0014 F9D1     		bne	.L45
+ 745              	.LVL89:
+ 746              	.L41:
+ 283:Command.c     **** 
+ 747              		.loc 1 283 0
+ 748 0016 7047     		bx	lr
+ 749              	.L43:
+ 272:Command.c     **** 		Keypad.KeyCodeBuf = Keypad.KeyCode;
+ 750              		.loc 1 272 0
+ 751 0018 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+ 752 001a 034B     		ldr	r3, .L50
+ 753 001c DA80     		strh	r2, [r3, #6]	@ movhi
+ 273:Command.c     **** 		Keypad.KeyParam = *(U8 *)((U8 *)KSCTab + 3);
+ 754              		.loc 1 273 0
+ 755 001e 5A81     		strh	r2, [r3, #10]	@ movhi
+ 274:Command.c     **** 		return;
+ 756              		.loc 1 274 0
+ 757 0020 C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
+ 758 0022 1A81     		strh	r2, [r3, #8]	@ movhi
+ 275:Command.c     **** 		}
+ 759              		.loc 1 275 0
+ 760 0024 7047     		bx	lr
+ 761              	.L51:
+ 762 0026 00BF     		.align	2
+ 763              	.L50:
+ 764 0028 00000000 		.word	Keypad
+ 765              		.cfi_endproc
+ 766              	.LFE32:
+ 768              		.section	.text.DoKeyOk,"ax",%progbits
+ 769              		.align	1
+ 770              		.p2align 2,,3
+ 771              		.global	DoKeyOk
+ 772              		.syntax unified
+ 773              		.thumb
+ 774              		.thumb_func
+ 775              		.fpu softvfp
+ 777              	DoKeyOk:
+ 778              	.LFB33:
+ 286:Command.c     ****  U16 tmp;
+ 779              		.loc 1 286 0
+ 780              		.cfi_startproc
+ 781              		@ args = 0, pretend = 0, frame = 0
+ 782              		@ frame_needed = 0, uses_anonymous_args = 0
+ 289:Command.c     ****  // Toggle HOLD state
+ 783              		.loc 1 289 0
+ 784 0000 0B4B     		ldr	r3, .L57
+ 286:Command.c     ****  U16 tmp;
+ 785              		.loc 1 286 0
+ 786 0002 10B5     		push	{r4, lr}
+ 787              		.cfi_def_cfa_offset 8
+ 788              		.cfi_offset 4, -8
+ 789              		.cfi_offset 14, -4
+ 289:Command.c     ****  // Toggle HOLD state
+ 790              		.loc 1 289 0
+ 791 0004 9847     		blx	r3
+ 792              	.LVL90:
+ 293:Command.c     ****  	// Set HOLD 
+ 793              		.loc 1 293 0
+ 794 0006 4307     		lsls	r3, r0, #29
+ 795 0008 08D5     		bpl	.L56
+ 301:Command.c     ****  	// Start capture at exit of HOLD
+ 796              		.loc 1 301 0
+ 797 000a 0A4B     		ldr	r3, .L57+4
+ 798 000c 9847     		blx	r3
+ 799              	.LVL91:
+ 303:Command.c     ****  	}
+ 800              		.loc 1 303 0
+ 801 000e 0A4B     		ldr	r3, .L57+8
+ 802 0010 9847     		blx	r3
+ 803              	.LVL92:
+ 307:Command.c     **** 
+ 804              		.loc 1 307 0
+ 805 0012 BDE81040 		pop	{r4, lr}
+ 806              		.cfi_remember_state
+ 807              		.cfi_restore 14
+ 808              		.cfi_restore 4
+ 809              		.cfi_def_cfa_offset 0
+ 306:Command.c     **** }
+ 810              		.loc 1 306 0
+ 811 0016 0220     		movs	r0, #2
+ 812 0018 084B     		ldr	r3, .L57+12
+ 813 001a 1847     		bx	r3	@ indirect register sibling call
+ 814              	.LVL93:
+ 815              	.L56:
+ 816              		.cfi_restore_state
+ 295:Command.c     ****  	// Stop capture
+ 817              		.loc 1 295 0
+ 818 001c 084B     		ldr	r3, .L57+16
+ 819 001e 9847     		blx	r3
+ 820              	.LVL94:
+ 297:Command.c     ****  	}
+ 821              		.loc 1 297 0
+ 822 0020 084B     		ldr	r3, .L57+20
+ 823 0022 9847     		blx	r3
+ 824              	.LVL95:
+ 307:Command.c     **** 
+ 825              		.loc 1 307 0
+ 826 0024 BDE81040 		pop	{r4, lr}
+ 827              		.cfi_restore 14
+ 828              		.cfi_restore 4
+ 829              		.cfi_def_cfa_offset 0
+ 306:Command.c     **** }
+ 830              		.loc 1 306 0
+ 831 0028 0220     		movs	r0, #2
+ 832 002a 044B     		ldr	r3, .L57+12
+ 833 002c 1847     		bx	r3	@ indirect register sibling call
+ 834              	.LVL96:
+ 835              	.L58:
+ 836 002e 00BF     		.align	2
+ 837              	.L57:
+ 838 0030 00000000 		.word	GetDsoStatus
+ 839 0034 00000000 		.word	ClrHold
+ 840 0038 00000000 		.word	StartCapture
+ 841 003c 00000000 		.word	UpdateDisp
+ 842 0040 00000000 		.word	SetHold
+ 843 0044 00000000 		.word	StopCapture
+ 844              		.cfi_endproc
+ 845              	.LFE33:
+ 847              		.section	.text.DoKeyInc,"ax",%progbits
+ 848              		.align	1
+ 849              		.p2align 2,,3
+ 850              		.global	DoKeyInc
+ 851              		.syntax unified
+ 852              		.thumb
+ 853              		.thumb_func
+ 854              		.fpu softvfp
+ 856              	DoKeyInc:
+ 857              	.LFB34:
+ 310:Command.c     ****  S8	tmp0;
+ 858              		.loc 1 310 0
+ 859              		.cfi_startproc
+ 860              		@ args = 0, pretend = 0, frame = 0
+ 861              		@ frame_needed = 0, uses_anonymous_args = 0
+ 862 0000 10B5     		push	{r4, lr}
+ 863              		.cfi_def_cfa_offset 8
+ 864              		.cfi_offset 4, -8
+ 865              		.cfi_offset 14, -4
+ 314:Command.c     **** 	case FC_Timebase:
+ 866              		.loc 1 314 0
+ 867 0002 434B     		ldr	r3, .L74
+ 868 0004 9847     		blx	r3
+ 869              	.LVL97:
+ 870 0006 0528     		cmp	r0, #5
+ 871 0008 44D8     		bhi	.L73
+ 872 000a DFE800F0 		tbb	[pc, r0]
+ 873              	.L62:
+ 874 000e 16       		.byte	(.L61-.L62)/2
+ 875 000f 36       		.byte	(.L63-.L62)/2
+ 876 0010 49       		.byte	(.L64-.L62)/2
+ 877 0011 5A       		.byte	(.L65-.L62)/2
+ 878 0012 6D       		.byte	(.L66-.L62)/2
+ 879 0013 03       		.byte	(.L67-.L62)/2
+ 880              		.p2align 1
+ 881              	.L67:
+ 355:Command.c     ****  		tmp1++;
+ 882              		.loc 1 355 0
+ 883 0014 3F4B     		ldr	r3, .L74+4
+ 884 0016 9847     		blx	r3
+ 885              	.LVL98:
+ 356:Command.c     ****  		tmp1 = SetVPos(tmp1);
+ 886              		.loc 1 356 0
+ 887 0018 0130     		adds	r0, r0, #1
+ 888              	.LVL99:
+ 357:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_Vpos], tmp1);
+ 889              		.loc 1 357 0
+ 890 001a 3F4B     		ldr	r3, .L74+8
+ 891 001c 00B2     		sxth	r0, r0
+ 892 001e 9847     		blx	r3
+ 893              	.LVL100:
+ 358:Command.c     ****  		UpdateDisp(Disp_Trace);
+ 894              		.loc 1 358 0
+ 895 0020 3E4A     		ldr	r2, .L74+12
+ 896 0022 81B2     		uxth	r1, r0
+ 897 0024 3E4B     		ldr	r3, .L74+16
+ 359:Command.c     **** 		break;
+ 898              		.loc 1 359 0
+ 899 0026 3F4C     		ldr	r4, .L74+20
+ 358:Command.c     ****  		UpdateDisp(Disp_Trace);
+ 900              		.loc 1 358 0
+ 901 0028 1089     		ldrh	r0, [r2, #8]
+ 902              	.LVL101:
+ 903 002a 9847     		blx	r3
+ 904              	.LVL102:
+ 359:Command.c     **** 		break;
+ 905              		.loc 1 359 0
+ 906 002c 0420     		movs	r0, #4
+ 907 002e A047     		blx	r4
+ 908              	.LVL103:
+ 381:Command.c     **** }
+ 909              		.loc 1 381 0
+ 910 0030 2346     		mov	r3, r4
+ 382:Command.c     **** 
+ 911              		.loc 1 382 0
+ 912 0032 BDE81040 		pop	{r4, lr}
+ 913              		.cfi_remember_state
+ 914              		.cfi_restore 14
+ 915              		.cfi_restore 4
+ 916              		.cfi_def_cfa_offset 0
+ 381:Command.c     **** }
+ 917              		.loc 1 381 0
+ 918 0036 0220     		movs	r0, #2
+ 919 0038 1847     		bx	r3	@ indirect register sibling call
+ 920              	.LVL104:
+ 921              	.L61:
+ 922              		.cfi_restore_state
+ 316:Command.c     ****  		tmp0++;
+ 923              		.loc 1 316 0
+ 924 003a 3B4B     		ldr	r3, .L74+24
+ 925 003c 9847     		blx	r3
+ 926              	.LVL105:
+ 317:Command.c     ****  		tmp0 = SetTimeBase(tmp0);
+ 927              		.loc 1 317 0
+ 928 003e 0130     		adds	r0, r0, #1
+ 929              	.LVL106:
+ 318:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TimeBase], tmp0);
+ 930              		.loc 1 318 0
+ 931 0040 3A4B     		ldr	r3, .L74+28
+ 932 0042 40B2     		sxtb	r0, r0
+ 933 0044 9847     		blx	r3
+ 934              	.LVL107:
+ 935 0046 0446     		mov	r4, r0
+ 936              	.LVL108:
+ 319:Command.c     **** 		if(tmp0 >= TB_20ms) {
+ 937              		.loc 1 319 0
+ 938 0048 344B     		ldr	r3, .L74+12
+ 939 004a 81B2     		uxth	r1, r0
+ 940 004c 1888     		ldrh	r0, [r3]
+ 941              	.LVL109:
+ 942 004e 344B     		ldr	r3, .L74+16
+ 943 0050 9847     		blx	r3
+ 944              	.LVL110:
+ 320:Command.c     **** 			// Restart capture
+ 945              		.loc 1 320 0
+ 946 0052 0D2C     		cmp	r4, #13
+ 329:Command.c     **** 			Keypad.KDebounceVal = KD_val1;
+ 947              		.loc 1 329 0
+ 948 0054 A4F10A04 		sub	r4, r4, #10
+ 322:Command.c     **** 			}
+ 949              		.loc 1 322 0
+ 950 0058 CCBF     		ite	gt
+ 951 005a 354B     		ldrgt	r3, .L74+32
+ 326:Command.c     **** 			}
+ 952              		.loc 1 326 0
+ 953 005c 354B     		ldrle	r3, .L74+36
+ 329:Command.c     **** 			Keypad.KDebounceVal = KD_val1;
+ 954              		.loc 1 329 0
+ 955 005e E4B2     		uxtb	r4, r4
+ 326:Command.c     **** 			}
+ 956              		.loc 1 326 0
+ 957 0060 9847     		blx	r3
+ 958              	.LVL111:
+ 329:Command.c     **** 			Keypad.KDebounceVal = KD_val1;
+ 959              		.loc 1 329 0
+ 960 0062 032C     		cmp	r4, #3
+ 330:Command.c     **** 			}
+ 961              		.loc 1 330 0
+ 962 0064 94BF     		ite	ls
+ 963 0066 0522     		movls	r2, #5
+ 333:Command.c     **** 			}
+ 964              		.loc 1 333 0
+ 965 0068 0222     		movhi	r2, #2
+ 966 006a 334B     		ldr	r3, .L74+40
+ 967 006c 2D4C     		ldr	r4, .L74+20
+ 968 006e DA81     		strh	r2, [r3, #14]	@ movhi
+ 381:Command.c     **** }
+ 969              		.loc 1 381 0
+ 970 0070 0220     		movs	r0, #2
+ 971 0072 2346     		mov	r3, r4
+ 382:Command.c     **** 
+ 972              		.loc 1 382 0
+ 973 0074 BDE81040 		pop	{r4, lr}
+ 974              		.cfi_remember_state
+ 975              		.cfi_restore 14
+ 976              		.cfi_restore 4
+ 977              		.cfi_def_cfa_offset 0
+ 381:Command.c     **** }
+ 978              		.loc 1 381 0
+ 979 0078 1847     		bx	r3	@ indirect register sibling call
+ 980              	.LVL112:
+ 981              	.L63:
+ 982              		.cfi_restore_state
+ 339:Command.c     ****  		tmp0++;
+ 983              		.loc 1 339 0
+ 984 007a 304B     		ldr	r3, .L74+44
+ 985 007c 9847     		blx	r3
+ 986              	.LVL113:
+ 340:Command.c     ****  		tmp0 = SetTrigMode(tmp0);
+ 987              		.loc 1 340 0
+ 988 007e 0130     		adds	r0, r0, #1
+ 989              	.LVL114:
+ 341:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TrigMode], tmp0);
+ 990              		.loc 1 341 0
+ 991 0080 2F4B     		ldr	r3, .L74+48
+ 992 0082 40B2     		sxtb	r0, r0
+ 993 0084 9847     		blx	r3
+ 994              	.LVL115:
+ 342:Command.c     **** 		// Restart capture. 
+ 995              		.loc 1 342 0
+ 996 0086 254A     		ldr	r2, .L74+12
+ 997 0088 81B2     		uxth	r1, r0
+ 998 008a 254B     		ldr	r3, .L74+16
+ 999 008c 9089     		ldrh	r0, [r2, #12]
+ 1000              	.LVL116:
+ 1001 008e 9847     		blx	r3
+ 1002              	.LVL117:
+ 344:Command.c     **** 		break;
+ 1003              		.loc 1 344 0
+ 1004 0090 274B     		ldr	r3, .L74+32
+ 1005 0092 9847     		blx	r3
+ 1006              	.LVL118:
+ 1007              	.L73:
+ 1008 0094 234C     		ldr	r4, .L74+20
+ 381:Command.c     **** }
+ 1009              		.loc 1 381 0
+ 1010 0096 0220     		movs	r0, #2
+ 1011 0098 2346     		mov	r3, r4
+ 382:Command.c     **** 
+ 1012              		.loc 1 382 0
+ 1013 009a BDE81040 		pop	{r4, lr}
+ 1014              		.cfi_remember_state
+ 1015              		.cfi_restore 14
+ 1016              		.cfi_restore 4
+ 1017              		.cfi_def_cfa_offset 0
+ 381:Command.c     **** }
+ 1018              		.loc 1 381 0
+ 1019 009e 1847     		bx	r3	@ indirect register sibling call
+ 1020              	.LVL119:
+ 1021              	.L64:
+ 1022              		.cfi_restore_state
+ 348:Command.c     ****  		tmp0++;
+ 1023              		.loc 1 348 0
+ 1024 00a0 284B     		ldr	r3, .L74+52
+ 1025 00a2 9847     		blx	r3
+ 1026              	.LVL120:
+ 349:Command.c     ****  		tmp0 = SetTrigEdge(tmp0);
+ 1027              		.loc 1 349 0
+ 1028 00a4 0130     		adds	r0, r0, #1
+ 1029              	.LVL121:
+ 350:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TrigEdge], tmp0);
+ 1030              		.loc 1 350 0
+ 1031 00a6 284B     		ldr	r3, .L74+56
+ 1032 00a8 40B2     		sxtb	r0, r0
+ 1033 00aa 9847     		blx	r3
+ 1034              	.LVL122:
+ 351:Command.c     **** 		break;
+ 1035              		.loc 1 351 0
+ 1036 00ac 1B4A     		ldr	r2, .L74+12
+ 1037 00ae 1D4C     		ldr	r4, .L74+20
+ 1038 00b0 81B2     		uxth	r1, r0
+ 1039 00b2 1B4B     		ldr	r3, .L74+16
+ 1040 00b4 D089     		ldrh	r0, [r2, #14]
+ 1041              	.LVL123:
+ 1042 00b6 9847     		blx	r3
+ 1043              	.LVL124:
+ 381:Command.c     **** }
+ 1044              		.loc 1 381 0
+ 1045 00b8 2346     		mov	r3, r4
+ 382:Command.c     **** 
+ 1046              		.loc 1 382 0
+ 1047 00ba BDE81040 		pop	{r4, lr}
+ 1048              		.cfi_remember_state
+ 1049              		.cfi_restore 14
+ 1050              		.cfi_restore 4
+ 1051              		.cfi_def_cfa_offset 0
+ 381:Command.c     **** }
+ 1052              		.loc 1 381 0
+ 1053 00be 0220     		movs	r0, #2
+ 1054 00c0 1847     		bx	r3	@ indirect register sibling call
+ 1055              	.LVL125:
+ 1056              	.L65:
+ 1057              		.cfi_restore_state
+ 363:Command.c     ****  		tmp1++;
+ 1058              		.loc 1 363 0
+ 1059 00c2 224B     		ldr	r3, .L74+60
+ 1060 00c4 9847     		blx	r3
+ 1061              	.LVL126:
+ 364:Command.c     ****  		tmp1 = SetTrigLvl(tmp1);
+ 1062              		.loc 1 364 0
+ 1063 00c6 0130     		adds	r0, r0, #1
+ 1064              	.LVL127:
+ 365:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TrigLvl], tmp1);
+ 1065              		.loc 1 365 0
+ 1066 00c8 214B     		ldr	r3, .L74+64
+ 1067 00ca 00B2     		sxth	r0, r0
+ 1068 00cc 9847     		blx	r3
+ 1069              	.LVL128:
+ 366:Command.c     **** 		OutputTLvl();
+ 1070              		.loc 1 366 0
+ 1071 00ce 134A     		ldr	r2, .L74+12
+ 1072 00d0 81B2     		uxth	r1, r0
+ 1073 00d2 134B     		ldr	r3, .L74+16
+ 1074 00d4 108A     		ldrh	r0, [r2, #16]
+ 1075              	.LVL129:
+ 1076 00d6 134C     		ldr	r4, .L74+20
+ 1077 00d8 9847     		blx	r3
+ 1078              	.LVL130:
+ 367:Command.c     **** 		break;
+ 1079              		.loc 1 367 0
+ 1080 00da 1E4B     		ldr	r3, .L74+68
+ 1081 00dc 9847     		blx	r3
+ 1082              	.LVL131:
+ 381:Command.c     **** }
+ 1083              		.loc 1 381 0
+ 1084 00de 2346     		mov	r3, r4
+ 382:Command.c     **** 
+ 1085              		.loc 1 382 0
+ 1086 00e0 BDE81040 		pop	{r4, lr}
+ 1087              		.cfi_remember_state
+ 1088              		.cfi_restore 14
+ 1089              		.cfi_restore 4
+ 1090              		.cfi_def_cfa_offset 0
+ 381:Command.c     **** }
+ 1091              		.loc 1 381 0
+ 1092 00e4 0220     		movs	r0, #2
+ 1093 00e6 1847     		bx	r3	@ indirect register sibling call
+ 1094              	.LVL132:
+ 1095              	.L66:
+ 1096              		.cfi_restore_state
+ 372:Command.c     ****  		tmp1--;
+ 1097              		.loc 1 372 0
+ 1098 00e8 1B4B     		ldr	r3, .L74+72
+ 1099 00ea 9847     		blx	r3
+ 1100              	.LVL133:
+ 373:Command.c     ****  		tmp1 = SetHPos(tmp1);
+ 1101              		.loc 1 373 0
+ 1102 00ec 0138     		subs	r0, r0, #1
+ 1103              	.LVL134:
+ 374:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_HPos], tmp1);
+ 1104              		.loc 1 374 0
+ 1105 00ee 1B4B     		ldr	r3, .L74+76
+ 1106 00f0 00B2     		sxth	r0, r0
+ 1107 00f2 9847     		blx	r3
+ 1108              	.LVL135:
+ 375:Command.c     ****  		UpdateDisp(Disp_Trace);
+ 1109              		.loc 1 375 0
+ 1110 00f4 094A     		ldr	r2, .L74+12
+ 1111 00f6 81B2     		uxth	r1, r0
+ 1112 00f8 094B     		ldr	r3, .L74+16
+ 376:Command.c     **** 		break;
+ 1113              		.loc 1 376 0
+ 1114 00fa 0A4C     		ldr	r4, .L74+20
+ 375:Command.c     ****  		UpdateDisp(Disp_Trace);
+ 1115              		.loc 1 375 0
+ 1116 00fc 5088     		ldrh	r0, [r2, #2]
+ 1117              	.LVL136:
+ 1118 00fe 9847     		blx	r3
+ 1119              	.LVL137:
+ 376:Command.c     **** 		break;
+ 1120              		.loc 1 376 0
+ 1121 0100 0420     		movs	r0, #4
+ 1122 0102 A047     		blx	r4
+ 1123              	.LVL138:
+ 381:Command.c     **** }
+ 1124              		.loc 1 381 0
+ 1125 0104 2346     		mov	r3, r4
+ 382:Command.c     **** 
+ 1126              		.loc 1 382 0
+ 1127 0106 BDE81040 		pop	{r4, lr}
+ 1128              		.cfi_restore 14
+ 1129              		.cfi_restore 4
+ 1130              		.cfi_def_cfa_offset 0
+ 381:Command.c     **** }
+ 1131              		.loc 1 381 0
+ 1132 010a 0220     		movs	r0, #2
+ 1133 010c 1847     		bx	r3	@ indirect register sibling call
+ 1134              	.LVL139:
+ 1135              	.L75:
+ 1136 010e 00BF     		.align	2
+ 1137              	.L74:
+ 1138 0110 00000000 		.word	GetFocus
+ 1139 0114 00000000 		.word	GetVPos
+ 1140 0118 00000000 		.word	SetVPos
+ 1141 011c 00000000 		.word	VirtAddVarTab
+ 1142 0120 00000000 		.word	EE_WriteVariable
+ 1143 0124 00000000 		.word	UpdateDisp
+ 1144 0128 00000000 		.word	GetTimebase
+ 1145 012c 00000000 		.word	SetTimeBase
+ 1146 0130 00000000 		.word	StartCapture
+ 1147 0134 00000000 		.word	UpdateTimebase
+ 1148 0138 00000000 		.word	Keypad
+ 1149 013c 00000000 		.word	GetTrigMode
+ 1150 0140 00000000 		.word	SetTrigMode
+ 1151 0144 00000000 		.word	GetTrigEdge
+ 1152 0148 00000000 		.word	SetTrigEdge
+ 1153 014c 00000000 		.word	GetTrigLvl
+ 1154 0150 00000000 		.word	SetTrigLvl
+ 1155 0154 00000000 		.word	OutputTLvl
+ 1156 0158 00000000 		.word	GetHPos
+ 1157 015c 00000000 		.word	SetHPos
+ 1158              		.cfi_endproc
+ 1159              	.LFE34:
+ 1161              		.section	.text.DoKeyDec,"ax",%progbits
+ 1162              		.align	1
+ 1163              		.p2align 2,,3
+ 1164              		.global	DoKeyDec
+ 1165              		.syntax unified
+ 1166              		.thumb
+ 1167              		.thumb_func
+ 1168              		.fpu softvfp
+ 1170              	DoKeyDec:
+ 1171              	.LFB35:
+ 385:Command.c     ****  S8	tmp0;
+ 1172              		.loc 1 385 0
+ 1173              		.cfi_startproc
+ 1174              		@ args = 0, pretend = 0, frame = 0
+ 1175              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1176 0000 10B5     		push	{r4, lr}
+ 1177              		.cfi_def_cfa_offset 8
+ 1178              		.cfi_offset 4, -8
+ 1179              		.cfi_offset 14, -4
+ 389:Command.c     **** 	case FC_Timebase:
+ 1180              		.loc 1 389 0
+ 1181 0002 3C4B     		ldr	r3, .L90
+ 1182 0004 9847     		blx	r3
+ 1183              	.LVL140:
+ 1184 0006 0528     		cmp	r0, #5
+ 1185 0008 27D8     		bhi	.L88
+ 1186 000a DFE800F0 		tbb	[pc, r0]
+ 1187              	.L79:
+ 1188 000e 16       		.byte	(.L78-.L79)/2
+ 1189 000f 28       		.byte	(.L80-.L79)/2
+ 1190 0010 3B       		.byte	(.L81-.L79)/2
+ 1191 0011 4C       		.byte	(.L82-.L79)/2
+ 1192 0012 5F       		.byte	(.L83-.L79)/2
+ 1193 0013 03       		.byte	(.L84-.L79)/2
+ 1194              		.p2align 1
+ 1195              	.L84:
+ 436:Command.c     ****  		tmp1--;
+ 1196              		.loc 1 436 0
+ 1197 0014 384B     		ldr	r3, .L90+4
+ 1198 0016 9847     		blx	r3
+ 1199              	.LVL141:
+ 437:Command.c     ****  		tmp1 = SetVPos(tmp1);
+ 1200              		.loc 1 437 0
+ 1201 0018 0138     		subs	r0, r0, #1
+ 1202              	.LVL142:
+ 438:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_Vpos], tmp1);
+ 1203              		.loc 1 438 0
+ 1204 001a 384B     		ldr	r3, .L90+8
+ 1205 001c 00B2     		sxth	r0, r0
+ 1206 001e 9847     		blx	r3
+ 1207              	.LVL143:
+ 439:Command.c     ****  		UpdateDisp(Disp_Trace);
+ 1208              		.loc 1 439 0
+ 1209 0020 374A     		ldr	r2, .L90+12
+ 1210 0022 81B2     		uxth	r1, r0
+ 1211 0024 374B     		ldr	r3, .L90+16
+ 1212 0026 1089     		ldrh	r0, [r2, #8]
+ 1213              	.LVL144:
+ 1214 0028 9847     		blx	r3
+ 1215              	.LVL145:
+ 440:Command.c     **** 		break;
+ 1216              		.loc 1 440 0
+ 1217 002a 374C     		ldr	r4, .L90+20
+ 1218 002c 0420     		movs	r0, #4
+ 1219 002e A047     		blx	r4
+ 1220              	.LVL146:
+ 1221              	.L77:
+ 462:Command.c     **** }
+ 1222              		.loc 1 462 0
+ 1223 0030 2346     		mov	r3, r4
+ 463:Command.c     **** 
+ 1224              		.loc 1 463 0
+ 1225 0032 BDE81040 		pop	{r4, lr}
+ 1226              		.cfi_remember_state
+ 1227              		.cfi_restore 14
+ 1228              		.cfi_restore 4
+ 1229              		.cfi_def_cfa_offset 0
+ 462:Command.c     **** }
+ 1230              		.loc 1 462 0
+ 1231 0036 0220     		movs	r0, #2
+ 1232 0038 1847     		bx	r3	@ indirect register sibling call
+ 1233              	.LVL147:
+ 1234              	.L78:
+ 1235              		.cfi_restore_state
+ 391:Command.c     ****  		tmp0--;
+ 1236              		.loc 1 391 0
+ 1237 003a 344B     		ldr	r3, .L90+24
+ 1238 003c 9847     		blx	r3
+ 1239              	.LVL148:
+ 392:Command.c     ****  		tmp0 = SetTimeBase(tmp0);
+ 1240              		.loc 1 392 0
+ 1241 003e 0138     		subs	r0, r0, #1
+ 1242              	.LVL149:
+ 393:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TimeBase], tmp0);
+ 1243              		.loc 1 393 0
+ 1244 0040 334B     		ldr	r3, .L90+28
+ 1245 0042 40B2     		sxtb	r0, r0
+ 1246 0044 9847     		blx	r3
+ 1247              	.LVL150:
+ 1248 0046 0446     		mov	r4, r0
+ 1249              	.LVL151:
+ 394:Command.c     **** 		if(tmp0 >= TB_50ms) {
+ 1250              		.loc 1 394 0
+ 1251 0048 2D4B     		ldr	r3, .L90+12
+ 1252 004a 81B2     		uxth	r1, r0
+ 1253 004c 1888     		ldrh	r0, [r3]
+ 1254              	.LVL152:
+ 1255 004e 2D4B     		ldr	r3, .L90+16
+ 1256 0050 9847     		blx	r3
+ 1257              	.LVL153:
+ 395:Command.c     **** 			// Restart capture
+ 1258              		.loc 1 395 0
+ 1259 0052 0C2C     		cmp	r4, #12
+ 1260 0054 0EDC     		bgt	.L89
+ 403:Command.c     **** 			
+ 1261              		.loc 1 403 0
+ 1262 0056 2F4B     		ldr	r3, .L90+32
+ 1263 0058 9847     		blx	r3
+ 1264              	.LVL154:
+ 1265              	.L88:
+ 1266 005a 2B4C     		ldr	r4, .L90+20
+ 1267 005c E8E7     		b	.L77
+ 1268              	.L80:
+ 420:Command.c     ****  		tmp0--;
+ 1269              		.loc 1 420 0
+ 1270 005e 2E4B     		ldr	r3, .L90+36
+ 1271 0060 9847     		blx	r3
+ 1272              	.LVL155:
+ 421:Command.c     ****  		tmp0 = SetTrigMode(tmp0);
+ 1273              		.loc 1 421 0
+ 1274 0062 0138     		subs	r0, r0, #1
+ 1275              	.LVL156:
+ 422:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TrigMode], tmp0);
+ 1276              		.loc 1 422 0
+ 1277 0064 2D4B     		ldr	r3, .L90+40
+ 1278 0066 40B2     		sxtb	r0, r0
+ 1279 0068 9847     		blx	r3
+ 1280              	.LVL157:
+ 423:Command.c     **** 		// Restart capture. 
+ 1281              		.loc 1 423 0
+ 1282 006a 254A     		ldr	r2, .L90+12
+ 1283 006c 81B2     		uxth	r1, r0
+ 1284 006e 254B     		ldr	r3, .L90+16
+ 1285 0070 9089     		ldrh	r0, [r2, #12]
+ 1286              	.LVL158:
+ 1287 0072 9847     		blx	r3
+ 1288              	.LVL159:
+ 1289              	.L89:
+ 1290 0074 244C     		ldr	r4, .L90+20
+ 425:Command.c     **** 		break;
+ 1291              		.loc 1 425 0
+ 1292 0076 2A4B     		ldr	r3, .L90+44
+ 1293 0078 9847     		blx	r3
+ 1294              	.LVL160:
+ 462:Command.c     **** }
+ 1295              		.loc 1 462 0
+ 1296 007a 2346     		mov	r3, r4
+ 463:Command.c     **** 
+ 1297              		.loc 1 463 0
+ 1298 007c BDE81040 		pop	{r4, lr}
+ 1299              		.cfi_remember_state
+ 1300              		.cfi_restore 14
+ 1301              		.cfi_restore 4
+ 1302              		.cfi_def_cfa_offset 0
+ 462:Command.c     **** }
+ 1303              		.loc 1 462 0
+ 1304 0080 0220     		movs	r0, #2
+ 1305 0082 1847     		bx	r3	@ indirect register sibling call
+ 1306              	.LVL161:
+ 1307              	.L81:
+ 1308              		.cfi_restore_state
+ 429:Command.c     ****  		tmp0--;
+ 1309              		.loc 1 429 0
+ 1310 0084 274B     		ldr	r3, .L90+48
+ 1311 0086 9847     		blx	r3
+ 1312              	.LVL162:
+ 430:Command.c     ****  		tmp0 = SetTrigEdge(tmp0);
+ 1313              		.loc 1 430 0
+ 1314 0088 0138     		subs	r0, r0, #1
+ 1315              	.LVL163:
+ 431:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TrigEdge], tmp0);
+ 1316              		.loc 1 431 0
+ 1317 008a 274B     		ldr	r3, .L90+52
+ 1318 008c 40B2     		sxtb	r0, r0
+ 1319 008e 9847     		blx	r3
+ 1320              	.LVL164:
+ 432:Command.c     **** 		break;
+ 1321              		.loc 1 432 0
+ 1322 0090 1B4A     		ldr	r2, .L90+12
+ 1323 0092 1D4C     		ldr	r4, .L90+20
+ 1324 0094 81B2     		uxth	r1, r0
+ 1325 0096 1B4B     		ldr	r3, .L90+16
+ 1326 0098 D089     		ldrh	r0, [r2, #14]
+ 1327              	.LVL165:
+ 1328 009a 9847     		blx	r3
+ 1329              	.LVL166:
+ 462:Command.c     **** }
+ 1330              		.loc 1 462 0
+ 1331 009c 2346     		mov	r3, r4
+ 463:Command.c     **** 
+ 1332              		.loc 1 463 0
+ 1333 009e BDE81040 		pop	{r4, lr}
+ 1334              		.cfi_remember_state
+ 1335              		.cfi_restore 14
+ 1336              		.cfi_restore 4
+ 1337              		.cfi_def_cfa_offset 0
+ 462:Command.c     **** }
+ 1338              		.loc 1 462 0
+ 1339 00a2 0220     		movs	r0, #2
+ 1340 00a4 1847     		bx	r3	@ indirect register sibling call
+ 1341              	.LVL167:
+ 1342              	.L82:
+ 1343              		.cfi_restore_state
+ 444:Command.c     ****  		tmp1--;
+ 1344              		.loc 1 444 0
+ 1345 00a6 214B     		ldr	r3, .L90+56
+ 1346 00a8 9847     		blx	r3
+ 1347              	.LVL168:
+ 445:Command.c     ****  		tmp1 = SetTrigLvl(tmp1);
+ 1348              		.loc 1 445 0
+ 1349 00aa 0138     		subs	r0, r0, #1
+ 1350              	.LVL169:
+ 446:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_TrigLvl], tmp1);
+ 1351              		.loc 1 446 0
+ 1352 00ac 204B     		ldr	r3, .L90+60
+ 1353 00ae 00B2     		sxth	r0, r0
+ 1354 00b0 9847     		blx	r3
+ 1355              	.LVL170:
+ 447:Command.c     **** 		OutputTLvl();
+ 1356              		.loc 1 447 0
+ 1357 00b2 134A     		ldr	r2, .L90+12
+ 1358 00b4 81B2     		uxth	r1, r0
+ 1359 00b6 134B     		ldr	r3, .L90+16
+ 1360 00b8 108A     		ldrh	r0, [r2, #16]
+ 1361              	.LVL171:
+ 1362 00ba 134C     		ldr	r4, .L90+20
+ 1363 00bc 9847     		blx	r3
+ 1364              	.LVL172:
+ 448:Command.c     **** 		break;
+ 1365              		.loc 1 448 0
+ 1366 00be 1D4B     		ldr	r3, .L90+64
+ 1367 00c0 9847     		blx	r3
+ 1368              	.LVL173:
+ 462:Command.c     **** }
+ 1369              		.loc 1 462 0
+ 1370 00c2 2346     		mov	r3, r4
+ 463:Command.c     **** 
+ 1371              		.loc 1 463 0
+ 1372 00c4 BDE81040 		pop	{r4, lr}
+ 1373              		.cfi_remember_state
+ 1374              		.cfi_restore 14
+ 1375              		.cfi_restore 4
+ 1376              		.cfi_def_cfa_offset 0
+ 462:Command.c     **** }
+ 1377              		.loc 1 462 0
+ 1378 00c8 0220     		movs	r0, #2
+ 1379 00ca 1847     		bx	r3	@ indirect register sibling call
+ 1380              	.LVL174:
+ 1381              	.L83:
+ 1382              		.cfi_restore_state
+ 453:Command.c     ****  		tmp1++;
+ 1383              		.loc 1 453 0
+ 1384 00cc 1A4B     		ldr	r3, .L90+68
+ 1385 00ce 9847     		blx	r3
+ 1386              	.LVL175:
+ 454:Command.c     ****  		tmp1 = SetHPos(tmp1);
+ 1387              		.loc 1 454 0
+ 1388 00d0 0130     		adds	r0, r0, #1
+ 1389              	.LVL176:
+ 455:Command.c     **** 		EE_WriteVariable(VirtAddVarTab[Addr_HPos], tmp1);
+ 1390              		.loc 1 455 0
+ 1391 00d2 1A4B     		ldr	r3, .L90+72
+ 1392 00d4 00B2     		sxth	r0, r0
+ 1393 00d6 9847     		blx	r3
+ 1394              	.LVL177:
+ 456:Command.c     ****  		UpdateDisp(Disp_Trace);
+ 1395              		.loc 1 456 0
+ 1396 00d8 094A     		ldr	r2, .L90+12
+ 1397 00da 81B2     		uxth	r1, r0
+ 1398 00dc 094B     		ldr	r3, .L90+16
+ 457:Command.c     **** 		break;
+ 1399              		.loc 1 457 0
+ 1400 00de 0A4C     		ldr	r4, .L90+20
+ 456:Command.c     ****  		UpdateDisp(Disp_Trace);
+ 1401              		.loc 1 456 0
+ 1402 00e0 5088     		ldrh	r0, [r2, #2]
+ 1403              	.LVL178:
+ 1404 00e2 9847     		blx	r3
+ 1405              	.LVL179:
+ 457:Command.c     **** 		break;
+ 1406              		.loc 1 457 0
+ 1407 00e4 0420     		movs	r0, #4
+ 1408 00e6 A047     		blx	r4
+ 1409              	.LVL180:
+ 462:Command.c     **** }
+ 1410              		.loc 1 462 0
+ 1411 00e8 2346     		mov	r3, r4
+ 463:Command.c     **** 
+ 1412              		.loc 1 463 0
+ 1413 00ea BDE81040 		pop	{r4, lr}
+ 1414              		.cfi_restore 14
+ 1415              		.cfi_restore 4
+ 1416              		.cfi_def_cfa_offset 0
+ 462:Command.c     **** }
+ 1417              		.loc 1 462 0
+ 1418 00ee 0220     		movs	r0, #2
+ 1419 00f0 1847     		bx	r3	@ indirect register sibling call
+ 1420              	.LVL181:
+ 1421              	.L91:
+ 1422 00f2 00BF     		.align	2
+ 1423              	.L90:
+ 1424 00f4 00000000 		.word	GetFocus
+ 1425 00f8 00000000 		.word	GetVPos
+ 1426 00fc 00000000 		.word	SetVPos
+ 1427 0100 00000000 		.word	VirtAddVarTab
+ 1428 0104 00000000 		.word	EE_WriteVariable
+ 1429 0108 00000000 		.word	UpdateDisp
+ 1430 010c 00000000 		.word	GetTimebase
+ 1431 0110 00000000 		.word	SetTimeBase
+ 1432 0114 00000000 		.word	UpdateTimebase
+ 1433 0118 00000000 		.word	GetTrigMode
+ 1434 011c 00000000 		.word	SetTrigMode
+ 1435 0120 00000000 		.word	StartCapture
+ 1436 0124 00000000 		.word	GetTrigEdge
+ 1437 0128 00000000 		.word	SetTrigEdge
+ 1438 012c 00000000 		.word	GetTrigLvl
+ 1439 0130 00000000 		.word	SetTrigLvl
+ 1440 0134 00000000 		.word	OutputTLvl
+ 1441 0138 00000000 		.word	GetHPos
+ 1442 013c 00000000 		.word	SetHPos
+ 1443              		.cfi_endproc
+ 1444              	.LFE35:
+ 1446              		.section	.text.DoKeySel,"ax",%progbits
+ 1447              		.align	1
+ 1448              		.p2align 2,,3
+ 1449              		.global	DoKeySel
+ 1450              		.syntax unified
+ 1451              		.thumb
+ 1452              		.thumb_func
+ 1453              		.fpu softvfp
+ 1455              	DoKeySel:
+ 1456              	.LFB36:
+ 466:Command.c     ****  U8 tmp;
+ 1457              		.loc 1 466 0
+ 1458              		.cfi_startproc
+ 1459              		@ args = 0, pretend = 0, frame = 0
+ 1460              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1461 0000 10B5     		push	{r4, lr}
+ 1462              		.cfi_def_cfa_offset 8
+ 1463              		.cfi_offset 4, -8
+ 1464              		.cfi_offset 14, -4
+ 469:Command.c     ****  tmp++;
+ 1465              		.loc 1 469 0
+ 1466 0002 074B     		ldr	r3, .L95
+ 1467 0004 9847     		blx	r3
+ 1468              	.LVL182:
+ 470:Command.c     ****  if(tmp >= FC_Max) {
+ 1469              		.loc 1 470 0
+ 1470 0006 0130     		adds	r0, r0, #1
+ 1471              	.LVL183:
+ 1472 0008 C0B2     		uxtb	r0, r0
+ 1473              	.LVL184:
+ 472:Command.c     ****  	}
+ 1474              		.loc 1 472 0
+ 1475 000a 0628     		cmp	r0, #6
+ 1476              	.LVL185:
+ 474:Command.c     **** 
+ 1477              		.loc 1 474 0
+ 1478 000c 054B     		ldr	r3, .L95+4
+ 1479 000e 28BF     		it	cs
+ 1480 0010 0020     		movcs	r0, #0
+ 1481              	.LVL186:
+ 1482 0012 9847     		blx	r3
+ 1483              	.LVL187:
+ 477:Command.c     **** 
+ 1484              		.loc 1 477 0
+ 1485 0014 BDE81040 		pop	{r4, lr}
+ 1486              		.cfi_restore 14
+ 1487              		.cfi_restore 4
+ 1488              		.cfi_def_cfa_offset 0
+ 476:Command.c     **** }
+ 1489              		.loc 1 476 0
+ 1490 0018 0220     		movs	r0, #2
+ 1491 001a 034B     		ldr	r3, .L95+8
+ 1492 001c 1847     		bx	r3	@ indirect register sibling call
+ 1493              	.LVL188:
+ 1494              	.L96:
+ 1495 001e 00BF     		.align	2
+ 1496              	.L95:
+ 1497 0020 00000000 		.word	GetFocus
+ 1498 0024 00000000 		.word	SetFocus
+ 1499 0028 00000000 		.word	UpdateDisp
+ 1500              		.cfi_endproc
+ 1501              	.LFE36:
+ 1503              		.section	.text.DoKeyOkH,"ax",%progbits
+ 1504              		.align	1
+ 1505              		.p2align 2,,3
+ 1506              		.global	DoKeyOkH
+ 1507              		.syntax unified
+ 1508              		.thumb
+ 1509              		.thumb_func
+ 1510              		.fpu softvfp
+ 1512              	DoKeyOkH:
+ 1513              	.LFB37:
+ 480:Command.c     ****  S16 tmp1;
+ 1514              		.loc 1 480 0
+ 1515              		.cfi_startproc
+ 1516              		@ args = 0, pretend = 0, frame = 0
+ 1517              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1518 0000 10B5     		push	{r4, lr}
+ 1519              		.cfi_def_cfa_offset 8
+ 1520              		.cfi_offset 4, -8
+ 1521              		.cfi_offset 14, -4
+ 483:Command.c     **** 	// Do VPos alignment
+ 1522              		.loc 1 483 0
+ 1523 0002 044B     		ldr	r3, .L101
+ 1524 0004 9847     		blx	r3
+ 1525              	.LVL189:
+ 1526 0006 0528     		cmp	r0, #5
+ 1527 0008 00D0     		beq	.L100
+ 1528              		.loc 1 489 0
+ 1529 000a 10BD     		pop	{r4, pc}
+ 1530              	.L100:
+ 1531 000c 024B     		ldr	r3, .L101+4
+ 1532 000e BDE81040 		pop	{r4, lr}
+ 1533              		.cfi_restore 14
+ 1534              		.cfi_restore 4
+ 1535              		.cfi_def_cfa_offset 0
+ 1536 0012 1847     		bx	r3	@ indirect register sibling call
+ 1537              	.LVL190:
+ 1538              	.L102:
+ 1539              		.align	2
+ 1540              	.L101:
+ 1541 0014 00000000 		.word	GetFocus
+ 1542 0018 00000000 		.word	DoKeyOkH.part.0
+ 1543              		.cfi_endproc
+ 1544              	.LFE37:
+ 1546              		.section	.text.DoKeyIncH,"ax",%progbits
+ 1547              		.align	1
+ 1548              		.p2align 2,,3
+ 1549              		.global	DoKeyIncH
+ 1550              		.syntax unified
+ 1551              		.thumb
+ 1552              		.thumb_func
+ 1553              		.fpu softvfp
+ 1555              	DoKeyIncH:
+ 1556              	.LFB38:
+ 490:Command.c     **** 
+ 491:Command.c     **** void	DoKeyIncH(void)
+ 492:Command.c     **** {
+ 1557              		.loc 1 492 0
+ 1558              		.cfi_startproc
+ 1559              		@ args = 0, pretend = 0, frame = 0
+ 1560              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1561 0000 10B5     		push	{r4, lr}
+ 1562              		.cfi_def_cfa_offset 8
+ 1563              		.cfi_offset 4, -8
+ 1564              		.cfi_offset 14, -4
+ 493:Command.c     ****  S16	tmp1;
+ 494:Command.c     ****  
+ 495:Command.c     ****  switch(GetFocus()) {
+ 1565              		.loc 1 495 0
+ 1566 0002 184B     		ldr	r3, .L110
+ 1567 0004 9847     		blx	r3
+ 1568              	.LVL191:
+ 1569 0006 0428     		cmp	r0, #4
+ 1570 0008 20D0     		beq	.L105
+ 1571 000a 0528     		cmp	r0, #5
+ 1572 000c 13D0     		beq	.L106
+ 1573 000e 0328     		cmp	r0, #3
+ 1574 0010 04D0     		beq	.L109
+ 496:Command.c     **** 	case FC_VPos:
+ 497:Command.c     ****  		tmp1 = GetVPos();
+ 498:Command.c     ****  		tmp1 += 10;
+ 499:Command.c     ****  		SetVPos(tmp1);
+ 500:Command.c     **** 		break;
+ 501:Command.c     **** 
+ 502:Command.c     **** 	case FC_TrigLvl:
+ 503:Command.c     ****  		tmp1 = GetTrigLvl();
+ 504:Command.c     ****  		tmp1 += 10;
+ 505:Command.c     ****  		SetTrigLvl(tmp1);
+ 506:Command.c     **** 		OutputTLvl();
+ 507:Command.c     **** 		break;
+ 508:Command.c     **** 		
+ 509:Command.c     **** 	case FC_HPos:
+ 510:Command.c     **** 		// Move waveform right
+ 511:Command.c     ****  		tmp1 = GetHPos();
+ 512:Command.c     ****  		tmp1 -= 20;
+ 513:Command.c     ****  		SetHPos(tmp1);		
+ 514:Command.c     **** 		break;
+ 515:Command.c     ****  	}
+ 516:Command.c     **** 
+ 517:Command.c     ****  UpdateDisp(Disp_Param);
+ 518:Command.c     **** }
+ 1575              		.loc 1 518 0
+ 1576 0012 BDE81040 		pop	{r4, lr}
+ 1577              		.cfi_remember_state
+ 1578              		.cfi_restore 14
+ 1579              		.cfi_restore 4
+ 1580              		.cfi_def_cfa_offset 0
+ 517:Command.c     **** }
+ 1581              		.loc 1 517 0
+ 1582 0016 0220     		movs	r0, #2
+ 1583 0018 134B     		ldr	r3, .L110+4
+ 1584 001a 1847     		bx	r3	@ indirect register sibling call
+ 1585              	.LVL192:
+ 1586              	.L109:
+ 1587              		.cfi_restore_state
+ 503:Command.c     ****  		tmp1 += 10;
+ 1588              		.loc 1 503 0
+ 1589 001c 134B     		ldr	r3, .L110+8
+ 1590 001e 9847     		blx	r3
+ 1591              	.LVL193:
+ 504:Command.c     ****  		SetTrigLvl(tmp1);
+ 1592              		.loc 1 504 0
+ 1593 0020 0A30     		adds	r0, r0, #10
+ 1594              	.LVL194:
+ 505:Command.c     **** 		OutputTLvl();
+ 1595              		.loc 1 505 0
+ 1596 0022 134B     		ldr	r3, .L110+12
+ 1597 0024 00B2     		sxth	r0, r0
+ 1598 0026 9847     		blx	r3
+ 1599              	.LVL195:
+ 506:Command.c     **** 		break;
+ 1600              		.loc 1 506 0
+ 1601 0028 124B     		ldr	r3, .L110+16
+ 1602 002a 9847     		blx	r3
+ 1603              	.LVL196:
+ 1604              		.loc 1 518 0
+ 1605 002c BDE81040 		pop	{r4, lr}
+ 1606              		.cfi_remember_state
+ 1607              		.cfi_restore 14
+ 1608              		.cfi_restore 4
+ 1609              		.cfi_def_cfa_offset 0
+ 517:Command.c     **** }
+ 1610              		.loc 1 517 0
+ 1611 0030 0220     		movs	r0, #2
+ 1612 0032 0D4B     		ldr	r3, .L110+4
+ 1613 0034 1847     		bx	r3	@ indirect register sibling call
+ 1614              	.LVL197:
+ 1615              	.L106:
+ 1616              		.cfi_restore_state
+ 497:Command.c     ****  		tmp1 += 10;
+ 1617              		.loc 1 497 0
+ 1618 0036 104B     		ldr	r3, .L110+20
+ 1619 0038 9847     		blx	r3
+ 1620              	.LVL198:
+ 498:Command.c     ****  		SetVPos(tmp1);
+ 1621              		.loc 1 498 0
+ 1622 003a 0A30     		adds	r0, r0, #10
+ 1623              	.LVL199:
+ 499:Command.c     **** 		break;
+ 1624              		.loc 1 499 0
+ 1625 003c 0F4B     		ldr	r3, .L110+24
+ 1626 003e 00B2     		sxth	r0, r0
+ 1627 0040 9847     		blx	r3
+ 1628              	.LVL200:
+ 1629              		.loc 1 518 0
+ 1630 0042 BDE81040 		pop	{r4, lr}
+ 1631              		.cfi_remember_state
+ 1632              		.cfi_restore 14
+ 1633              		.cfi_restore 4
+ 1634              		.cfi_def_cfa_offset 0
+ 517:Command.c     **** }
+ 1635              		.loc 1 517 0
+ 1636 0046 0220     		movs	r0, #2
+ 1637 0048 074B     		ldr	r3, .L110+4
+ 1638 004a 1847     		bx	r3	@ indirect register sibling call
+ 1639              	.LVL201:
+ 1640              	.L105:
+ 1641              		.cfi_restore_state
+ 511:Command.c     ****  		tmp1 -= 20;
+ 1642              		.loc 1 511 0
+ 1643 004c 0C4B     		ldr	r3, .L110+28
+ 1644 004e 9847     		blx	r3
+ 1645              	.LVL202:
+ 512:Command.c     ****  		SetHPos(tmp1);		
+ 1646              		.loc 1 512 0
+ 1647 0050 1438     		subs	r0, r0, #20
+ 1648              	.LVL203:
+ 513:Command.c     **** 		break;
+ 1649              		.loc 1 513 0
+ 1650 0052 0C4B     		ldr	r3, .L110+32
+ 1651 0054 00B2     		sxth	r0, r0
+ 1652 0056 9847     		blx	r3
+ 1653              	.LVL204:
+ 1654              		.loc 1 518 0
+ 1655 0058 BDE81040 		pop	{r4, lr}
+ 1656              		.cfi_restore 14
+ 1657              		.cfi_restore 4
+ 1658              		.cfi_def_cfa_offset 0
+ 517:Command.c     **** }
+ 1659              		.loc 1 517 0
+ 1660 005c 0220     		movs	r0, #2
+ 1661 005e 024B     		ldr	r3, .L110+4
+ 1662 0060 1847     		bx	r3	@ indirect register sibling call
+ 1663              	.LVL205:
+ 1664              	.L111:
+ 1665 0062 00BF     		.align	2
+ 1666              	.L110:
+ 1667 0064 00000000 		.word	GetFocus
+ 1668 0068 00000000 		.word	UpdateDisp
+ 1669 006c 00000000 		.word	GetTrigLvl
+ 1670 0070 00000000 		.word	SetTrigLvl
+ 1671 0074 00000000 		.word	OutputTLvl
+ 1672 0078 00000000 		.word	GetVPos
+ 1673 007c 00000000 		.word	SetVPos
+ 1674 0080 00000000 		.word	GetHPos
+ 1675 0084 00000000 		.word	SetHPos
+ 1676              		.cfi_endproc
+ 1677              	.LFE38:
+ 1679              		.section	.text.DoKeyDecH,"ax",%progbits
+ 1680              		.align	1
+ 1681              		.p2align 2,,3
+ 1682              		.global	DoKeyDecH
+ 1683              		.syntax unified
+ 1684              		.thumb
+ 1685              		.thumb_func
+ 1686              		.fpu softvfp
+ 1688              	DoKeyDecH:
+ 1689              	.LFB39:
+ 519:Command.c     **** 
+ 520:Command.c     **** void	DoKeyDecH(void)
+ 521:Command.c     **** {
+ 1690              		.loc 1 521 0
+ 1691              		.cfi_startproc
+ 1692              		@ args = 0, pretend = 0, frame = 0
+ 1693              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1694 0000 10B5     		push	{r4, lr}
+ 1695              		.cfi_def_cfa_offset 8
+ 1696              		.cfi_offset 4, -8
+ 1697              		.cfi_offset 14, -4
+ 522:Command.c     ****  S16	tmp1;
+ 523:Command.c     ****  
+ 524:Command.c     ****  switch(GetFocus()) {
+ 1698              		.loc 1 524 0
+ 1699 0002 184B     		ldr	r3, .L119
+ 1700 0004 9847     		blx	r3
+ 1701              	.LVL206:
+ 1702 0006 0428     		cmp	r0, #4
+ 1703 0008 20D0     		beq	.L114
+ 1704 000a 0528     		cmp	r0, #5
+ 1705 000c 13D0     		beq	.L115
+ 1706 000e 0328     		cmp	r0, #3
+ 1707 0010 04D0     		beq	.L118
+ 525:Command.c     **** 	case FC_VPos:
+ 526:Command.c     ****  		tmp1 = GetVPos();
+ 527:Command.c     ****  		tmp1 -= 10;
+ 528:Command.c     ****  		SetVPos(tmp1);
+ 529:Command.c     **** 		break;
+ 530:Command.c     **** 
+ 531:Command.c     **** 	case FC_TrigLvl:
+ 532:Command.c     ****  		tmp1 = GetTrigLvl();
+ 533:Command.c     ****  		tmp1 -= 10;
+ 534:Command.c     ****  		SetTrigLvl(tmp1);
+ 535:Command.c     **** 		OutputTLvl();
+ 536:Command.c     **** 		break;
+ 537:Command.c     **** 		
+ 538:Command.c     **** 	case FC_HPos:
+ 539:Command.c     **** 		// Move waveform left
+ 540:Command.c     ****  		tmp1 = GetHPos();
+ 541:Command.c     ****  		tmp1 += 20;
+ 542:Command.c     ****  		SetHPos(tmp1);
+ 543:Command.c     **** 		break;
+ 544:Command.c     ****  	}
+ 545:Command.c     **** 
+ 546:Command.c     ****  UpdateDisp(Disp_Param);
+ 547:Command.c     **** }
+ 1708              		.loc 1 547 0
+ 1709 0012 BDE81040 		pop	{r4, lr}
+ 1710              		.cfi_remember_state
+ 1711              		.cfi_restore 14
+ 1712              		.cfi_restore 4
+ 1713              		.cfi_def_cfa_offset 0
+ 546:Command.c     **** }
+ 1714              		.loc 1 546 0
+ 1715 0016 0220     		movs	r0, #2
+ 1716 0018 134B     		ldr	r3, .L119+4
+ 1717 001a 1847     		bx	r3	@ indirect register sibling call
+ 1718              	.LVL207:
+ 1719              	.L118:
+ 1720              		.cfi_restore_state
+ 532:Command.c     ****  		tmp1 -= 10;
+ 1721              		.loc 1 532 0
+ 1722 001c 134B     		ldr	r3, .L119+8
+ 1723 001e 9847     		blx	r3
+ 1724              	.LVL208:
+ 533:Command.c     ****  		SetTrigLvl(tmp1);
+ 1725              		.loc 1 533 0
+ 1726 0020 0A38     		subs	r0, r0, #10
+ 1727              	.LVL209:
+ 534:Command.c     **** 		OutputTLvl();
+ 1728              		.loc 1 534 0
+ 1729 0022 134B     		ldr	r3, .L119+12
+ 1730 0024 00B2     		sxth	r0, r0
+ 1731 0026 9847     		blx	r3
+ 1732              	.LVL210:
+ 535:Command.c     **** 		break;
+ 1733              		.loc 1 535 0
+ 1734 0028 124B     		ldr	r3, .L119+16
+ 1735 002a 9847     		blx	r3
+ 1736              	.LVL211:
+ 1737              		.loc 1 547 0
+ 1738 002c BDE81040 		pop	{r4, lr}
+ 1739              		.cfi_remember_state
+ 1740              		.cfi_restore 14
+ 1741              		.cfi_restore 4
+ 1742              		.cfi_def_cfa_offset 0
+ 546:Command.c     **** }
+ 1743              		.loc 1 546 0
+ 1744 0030 0220     		movs	r0, #2
+ 1745 0032 0D4B     		ldr	r3, .L119+4
+ 1746 0034 1847     		bx	r3	@ indirect register sibling call
+ 1747              	.LVL212:
+ 1748              	.L115:
+ 1749              		.cfi_restore_state
+ 526:Command.c     ****  		tmp1 -= 10;
+ 1750              		.loc 1 526 0
+ 1751 0036 104B     		ldr	r3, .L119+20
+ 1752 0038 9847     		blx	r3
+ 1753              	.LVL213:
+ 527:Command.c     ****  		SetVPos(tmp1);
+ 1754              		.loc 1 527 0
+ 1755 003a 0A38     		subs	r0, r0, #10
+ 1756              	.LVL214:
+ 528:Command.c     **** 		break;
+ 1757              		.loc 1 528 0
+ 1758 003c 0F4B     		ldr	r3, .L119+24
+ 1759 003e 00B2     		sxth	r0, r0
+ 1760 0040 9847     		blx	r3
+ 1761              	.LVL215:
+ 1762              		.loc 1 547 0
+ 1763 0042 BDE81040 		pop	{r4, lr}
+ 1764              		.cfi_remember_state
+ 1765              		.cfi_restore 14
+ 1766              		.cfi_restore 4
+ 1767              		.cfi_def_cfa_offset 0
+ 546:Command.c     **** }
+ 1768              		.loc 1 546 0
+ 1769 0046 0220     		movs	r0, #2
+ 1770 0048 074B     		ldr	r3, .L119+4
+ 1771 004a 1847     		bx	r3	@ indirect register sibling call
+ 1772              	.LVL216:
+ 1773              	.L114:
+ 1774              		.cfi_restore_state
+ 540:Command.c     ****  		tmp1 += 20;
+ 1775              		.loc 1 540 0
+ 1776 004c 0C4B     		ldr	r3, .L119+28
+ 1777 004e 9847     		blx	r3
+ 1778              	.LVL217:
+ 541:Command.c     ****  		SetHPos(tmp1);
+ 1779              		.loc 1 541 0
+ 1780 0050 1430     		adds	r0, r0, #20
+ 1781              	.LVL218:
+ 542:Command.c     **** 		break;
+ 1782              		.loc 1 542 0
+ 1783 0052 0C4B     		ldr	r3, .L119+32
+ 1784 0054 00B2     		sxth	r0, r0
+ 1785 0056 9847     		blx	r3
+ 1786              	.LVL219:
+ 1787              		.loc 1 547 0
+ 1788 0058 BDE81040 		pop	{r4, lr}
+ 1789              		.cfi_restore 14
+ 1790              		.cfi_restore 4
+ 1791              		.cfi_def_cfa_offset 0
+ 546:Command.c     **** }
+ 1792              		.loc 1 546 0
+ 1793 005c 0220     		movs	r0, #2
+ 1794 005e 024B     		ldr	r3, .L119+4
+ 1795 0060 1847     		bx	r3	@ indirect register sibling call
+ 1796              	.LVL220:
+ 1797              	.L120:
+ 1798 0062 00BF     		.align	2
+ 1799              	.L119:
+ 1800 0064 00000000 		.word	GetFocus
+ 1801 0068 00000000 		.word	UpdateDisp
+ 1802 006c 00000000 		.word	GetTrigLvl
+ 1803 0070 00000000 		.word	SetTrigLvl
+ 1804 0074 00000000 		.word	OutputTLvl
+ 1805 0078 00000000 		.word	GetVPos
+ 1806 007c 00000000 		.word	SetVPos
+ 1807 0080 00000000 		.word	GetHPos
+ 1808 0084 00000000 		.word	SetHPos
+ 1809              		.cfi_endproc
+ 1810              	.LFE39:
+ 1812              		.section	.text.KeyProc,"ax",%progbits
+ 1813              		.align	1
+ 1814              		.p2align 2,,3
+ 1815              		.global	KeyProc
+ 1816              		.syntax unified
+ 1817              		.thumb
+ 1818              		.thumb_func
+ 1819              		.fpu softvfp
+ 1821              	KeyProc:
+ 1822              	.LFB30:
+ 136:Command.c     ****  switch(Keypad.KeyCode) {
+ 1823              		.loc 1 136 0
+ 1824              		.cfi_startproc
+ 1825              		@ args = 0, pretend = 0, frame = 0
+ 1826              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137:Command.c     **** 	case KC_SW1:
+ 1827              		.loc 1 137 0
+ 1828 0000 104B     		ldr	r3, .L135
+ 1829 0002 DB88     		ldrh	r3, [r3, #6]
+ 1830 0004 013B     		subs	r3, r3, #1
+ 1831 0006 062B     		cmp	r3, #6
+ 1832 0008 17D8     		bhi	.L132
+ 1833 000a DFE803F0 		tbb	[pc, r3]
+ 1834              	.L124:
+ 1835 000e 06       		.byte	(.L123-.L124)/2
+ 1836 000f 08       		.byte	(.L125-.L124)/2
+ 1837 0010 0A       		.byte	(.L126-.L124)/2
+ 1838 0011 0C       		.byte	(.L127-.L124)/2
+ 1839 0012 0E       		.byte	(.L128-.L124)/2
+ 1840 0013 14       		.byte	(.L129-.L124)/2
+ 1841 0014 04       		.byte	(.L130-.L124)/2
+ 1842 0015 00       		.p2align 1
+ 1843              	.L130:
+ 164:Command.c     **** 		break;
+ 1844              		.loc 1 164 0
+ 1845 0016 0C4B     		ldr	r3, .L135+4
+ 1846 0018 1847     		bx	r3	@ indirect register sibling call
+ 1847              	.LVL221:
+ 1848              	.L123:
+ 139:Command.c     **** 	default:	
+ 1849              		.loc 1 139 0
+ 1850 001a 0C4B     		ldr	r3, .L135+8
+ 1851 001c 1847     		bx	r3	@ indirect register sibling call
+ 1852              	.LVL222:
+ 1853              	.L125:
+ 144:Command.c     **** 		break;
+ 1854              		.loc 1 144 0
+ 1855 001e 0C4B     		ldr	r3, .L135+12
+ 1856 0020 1847     		bx	r3	@ indirect register sibling call
+ 1857              	.LVL223:
+ 1858              	.L126:
+ 148:Command.c     **** 		break;
+ 1859              		.loc 1 148 0
+ 1860 0022 0C4B     		ldr	r3, .L135+16
+ 1861 0024 1847     		bx	r3	@ indirect register sibling call
+ 1862              	.LVL224:
+ 1863              	.L127:
+ 152:Command.c     **** 		break;
+ 1864              		.loc 1 152 0
+ 1865 0026 0C4B     		ldr	r3, .L135+20
+ 1866 0028 1847     		bx	r3	@ indirect register sibling call
+ 1867              	.LVL225:
+ 1868              	.L128:
+ 136:Command.c     ****  switch(Keypad.KeyCode) {
+ 1869              		.loc 1 136 0
+ 1870 002a 10B5     		push	{r4, lr}
+ 1871              		.cfi_def_cfa_offset 8
+ 1872              		.cfi_offset 4, -8
+ 1873              		.cfi_offset 14, -4
+ 1874              	.LBB20:
+ 1875              	.LBB21:
+ 483:Command.c     **** 	// Do VPos alignment
+ 1876              		.loc 1 483 0
+ 1877 002c 0B4B     		ldr	r3, .L135+24
+ 1878 002e 9847     		blx	r3
+ 1879              	.LVL226:
+ 1880 0030 0528     		cmp	r0, #5
+ 1881 0032 03D0     		beq	.L134
+ 1882              	.LBE21:
+ 1883              	.LBE20:
+ 172:Command.c     **** 
+ 1884              		.loc 1 172 0
+ 1885 0034 10BD     		pop	{r4, pc}
+ 1886              	.L129:
+ 1887              		.cfi_def_cfa_offset 0
+ 1888              		.cfi_restore 4
+ 1889              		.cfi_restore 14
+ 160:Command.c     **** 		break;
+ 1890              		.loc 1 160 0
+ 1891 0036 0A4B     		ldr	r3, .L135+28
+ 1892 0038 1847     		bx	r3	@ indirect register sibling call
+ 1893              	.LVL227:
+ 1894              	.L132:
+ 1895 003a 7047     		bx	lr
+ 1896              	.L134:
+ 1897              		.cfi_def_cfa_offset 8
+ 1898              		.cfi_offset 4, -8
+ 1899              		.cfi_offset 14, -4
+ 1900              	.LBB24:
+ 1901              	.LBB22:
+ 1902 003c 094B     		ldr	r3, .L135+32
+ 1903              	.LBE22:
+ 1904              	.LBE24:
+ 172:Command.c     **** 
+ 1905              		.loc 1 172 0
+ 1906 003e BDE81040 		pop	{r4, lr}
+ 1907              		.cfi_restore 14
+ 1908              		.cfi_restore 4
+ 1909              		.cfi_def_cfa_offset 0
+ 1910              	.LBB25:
+ 1911              	.LBB23:
+ 1912 0042 1847     		bx	r3	@ indirect register sibling call
+ 1913              	.LVL228:
+ 1914              	.L136:
+ 1915              		.align	2
+ 1916              	.L135:
+ 1917 0044 00000000 		.word	Keypad
+ 1918 0048 00000000 		.word	DoKeyDecH
+ 1919 004c 00000000 		.word	DoKeyOk
+ 1920 0050 00000000 		.word	DoKeyInc
+ 1921 0054 00000000 		.word	DoKeyDec
+ 1922 0058 00000000 		.word	DoKeySel
+ 1923 005c 00000000 		.word	GetFocus
+ 1924 0060 00000000 		.word	DoKeyIncH
+ 1925 0064 00000000 		.word	DoKeyOkH.part.0
+ 1926              	.LBE23:
+ 1927              	.LBE25:
+ 1928              		.cfi_endproc
+ 1929              	.LFE30:
+ 1931              		.section	.text.DoKeySelH,"ax",%progbits
+ 1932              		.align	1
+ 1933              		.p2align 2,,3
+ 1934              		.global	DoKeySelH
+ 1935              		.syntax unified
+ 1936              		.thumb
+ 1937              		.thumb_func
+ 1938              		.fpu softvfp
+ 1940              	DoKeySelH:
+ 1941              	.LFB40:
+ 548:Command.c     **** 
+ 549:Command.c     **** void	DoKeySelH(void)
+ 550:Command.c     **** {
+ 1942              		.loc 1 550 0
+ 1943              		.cfi_startproc
+ 1944              		@ args = 0, pretend = 0, frame = 0
+ 1945              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1946              		@ link register save eliminated.
+ 551:Command.c     **** 
+ 552:Command.c     **** }
+ 1947              		.loc 1 552 0
+ 1948 0000 7047     		bx	lr
+ 1949              		.cfi_endproc
+ 1950              	.LFE40:
+ 1952 0002 00BF     		.section	.text.LedBlink,"ax",%progbits
+ 1953              		.align	1
+ 1954              		.p2align 2,,3
+ 1955              		.global	LedBlink
+ 1956              		.syntax unified
+ 1957              		.thumb
+ 1958              		.thumb_func
+ 1959              		.fpu softvfp
+ 1961              	LedBlink:
+ 1962              	.LFB41:
+ 553:Command.c     **** 
+ 554:Command.c     **** void	LedBlink(void)
+ 555:Command.c     **** {
+ 1963              		.loc 1 555 0
+ 1964              		.cfi_startproc
+ 1965              		@ args = 0, pretend = 0, frame = 0
+ 1966              		@ frame_needed = 0, uses_anonymous_args = 0
+ 556:Command.c     ****  U16	tmp;
+ 557:Command.c     ****  
+ 558:Command.c     ****  // Turn on LED
+ 559:Command.c     ****  Port_BitClr(LED_Base, (1 << LED_Bit));
+ 1967              		.loc 1 559 0
+ 1968 0000 4FF40042 		mov	r2, #32768
+ 555:Command.c     ****  U16	tmp;
+ 1969              		.loc 1 555 0
+ 1970 0004 38B5     		push	{r3, r4, r5, lr}
+ 1971              		.cfi_def_cfa_offset 16
+ 1972              		.cfi_offset 3, -16
+ 1973              		.cfi_offset 4, -12
+ 1974              		.cfi_offset 5, -8
+ 1975              		.cfi_offset 14, -4
+ 1976              		.loc 1 559 0
+ 1977 0006 1424     		movs	r4, #20
+ 1978 0008 134B     		ldr	r3, .L146
+ 1979 000a 144D     		ldr	r5, .L146+4
+ 1980 000c 5A61     		str	r2, [r3, #20]
+ 1981              	.LVL229:
+ 1982              	.L139:
+ 1983 000e 013C     		subs	r4, r4, #1
+ 1984              	.LVL230:
+ 560:Command.c     ****  tmp = 20;
+ 561:Command.c     ****  while(tmp) {
+ 562:Command.c     ****  	Delay(65000);
+ 1985              		.loc 1 562 0
+ 1986 0010 4FF6E850 		movw	r0, #65000
+ 1987 0014 A4B2     		uxth	r4, r4
+ 1988 0016 A847     		blx	r5
+ 1989              	.LVL231:
+ 561:Command.c     ****  	Delay(65000);
+ 1990              		.loc 1 561 0
+ 1991 0018 002C     		cmp	r4, #0
+ 1992 001a F8D1     		bne	.L139
+ 563:Command.c     ****  	tmp--;
+ 564:Command.c     ****  	}
+ 565:Command.c     ****  
+ 566:Command.c     ****  // Turn off LED
+ 567:Command.c     ****  Port_BitSet(LED_Base, (1 << LED_Bit));
+ 1993              		.loc 1 567 0
+ 1994 001c 4FF40042 		mov	r2, #32768
+ 1995 0020 1424     		movs	r4, #20
+ 1996 0022 0D4B     		ldr	r3, .L146
+ 1997 0024 1A61     		str	r2, [r3, #16]
+ 1998              	.LVL232:
+ 1999              	.L140:
+ 2000 0026 013C     		subs	r4, r4, #1
+ 2001              	.LVL233:
+ 568:Command.c     ****  tmp = 20;
+ 569:Command.c     ****  while(tmp) {
+ 570:Command.c     ****  	Delay(65000);
+ 2002              		.loc 1 570 0
+ 2003 0028 4FF6E850 		movw	r0, #65000
+ 2004 002c A4B2     		uxth	r4, r4
+ 2005 002e A847     		blx	r5
+ 2006              	.LVL234:
+ 569:Command.c     ****  	Delay(65000);
+ 2007              		.loc 1 569 0
+ 2008 0030 002C     		cmp	r4, #0
+ 2009 0032 F8D1     		bne	.L140
+ 571:Command.c     ****  	tmp--;
+ 572:Command.c     ****  	}
+ 573:Command.c     **** 
+ 574:Command.c     ****  // Turn on LED
+ 575:Command.c     ****  Port_BitClr(LED_Base, (1 << LED_Bit));
+ 2010              		.loc 1 575 0
+ 2011 0034 4FF40042 		mov	r2, #32768
+ 2012 0038 1424     		movs	r4, #20
+ 2013 003a 074B     		ldr	r3, .L146
+ 2014 003c 5A61     		str	r2, [r3, #20]
+ 2015              	.LVL235:
+ 2016              	.L141:
+ 2017 003e 013C     		subs	r4, r4, #1
+ 2018              	.LVL236:
+ 576:Command.c     ****  tmp = 20;
+ 577:Command.c     ****  while(tmp) {
+ 578:Command.c     ****  	Delay(65000);
+ 2019              		.loc 1 578 0
+ 2020 0040 4FF6E850 		movw	r0, #65000
+ 2021 0044 A4B2     		uxth	r4, r4
+ 2022 0046 A847     		blx	r5
+ 2023              	.LVL237:
+ 577:Command.c     ****  	Delay(65000);
+ 2024              		.loc 1 577 0
+ 2025 0048 002C     		cmp	r4, #0
+ 2026 004a F8D1     		bne	.L141
+ 579:Command.c     ****  	tmp--;
+ 580:Command.c     ****  	}
+ 581:Command.c     ****  
+ 582:Command.c     ****  // Turn off LED
+ 583:Command.c     ****  Port_BitSet(LED_Base, (1 << LED_Bit));
+ 2027              		.loc 1 583 0
+ 2028 004c 4FF40042 		mov	r2, #32768
+ 2029 0050 014B     		ldr	r3, .L146
+ 2030 0052 1A61     		str	r2, [r3, #16]
+ 584:Command.c     **** }
+ 2031              		.loc 1 584 0
+ 2032 0054 38BD     		pop	{r3, r4, r5, pc}
+ 2033              	.L147:
+ 2034 0056 00BF     		.align	2
+ 2035              	.L146:
+ 2036 0058 00080140 		.word	1073809408
+ 2037 005c 00000000 		.word	Delay
+ 2038              		.cfi_endproc
+ 2039              	.LFE41:
+ 2041              		.section	.text.TestMode,"ax",%progbits
+ 2042              		.align	1
+ 2043              		.p2align 2,,3
+ 2044              		.global	TestMode
+ 2045              		.syntax unified
+ 2046              		.thumb
+ 2047              		.thumb_func
+ 2048              		.fpu softvfp
+ 2050              	TestMode:
+ 2051              	.LFB42:
+ 585:Command.c     **** 
+ 586:Command.c     **** void	TestMode(void)
+ 587:Command.c     **** {
+ 2052              		.loc 1 587 0
+ 2053              		.cfi_startproc
+ 2054              		@ args = 0, pretend = 0, frame = 0
+ 2055              		@ frame_needed = 0, uses_anonymous_args = 0
+ 588:Command.c     ****  U16 tmp;
+ 589:Command.c     ****  
+ 590:Command.c     ****  // Change system clock to HSI
+ 591:Command.c     ****  RCC->CFGR &= ~RCC_CFGR_SW;
+ 592:Command.c     ****  RCC->CFGR |= RCC_CFGR_SW_HSI;
+ 593:Command.c     **** 
+ 594:Command.c     ****  // Disable JTAG and SWD
+ 595:Command.c     ****  AFIO->MAPR &= ~AFIO_MAPR_SWJ_CFG;
+ 596:Command.c     ****  AFIO->MAPR |= AFIO_MAPR_SWJ_CFG_2;
+ 597:Command.c     **** 
+ 598:Command.c     ****  // Remap PD0 & PD1 to make them available as GPIO
+ 599:Command.c     ****  AFIO->MAPR |= AFIO_MAPR_PD01_REMAP;
+ 600:Command.c     **** 
+ 601:Command.c     ****  // Set all ports to output mode
+ 602:Command.c     ****  GPIOA->CRL = 0x33333333;
+ 2056              		.loc 1 602 0
+ 2057 0000 2B48     		ldr	r0, .L151
+ 603:Command.c     ****  GPIOA->CRH = 0x33333333;
+ 604:Command.c     **** 
+ 605:Command.c     ****  GPIOB->CRL = 0x33333333;
+ 606:Command.c     ****  GPIOB->CRH = 0x33333333;
+ 607:Command.c     **** 
+ 608:Command.c     ****  GPIOC->CRL = 0x33333333;
+ 2058              		.loc 1 608 0
+ 2059 0002 2C49     		ldr	r1, .L151+4
+ 602:Command.c     ****  GPIOA->CRH = 0x33333333;
+ 2060              		.loc 1 602 0
+ 2061 0004 4FF03333 		mov	r3, #858993459
+ 587:Command.c     ****  U16 tmp;
+ 2062              		.loc 1 587 0
+ 2063 0008 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 2064              		.cfi_def_cfa_offset 24
+ 2065              		.cfi_offset 4, -24
+ 2066              		.cfi_offset 5, -20
+ 2067              		.cfi_offset 6, -16
+ 2068              		.cfi_offset 7, -12
+ 2069              		.cfi_offset 8, -8
+ 2070              		.cfi_offset 14, -4
+ 609:Command.c     ****  GPIOC->CRH = 0x33333333;
+ 610:Command.c     ****  
+ 611:Command.c     ****  GPIOD->CRL = 0x33333333;
+ 612:Command.c     ****  GPIOD->CRH = 0x33333333;
+ 613:Command.c     **** 
+ 614:Command.c     ****  // Blink LEDs
+ 615:Command.c     ****  while(1) {
+ 616:Command.c     **** 	GPIOA->ODR = 0x5555;
+ 2071              		.loc 1 616 0
+ 2072 000c 8046     		mov	r8, r0
+ 617:Command.c     **** 	GPIOB->ODR = 0x5555;
+ 618:Command.c     **** 	GPIOC->ODR = 0x5555;
+ 2073              		.loc 1 618 0
+ 2074 000e 0F46     		mov	r7, r1
+ 591:Command.c     ****  RCC->CFGR |= RCC_CFGR_SW_HSI;
+ 2075              		.loc 1 591 0
+ 2076 0010 294A     		ldr	r2, .L151+8
+ 605:Command.c     ****  GPIOB->CRH = 0x33333333;
+ 2077              		.loc 1 605 0
+ 2078 0012 2A4D     		ldr	r5, .L151+12
+ 591:Command.c     ****  RCC->CFGR |= RCC_CFGR_SW_HSI;
+ 2079              		.loc 1 591 0
+ 2080 0014 5468     		ldr	r4, [r2, #4]
+ 2081 0016 24F00304 		bic	r4, r4, #3
+ 2082 001a 5460     		str	r4, [r2, #4]
+ 592:Command.c     **** 
+ 2083              		.loc 1 592 0
+ 2084 001c 5468     		ldr	r4, [r2, #4]
+ 2085 001e 5460     		str	r4, [r2, #4]
+ 595:Command.c     ****  AFIO->MAPR |= AFIO_MAPR_SWJ_CFG_2;
+ 2086              		.loc 1 595 0
+ 2087 0020 A2F58832 		sub	r2, r2, #69632
+ 2088 0024 5468     		ldr	r4, [r2, #4]
+ 2089 0026 24F0E064 		bic	r4, r4, #117440512
+ 2090 002a 5460     		str	r4, [r2, #4]
+ 596:Command.c     **** 
+ 2091              		.loc 1 596 0
+ 2092 002c 5468     		ldr	r4, [r2, #4]
+ 2093 002e 44F08064 		orr	r4, r4, #67108864
+ 2094 0032 5460     		str	r4, [r2, #4]
+ 599:Command.c     **** 
+ 2095              		.loc 1 599 0
+ 2096 0034 5468     		ldr	r4, [r2, #4]
+ 2097 0036 44F40044 		orr	r4, r4, #32768
+ 2098 003a 5460     		str	r4, [r2, #4]
+ 611:Command.c     ****  GPIOD->CRH = 0x33333333;
+ 2099              		.loc 1 611 0
+ 2100 003c 02F5A052 		add	r2, r2, #5120
+ 2101 0040 1F4C     		ldr	r4, .L151+16
+ 602:Command.c     ****  GPIOA->CRH = 0x33333333;
+ 2102              		.loc 1 602 0
+ 2103 0042 0360     		str	r3, [r0]
+ 603:Command.c     **** 
+ 2104              		.loc 1 603 0
+ 2105 0044 4360     		str	r3, [r0, #4]
+ 605:Command.c     ****  GPIOB->CRH = 0x33333333;
+ 2106              		.loc 1 605 0
+ 2107 0046 2B60     		str	r3, [r5]
+ 606:Command.c     **** 
+ 2108              		.loc 1 606 0
+ 2109 0048 6B60     		str	r3, [r5, #4]
+ 608:Command.c     ****  GPIOC->CRH = 0x33333333;
+ 2110              		.loc 1 608 0
+ 2111 004a 0B60     		str	r3, [r1]
+ 609:Command.c     ****  
+ 2112              		.loc 1 609 0
+ 2113 004c 4B60     		str	r3, [r1, #4]
+ 611:Command.c     ****  GPIOD->CRH = 0x33333333;
+ 2114              		.loc 1 611 0
+ 2115 004e 1360     		str	r3, [r2]
+ 612:Command.c     **** 
+ 2116              		.loc 1 612 0
+ 2117 0050 5360     		str	r3, [r2, #4]
+ 2118              	.L149:
+ 616:Command.c     **** 	GPIOB->ODR = 0x5555;
+ 2119              		.loc 1 616 0
+ 2120 0052 45F25553 		movw	r3, #21845
+ 617:Command.c     **** 	GPIOC->ODR = 0x5555;
+ 2121              		.loc 1 617 0
+ 2122 0056 194E     		ldr	r6, .L151+12
+ 619:Command.c     **** 	GPIOD->ODR = 0x5555;
+ 2123              		.loc 1 619 0
+ 2124 0058 1A4D     		ldr	r5, .L151+20
+ 616:Command.c     **** 	GPIOB->ODR = 0x5555;
+ 2125              		.loc 1 616 0
+ 2126 005a C8F80C30 		str	r3, [r8, #12]
+ 620:Command.c     **** 
+ 621:Command.c     **** 	tmp = 5;
+ 622:Command.c     **** 	while(tmp) {
+ 623:Command.c     **** 		Delay(60000);
+ 2127              		.loc 1 623 0
+ 2128 005e 4EF66020 		movw	r0, #60000
+ 617:Command.c     **** 	GPIOC->ODR = 0x5555;
+ 2129              		.loc 1 617 0
+ 2130 0062 F360     		str	r3, [r6, #12]
+ 618:Command.c     **** 	GPIOD->ODR = 0x5555;
+ 2131              		.loc 1 618 0
+ 2132 0064 FB60     		str	r3, [r7, #12]
+ 619:Command.c     **** 
+ 2133              		.loc 1 619 0
+ 2134 0066 EB60     		str	r3, [r5, #12]
+ 2135              	.LVL238:
+ 2136              		.loc 1 623 0
+ 2137 0068 A047     		blx	r4
+ 2138              	.LVL239:
+ 2139 006a 4EF66020 		movw	r0, #60000
+ 2140 006e A047     		blx	r4
+ 2141              	.LVL240:
+ 2142 0070 4EF66020 		movw	r0, #60000
+ 2143 0074 A047     		blx	r4
+ 2144              	.LVL241:
+ 2145 0076 4EF66020 		movw	r0, #60000
+ 2146 007a A047     		blx	r4
+ 2147              	.LVL242:
+ 2148 007c 4EF66020 		movw	r0, #60000
+ 2149 0080 A047     		blx	r4
+ 2150              	.LVL243:
+ 624:Command.c     **** 		tmp--;
+ 625:Command.c     **** 		}
+ 626:Command.c     **** 
+ 627:Command.c     **** 	GPIOA->ODR = 0xAAAA;
+ 2151              		.loc 1 627 0
+ 2152 0082 4AF6AA23 		movw	r3, #43690
+ 628:Command.c     **** 	GPIOB->ODR = 0xAAAA;
+ 629:Command.c     **** 	GPIOC->ODR = 0xAAAA;
+ 630:Command.c     **** 	GPIOD->ODR = 0xAAAA;
+ 631:Command.c     **** 
+ 632:Command.c     **** 	tmp = 5;
+ 633:Command.c     **** 	while(tmp) {
+ 634:Command.c     **** 		Delay(60000);
+ 2153              		.loc 1 634 0
+ 2154 0086 4EF66020 		movw	r0, #60000
+ 627:Command.c     **** 	GPIOB->ODR = 0xAAAA;
+ 2155              		.loc 1 627 0
+ 2156 008a C8F80C30 		str	r3, [r8, #12]
+ 628:Command.c     **** 	GPIOB->ODR = 0xAAAA;
+ 2157              		.loc 1 628 0
+ 2158 008e F360     		str	r3, [r6, #12]
+ 629:Command.c     **** 	GPIOD->ODR = 0xAAAA;
+ 2159              		.loc 1 629 0
+ 2160 0090 FB60     		str	r3, [r7, #12]
+ 630:Command.c     **** 
+ 2161              		.loc 1 630 0
+ 2162 0092 EB60     		str	r3, [r5, #12]
+ 2163              	.LVL244:
+ 2164              		.loc 1 634 0
+ 2165 0094 A047     		blx	r4
+ 2166              	.LVL245:
+ 2167 0096 4EF66020 		movw	r0, #60000
+ 2168 009a A047     		blx	r4
+ 2169              	.LVL246:
+ 2170 009c 4EF66020 		movw	r0, #60000
+ 2171 00a0 A047     		blx	r4
+ 2172              	.LVL247:
+ 2173 00a2 4EF66020 		movw	r0, #60000
+ 2174 00a6 A047     		blx	r4
+ 2175              	.LVL248:
+ 2176 00a8 4EF66020 		movw	r0, #60000
+ 2177 00ac A047     		blx	r4
+ 2178              	.LVL249:
+ 2179 00ae D0E7     		b	.L149
+ 2180              	.L152:
+ 2181              		.align	2
+ 2182              	.L151:
+ 2183 00b0 00080140 		.word	1073809408
+ 2184 00b4 00100140 		.word	1073811456
+ 2185 00b8 00100240 		.word	1073876992
+ 2186 00bc 000C0140 		.word	1073810432
+ 2187 00c0 00000000 		.word	Delay
+ 2188 00c4 00140140 		.word	1073812480
+ 2189              		.cfi_endproc
+ 2190              	.LFE42:
+ 2192              		.comm	Flags,2,2
+ 2193              		.comm	CplPrev,1,1
+ 2194              		.comm	VSenPrev,1,1
+ 2195              		.comm	Keypad,20,4
+ 2196              		.global	KScanCodeTab
+ 2197              		.section	.rodata.KScanCodeTab,"a",%progbits
+ 2198              		.align	2
+ 2199              		.set	.LANCHOR0,. + 0
+ 2202              	KScanCodeTab:
+ 2203 0000 FF7F     		.short	32767
+ 2204 0002 01       		.byte	1
+ 2205 0003 31       		.byte	49
+ 2206 0004 FFBF     		.short	-16385
+ 2207 0006 02       		.byte	2
+ 2208 0007 32       		.byte	50
+ 2209 0008 FFDF     		.short	-8193
+ 2210 000a 03       		.byte	3
+ 2211 000b 33       		.byte	51
+ 2212 000c FFEF     		.short	-4097
+ 2213 000e 04       		.byte	4
+ 2214 000f 34       		.byte	52
+ 2215 0010 FE7F     		.short	32766
+ 2216 0012 05       		.byte	5
+ 2217 0013 35       		.byte	53
+ 2218 0014 FEBF     		.short	-16386
+ 2219 0016 06       		.byte	6
+ 2220 0017 36       		.byte	54
+ 2221 0018 FEDF     		.short	-8194
+ 2222 001a 07       		.byte	7
+ 2223 001b 37       		.byte	55
+ 2224 001c FEEF     		.short	-4098
+ 2225 001e 08       		.byte	8
+ 2226 001f 38       		.byte	56
+ 2227 0020 0000     		.short	0
+ 2228 0022 00       		.byte	0
+ 2229 0023 00       		.byte	0
+ 2230              		.text
+ 2231              	.Letext0:
+ 2232              		.file 2 "/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default
+ 2233              		.file 3 "/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 2234              		.file 4 "./Libraries/CMSIS/CM3/CoreSupport/core_cm3.h"
+ 2235              		.file 5 "./Libraries/CMSIS/CM3/CoreSupport/system_stm32f10x.h"
+ 2236              		.file 6 "./Libraries/CMSIS/CM3/CoreSupport/stm32f10x.h"
+ 2237              		.file 7 "Common.h"
+ 2238              		.file 8 "Board.h"
+ 2239              		.file 9 "Command.h"
+ 2240              		.file 10 "libdso138.h"
+ 2241              		.file 11 "Screen.h"
+ 2242              		.file 12 "Eeprom.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Command.c
+     /tmp/ccUcM4nm.s:16     .text.DoKeyOkH.part.0:0000000000000000 $t
+     /tmp/ccUcM4nm.s:23     .text.DoKeyOkH.part.0:0000000000000000 DoKeyOkH.part.0
+     /tmp/ccUcM4nm.s:63     .text.DoKeyOkH.part.0:0000000000000020 $d
+     /tmp/ccUcM4nm.s:71     .text.AppInit:0000000000000000 $t
+     /tmp/ccUcM4nm.s:79     .text.AppInit:0000000000000000 AppInit
+     /tmp/ccUcM4nm.s:363    .text.AppInit:0000000000000170 $d
+                            *COM*:0000000000000014 Keypad
+     /tmp/ccUcM4nm.s:385    .text.KeyScan:0000000000000000 $t
+     /tmp/ccUcM4nm.s:393    .text.KeyScan:0000000000000000 KeyScan
+     /tmp/ccUcM4nm.s:694    .text.KeyScan:000000000000013c $d
+                            *COM*:0000000000000001 VSenPrev
+                            *COM*:0000000000000001 CplPrev
+     /tmp/ccUcM4nm.s:710    .text.KeyConvert:0000000000000000 $t
+     /tmp/ccUcM4nm.s:718    .text.KeyConvert:0000000000000000 KeyConvert
+     /tmp/ccUcM4nm.s:764    .text.KeyConvert:0000000000000028 $d
+     /tmp/ccUcM4nm.s:769    .text.DoKeyOk:0000000000000000 $t
+     /tmp/ccUcM4nm.s:777    .text.DoKeyOk:0000000000000000 DoKeyOk
+     /tmp/ccUcM4nm.s:838    .text.DoKeyOk:0000000000000030 $d
+     /tmp/ccUcM4nm.s:848    .text.DoKeyInc:0000000000000000 $t
+     /tmp/ccUcM4nm.s:856    .text.DoKeyInc:0000000000000000 DoKeyInc
+     /tmp/ccUcM4nm.s:874    .text.DoKeyInc:000000000000000e $d
+     /tmp/ccUcM4nm.s:880    .text.DoKeyInc:0000000000000014 $t
+     /tmp/ccUcM4nm.s:1138   .text.DoKeyInc:0000000000000110 $d
+     /tmp/ccUcM4nm.s:1162   .text.DoKeyDec:0000000000000000 $t
+     /tmp/ccUcM4nm.s:1170   .text.DoKeyDec:0000000000000000 DoKeyDec
+     /tmp/ccUcM4nm.s:1188   .text.DoKeyDec:000000000000000e $d
+     /tmp/ccUcM4nm.s:1194   .text.DoKeyDec:0000000000000014 $t
+     /tmp/ccUcM4nm.s:1424   .text.DoKeyDec:00000000000000f4 $d
+     /tmp/ccUcM4nm.s:1447   .text.DoKeySel:0000000000000000 $t
+     /tmp/ccUcM4nm.s:1455   .text.DoKeySel:0000000000000000 DoKeySel
+     /tmp/ccUcM4nm.s:1497   .text.DoKeySel:0000000000000020 $d
+     /tmp/ccUcM4nm.s:1504   .text.DoKeyOkH:0000000000000000 $t
+     /tmp/ccUcM4nm.s:1512   .text.DoKeyOkH:0000000000000000 DoKeyOkH
+     /tmp/ccUcM4nm.s:1541   .text.DoKeyOkH:0000000000000014 $d
+     /tmp/ccUcM4nm.s:1547   .text.DoKeyIncH:0000000000000000 $t
+     /tmp/ccUcM4nm.s:1555   .text.DoKeyIncH:0000000000000000 DoKeyIncH
+     /tmp/ccUcM4nm.s:1667   .text.DoKeyIncH:0000000000000064 $d
+     /tmp/ccUcM4nm.s:1680   .text.DoKeyDecH:0000000000000000 $t
+     /tmp/ccUcM4nm.s:1688   .text.DoKeyDecH:0000000000000000 DoKeyDecH
+     /tmp/ccUcM4nm.s:1800   .text.DoKeyDecH:0000000000000064 $d
+     /tmp/ccUcM4nm.s:1813   .text.KeyProc:0000000000000000 $t
+     /tmp/ccUcM4nm.s:1821   .text.KeyProc:0000000000000000 KeyProc
+     /tmp/ccUcM4nm.s:1835   .text.KeyProc:000000000000000e $d
+     /tmp/ccUcM4nm.s:1917   .text.KeyProc:0000000000000044 $d
+     /tmp/ccUcM4nm.s:1932   .text.DoKeySelH:0000000000000000 $t
+     /tmp/ccUcM4nm.s:1940   .text.DoKeySelH:0000000000000000 DoKeySelH
+     /tmp/ccUcM4nm.s:1953   .text.LedBlink:0000000000000000 $t
+     /tmp/ccUcM4nm.s:1961   .text.LedBlink:0000000000000000 LedBlink
+     /tmp/ccUcM4nm.s:2036   .text.LedBlink:0000000000000058 $d
+     /tmp/ccUcM4nm.s:2042   .text.TestMode:0000000000000000 $t
+     /tmp/ccUcM4nm.s:2050   .text.TestMode:0000000000000000 TestMode
+     /tmp/ccUcM4nm.s:2183   .text.TestMode:00000000000000b0 $d
+                            *COM*:0000000000000002 Flags
+     /tmp/ccUcM4nm.s:2202   .rodata.KScanCodeTab:0000000000000000 KScanCodeTab
+     /tmp/ccUcM4nm.s:2198   .rodata.KScanCodeTab:0000000000000000 $d
+     /tmp/ccUcM4nm.s:1842   .text.KeyProc:0000000000000015 $d
+     /tmp/ccUcM4nm.s:1842   .text.KeyProc:0000000000000016 $t
+
+UNDEFINED SYMBOLS
+GetAverage
+SetVPosOfs
+VirtAddVarTab
+EE_WriteVariable
+DSO_Init
+EE_ReadVariable
+SetVPos
+SetVSen
+SetCpl
+SetTimeBase
+SetTrigMode
+SetTrigEdge
+SetTrigLvl
+SetRecLen
+GetRecLen
+SetHPos
+OutputTLvl
+TimerKeyScan
+ADC_Poll
+UpdateDisp
+GetDsoStatus
+ClrHold
+StartCapture
+SetHold
+StopCapture
+GetFocus
+GetVPos
+GetTimebase
+UpdateTimebase
+GetTrigMode
+GetTrigEdge
+GetTrigLvl
+GetHPos
+SetFocus
+Delay
