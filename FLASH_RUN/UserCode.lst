@@ -43,28 +43,28 @@
   37              		.cfi_offset 8, -8
   38              		.cfi_offset 14, -4
    8:UserCode.c    ****     //Current Voltage Sensitivity
-   9:UserCode.c    ****     uputs((U8 *)"\rCurrent Voltage Sensitivity: ", USART1);
+   9:UserCode.c    ****     uputs((U8 *)"\rCurrent Voltage Sensitivity: 0x", USART1);
   39              		.loc 1 9 0
-  40 0004 384C     		ldr	r4, .L4
-  41 0006 394D     		ldr	r5, .L4+4
+  40 0004 434C     		ldr	r4, .L4
+  41 0006 444D     		ldr	r5, .L4+4
   42 0008 2146     		mov	r1, r4
-  43 000a 3948     		ldr	r0, .L4+8
-  10:UserCode.c    ****     uputInt(GetVSen(), USART1);    
+  43 000a 4448     		ldr	r0, .L4+8
+  10:UserCode.c    ****     uputHex(GetVSen(), USART1);    
   11:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);
   44              		.loc 1 11 0
-  45 000c 394E     		ldr	r6, .L4+12
-   9:UserCode.c    ****     uputInt(GetVSen(), USART1);    
+  45 000c 444E     		ldr	r6, .L4+12
+   9:UserCode.c    ****     uputHex(GetVSen(), USART1);    
   46              		.loc 1 9 0
   47 000e A847     		blx	r5
   48              	.LVL0:
-  10:UserCode.c    ****     uputInt(GetVSen(), USART1);    
+  10:UserCode.c    ****     uputHex(GetVSen(), USART1);    
   49              		.loc 1 10 0
-  50 0010 394B     		ldr	r3, .L4+16
-  51 0012 3A4F     		ldr	r7, .L4+20
-  52 0014 9847     		blx	r3
-  53              	.LVL1:
+  50 0010 444B     		ldr	r3, .L4+16
+  51 0012 9847     		blx	r3
+  52              	.LVL1:
+  53 0014 444B     		ldr	r3, .L4+20
   54 0016 2146     		mov	r1, r4
-  55 0018 B847     		blx	r7
+  55 0018 9847     		blx	r3
   56              	.LVL2:
   57              		.loc 1 11 0
   58 001a 2146     		mov	r1, r4
@@ -76,374 +76,436 @@
   14:UserCode.c    ****     uputs((U8 *)"\rCurrent Couple Setting: ", USART1);
   62              		.loc 1 14 0
   63 0020 2146     		mov	r1, r4
-  64 0022 3748     		ldr	r0, .L4+24
+  64 0022 4248     		ldr	r0, .L4+24
   65 0024 A847     		blx	r5
   66              	.LVL4:
-  15:UserCode.c    ****     uputInt(GetCpl(), USART1);    
+  15:UserCode.c    ****     uputDec(GetCpl(), USART1);    
   67              		.loc 1 15 0
-  68 0026 374B     		ldr	r3, .L4+28
-  69 0028 9847     		blx	r3
-  70              	.LVL5:
-  71 002a 2146     		mov	r1, r4
-  72 002c B847     		blx	r7
-  73              	.LVL6:
+  68 0026 424B     		ldr	r3, .L4+28
+  69 0028 424F     		ldr	r7, .L4+32
+  70 002a 9847     		blx	r3
+  71              	.LVL5:
+  72 002c 2146     		mov	r1, r4
+  73 002e B847     		blx	r7
+  74              	.LVL6:
   16:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);    
-  74              		.loc 1 16 0
-  75 002e 2146     		mov	r1, r4
-  76 0030 3046     		mov	r0, r6
-  77 0032 A847     		blx	r5
-  78              	.LVL7:
+  75              		.loc 1 16 0
+  76 0030 2146     		mov	r1, r4
+  77 0032 3046     		mov	r0, r6
+  78 0034 A847     		blx	r5
+  79              	.LVL7:
   17:UserCode.c    **** 
   18:UserCode.c    ****     //Current Vertical Position
   19:UserCode.c    ****     uputs((U8 *)"\rCurrent Vertical Position: ", USART1);
-  79              		.loc 1 19 0
-  80 0034 2146     		mov	r1, r4
-  81 0036 3448     		ldr	r0, .L4+32
-  82 0038 A847     		blx	r5
-  83              	.LVL8:
-  20:UserCode.c    ****     uputInt(GetVPos(), USART1);    
-  84              		.loc 1 20 0
-  85 003a 344B     		ldr	r3, .L4+36
-  86 003c 9847     		blx	r3
-  87              	.LVL9:
-  88 003e 2146     		mov	r1, r4
-  89 0040 B847     		blx	r7
-  90              	.LVL10:
+  80              		.loc 1 19 0
+  81 0036 2146     		mov	r1, r4
+  82 0038 3F48     		ldr	r0, .L4+36
+  83 003a A847     		blx	r5
+  84              	.LVL8:
+  20:UserCode.c    ****     uputDec(GetVPos(), USART1);    
+  85              		.loc 1 20 0
+  86 003c 3F4B     		ldr	r3, .L4+40
+  87 003e 9847     		blx	r3
+  88              	.LVL9:
+  89 0040 2146     		mov	r1, r4
+  90 0042 B847     		blx	r7
+  91              	.LVL10:
   21:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);    
-  91              		.loc 1 21 0
-  92 0042 2146     		mov	r1, r4
-  93 0044 3046     		mov	r0, r6
-  94 0046 A847     		blx	r5
-  95              	.LVL11:
+  92              		.loc 1 21 0
+  93 0044 2146     		mov	r1, r4
+  94 0046 3046     		mov	r0, r6
+  95 0048 A847     		blx	r5
+  96              	.LVL11:
   22:UserCode.c    **** 
   23:UserCode.c    ****     //Current Time Base 
   24:UserCode.c    ****     uputs((U8 *)"\rCurrent Time Base: ", USART1);
-  96              		.loc 1 24 0
-  97 0048 2146     		mov	r1, r4
-  98 004a 3148     		ldr	r0, .L4+40
-  99 004c A847     		blx	r5
- 100              	.LVL12:
-  25:UserCode.c    ****     uputInt(GetTimebase(), USART1);    
- 101              		.loc 1 25 0
- 102 004e 314B     		ldr	r3, .L4+44
- 103 0050 9847     		blx	r3
- 104              	.LVL13:
- 105 0052 2146     		mov	r1, r4
- 106 0054 B847     		blx	r7
- 107              	.LVL14:
+  97              		.loc 1 24 0
+  98 004a 2146     		mov	r1, r4
+  99 004c 3C48     		ldr	r0, .L4+44
+ 100 004e A847     		blx	r5
+ 101              	.LVL12:
+  25:UserCode.c    ****     uputDec(GetTimebase(), USART1);    
+ 102              		.loc 1 25 0
+ 103 0050 3C4B     		ldr	r3, .L4+48
+ 104 0052 9847     		blx	r3
+ 105              	.LVL13:
+ 106 0054 2146     		mov	r1, r4
+ 107 0056 B847     		blx	r7
+ 108              	.LVL14:
   26:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);    
- 108              		.loc 1 26 0
- 109 0056 2146     		mov	r1, r4
- 110 0058 3046     		mov	r0, r6
- 111 005a A847     		blx	r5
- 112              	.LVL15:
+ 109              		.loc 1 26 0
+ 110 0058 2146     		mov	r1, r4
+ 111 005a 3046     		mov	r0, r6
+ 112 005c A847     		blx	r5
+ 113              	.LVL15:
   27:UserCode.c    **** 
   28:UserCode.c    ****     //Current Horizontal Position
   29:UserCode.c    ****     uputs((U8 *)"\rCurrent Horizontal Position: ", USART1);
- 113              		.loc 1 29 0
- 114 005c 2146     		mov	r1, r4
- 115 005e 2E48     		ldr	r0, .L4+48
- 116 0060 A847     		blx	r5
- 117              	.LVL16:
-  30:UserCode.c    ****     uputInt(GetHPos(), USART1);    
- 118              		.loc 1 30 0
- 119 0062 2E4B     		ldr	r3, .L4+52
- 120 0064 9847     		blx	r3
- 121              	.LVL17:
- 122 0066 2146     		mov	r1, r4
- 123 0068 B847     		blx	r7
- 124              	.LVL18:
+ 114              		.loc 1 29 0
+ 115 005e 2146     		mov	r1, r4
+ 116 0060 3948     		ldr	r0, .L4+52
+ 117 0062 A847     		blx	r5
+ 118              	.LVL16:
+  30:UserCode.c    ****     uputDec(GetHPos(), USART1);    
+ 119              		.loc 1 30 0
+ 120 0064 394B     		ldr	r3, .L4+56
+ 121 0066 9847     		blx	r3
+ 122              	.LVL17:
+ 123 0068 2146     		mov	r1, r4
+ 124 006a B847     		blx	r7
+ 125              	.LVL18:
   31:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);    
- 125              		.loc 1 31 0
- 126 006a 2146     		mov	r1, r4
- 127 006c 3046     		mov	r0, r6
- 128 006e A847     		blx	r5
- 129              	.LVL19:
+ 126              		.loc 1 31 0
+ 127 006c 2146     		mov	r1, r4
+ 128 006e 3046     		mov	r0, r6
+ 129 0070 A847     		blx	r5
+ 130              	.LVL19:
   32:UserCode.c    **** 
   33:UserCode.c    ****     //Current Trigger Mode
   34:UserCode.c    ****     uputs((U8 *)"\rCurrent Trigger Mode: ", USART1);
- 130              		.loc 1 34 0
- 131 0070 2146     		mov	r1, r4
- 132 0072 2B48     		ldr	r0, .L4+56
- 133 0074 A847     		blx	r5
- 134              	.LVL20:
-  35:UserCode.c    ****     uputInt(GetTrigMode(), USART1);    
- 135              		.loc 1 35 0
- 136 0076 2B4B     		ldr	r3, .L4+60
- 137 0078 9847     		blx	r3
- 138              	.LVL21:
- 139 007a 2146     		mov	r1, r4
- 140 007c B847     		blx	r7
- 141              	.LVL22:
+ 131              		.loc 1 34 0
+ 132 0072 2146     		mov	r1, r4
+ 133 0074 3648     		ldr	r0, .L4+60
+ 134 0076 A847     		blx	r5
+ 135              	.LVL20:
+  35:UserCode.c    ****     uputDec(GetTrigMode(), USART1);    
+ 136              		.loc 1 35 0
+ 137 0078 364B     		ldr	r3, .L4+64
+ 138 007a 9847     		blx	r3
+ 139              	.LVL21:
+ 140 007c 2146     		mov	r1, r4
+ 141 007e B847     		blx	r7
+ 142              	.LVL22:
   36:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);    
- 142              		.loc 1 36 0
- 143 007e 2146     		mov	r1, r4
- 144 0080 3046     		mov	r0, r6
- 145 0082 A847     		blx	r5
- 146              	.LVL23:
+ 143              		.loc 1 36 0
+ 144 0080 2146     		mov	r1, r4
+ 145 0082 3046     		mov	r0, r6
+ 146 0084 A847     		blx	r5
+ 147              	.LVL23:
   37:UserCode.c    **** 
   38:UserCode.c    ****     //Current Trigger Slope
   39:UserCode.c    ****     uputs((U8 *)"\rCurrent Trigger Slope: ", USART1);
- 147              		.loc 1 39 0
- 148 0084 2146     		mov	r1, r4
- 149 0086 2848     		ldr	r0, .L4+64
- 150 0088 A847     		blx	r5
- 151              	.LVL24:
-  40:UserCode.c    ****     uputInt(GetTrigEdge(), USART1);    
- 152              		.loc 1 40 0
- 153 008a 284B     		ldr	r3, .L4+68
- 154 008c 9847     		blx	r3
- 155              	.LVL25:
- 156 008e 2146     		mov	r1, r4
- 157 0090 B847     		blx	r7
- 158              	.LVL26:
+ 148              		.loc 1 39 0
+ 149 0086 2146     		mov	r1, r4
+ 150 0088 3348     		ldr	r0, .L4+68
+ 151 008a A847     		blx	r5
+ 152              	.LVL24:
+  40:UserCode.c    ****     uputDec(GetTrigEdge(), USART1);    
+ 153              		.loc 1 40 0
+ 154 008c 334B     		ldr	r3, .L4+72
+ 155 008e 9847     		blx	r3
+ 156              	.LVL25:
+ 157 0090 2146     		mov	r1, r4
+ 158 0092 B847     		blx	r7
+ 159              	.LVL26:
   41:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);    
- 159              		.loc 1 41 0
- 160 0092 2146     		mov	r1, r4
- 161 0094 3046     		mov	r0, r6
- 162 0096 A847     		blx	r5
- 163              	.LVL27:
+ 160              		.loc 1 41 0
+ 161 0094 2146     		mov	r1, r4
+ 162 0096 3046     		mov	r0, r6
+ 163 0098 A847     		blx	r5
+ 164              	.LVL27:
   42:UserCode.c    **** 
   43:UserCode.c    ****     //Current Trigger Level
   44:UserCode.c    ****     uputs((U8 *)"\rCurrent Trigger Level: ", USART1);
- 164              		.loc 1 44 0
- 165 0098 2146     		mov	r1, r4
- 166 009a 2548     		ldr	r0, .L4+72
- 167 009c A847     		blx	r5
- 168              	.LVL28:
-  45:UserCode.c    ****     uputInt(GetTrigLvl(), USART1);    
- 169              		.loc 1 45 0
- 170 009e 254B     		ldr	r3, .L4+76
- 171 00a0 9847     		blx	r3
- 172              	.LVL29:
- 173 00a2 2146     		mov	r1, r4
- 174 00a4 B847     		blx	r7
- 175              	.LVL30:
+ 165              		.loc 1 44 0
+ 166 009a 2146     		mov	r1, r4
+ 167 009c 3048     		ldr	r0, .L4+76
+ 168 009e A847     		blx	r5
+ 169              	.LVL28:
+  45:UserCode.c    ****     uputDec(GetTrigLvl(), USART1);    
+ 170              		.loc 1 45 0
+ 171 00a0 304B     		ldr	r3, .L4+80
+ 172 00a2 9847     		blx	r3
+ 173              	.LVL29:
+ 174 00a4 2146     		mov	r1, r4
+ 175 00a6 B847     		blx	r7
+ 176              	.LVL30:
   46:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);    
- 176              		.loc 1 46 0
- 177 00a6 2146     		mov	r1, r4
- 178 00a8 3046     		mov	r0, r6
- 179 00aa A847     		blx	r5
- 180              	.LVL31:
+ 177              		.loc 1 46 0
+ 178 00a8 2146     		mov	r1, r4
+ 179 00aa 3046     		mov	r0, r6
+ 180 00ac A847     		blx	r5
+ 181              	.LVL31:
   47:UserCode.c    **** 
   48:UserCode.c    ****     //Current Record Length
   49:UserCode.c    ****     uputs((U8 *)"\rCurrent Record Length: ", USART1);
- 181              		.loc 1 49 0
- 182 00ac 2146     		mov	r1, r4
- 183 00ae 2248     		ldr	r0, .L4+80
- 184 00b0 A847     		blx	r5
- 185              	.LVL32:
-  50:UserCode.c    ****     uputInt(GetRecLen(), USART1);    
- 186              		.loc 1 50 0
- 187 00b2 224B     		ldr	r3, .L4+84
- 188 00b4 9847     		blx	r3
- 189              	.LVL33:
- 190 00b6 2146     		mov	r1, r4
- 191 00b8 B847     		blx	r7
- 192              	.LVL34:
+ 182              		.loc 1 49 0
+ 183 00ae 2146     		mov	r1, r4
+ 184 00b0 2D48     		ldr	r0, .L4+84
+ 185 00b2 A847     		blx	r5
+ 186              	.LVL32:
+  50:UserCode.c    ****     uputDec(GetRecLen(), USART1);    
+ 187              		.loc 1 50 0
+ 188 00b4 2D4B     		ldr	r3, .L4+88
+ 189 00b6 9847     		blx	r3
+ 190              	.LVL33:
+ 191 00b8 2146     		mov	r1, r4
+ 192 00ba B847     		blx	r7
+ 193              	.LVL34:
   51:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);    
- 193              		.loc 1 51 0
- 194 00ba 2146     		mov	r1, r4
- 195 00bc 3046     		mov	r0, r6
- 196 00be A847     		blx	r5
- 197              	.LVL35:
+ 194              		.loc 1 51 0
+ 195 00bc 2146     		mov	r1, r4
+ 196 00be 3046     		mov	r0, r6
+ 197 00c0 A847     		blx	r5
+ 198              	.LVL35:
   52:UserCode.c    **** 
   53:UserCode.c    ****     //Current Vertical Position Offeset
   54:UserCode.c    ****     uputs((U8 *)"\rCurrent Position Offeset: ", USART1);
- 198              		.loc 1 54 0
- 199 00c0 2146     		mov	r1, r4
- 200 00c2 1F48     		ldr	r0, .L4+88
- 201 00c4 A847     		blx	r5
- 202              	.LVL36:
-  55:UserCode.c    ****     uputInt(GetVPosOfs(), USART1);    
- 203              		.loc 1 55 0
- 204 00c6 1F4B     		ldr	r3, .L4+92
- 205 00c8 9847     		blx	r3
- 206              	.LVL37:
- 207 00ca 2146     		mov	r1, r4
- 208 00cc B847     		blx	r7
- 209              	.LVL38:
+ 199              		.loc 1 54 0
+ 200 00c2 2146     		mov	r1, r4
+ 201 00c4 2A48     		ldr	r0, .L4+92
+ 202 00c6 A847     		blx	r5
+ 203              	.LVL36:
+  55:UserCode.c    ****     uputDec(GetVPosOfs(), USART1);    
+ 204              		.loc 1 55 0
+ 205 00c8 2A4B     		ldr	r3, .L4+96
+ 206 00ca 9847     		blx	r3
+ 207              	.LVL37:
+ 208 00cc 2146     		mov	r1, r4
+ 209 00ce B847     		blx	r7
+ 210              	.LVL38:
   56:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);   
- 210              		.loc 1 56 0
- 211 00ce 2146     		mov	r1, r4
- 212 00d0 3046     		mov	r0, r6
- 213 00d2 A847     		blx	r5
- 214              	.LVL39:
-  57:UserCode.c    **** 
-  58:UserCode.c    ****     //End Of Records
-  59:UserCode.c    ****     uputs((U8 *)"----------------------------------------------------------------------------------
- 215              		.loc 1 59 0
- 216 00d4 2146     		mov	r1, r4
- 217 00d6 1C48     		ldr	r0, .L4+96
- 218 00d8 A847     		blx	r5
- 219              	.LVL40:
-  60:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);         
- 220              		.loc 1 60 0
- 221 00da 2146     		mov	r1, r4
- 222 00dc 3046     		mov	r0, r6
- 223 00de 2B46     		mov	r3, r5
-  61:UserCode.c    **** 
-  62:UserCode.c    **** }
- 224              		.loc 1 62 0
- 225 00e0 BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
- 226              		.cfi_restore 14
- 227              		.cfi_restore 8
- 228              		.cfi_restore 7
- 229              		.cfi_restore 6
- 230              		.cfi_restore 5
- 231              		.cfi_restore 4
- 232              		.cfi_def_cfa_offset 0
-  60:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);         
- 233              		.loc 1 60 0
- 234 00e4 1847     		bx	r3	@ indirect register sibling call
- 235              	.LVL41:
- 236              	.L5:
- 237 00e6 00BF     		.align	2
- 238              	.L4:
- 239 00e8 00380140 		.word	1073821696
- 240 00ec 00000000 		.word	uputs
- 241 00f0 00000000 		.word	.LC0
- 242 00f4 20000000 		.word	.LC1
- 243 00f8 00000000 		.word	GetVSen
- 244 00fc 00000000 		.word	uputInt
- 245 0100 24000000 		.word	.LC2
- 246 0104 00000000 		.word	GetCpl
- 247 0108 40000000 		.word	.LC3
- 248 010c 00000000 		.word	GetVPos
- 249 0110 60000000 		.word	.LC4
- 250 0114 00000000 		.word	GetTimebase
- 251 0118 78000000 		.word	.LC5
- 252 011c 00000000 		.word	GetHPos
- 253 0120 98000000 		.word	.LC6
- 254 0124 00000000 		.word	GetTrigMode
- 255 0128 B0000000 		.word	.LC7
- 256 012c 00000000 		.word	GetTrigEdge
- 257 0130 CC000000 		.word	.LC8
- 258 0134 00000000 		.word	GetTrigLvl
- 259 0138 E8000000 		.word	.LC9
- 260 013c 00000000 		.word	GetRecLen
- 261 0140 04010000 		.word	.LC10
- 262 0144 00000000 		.word	GetVPosOfs
- 263 0148 20010000 		.word	.LC11
- 264              		.cfi_endproc
- 265              	.LFE29:
- 267              		.comm	deltaTickValue,4,4
- 268              		.comm	previousTickVal,4,4
- 269              		.comm	currentTickVal,4,4
- 270              		.comm	int_buffer,32,4
- 271              		.section	.rodata.UsrCode.str1.4,"aMS",%progbits,1
- 272              		.align	2
- 273              	.LC0:
- 274 0000 0D437572 		.ascii	"\015Current Voltage Sensitivity: \000"
- 274      72656E74 
- 274      20566F6C 
- 274      74616765 
- 274      2053656E 
- 275 001f 00       		.space	1
- 276              	.LC1:
- 277 0020 0A0D00   		.ascii	"\012\015\000"
- 278 0023 00       		.space	1
- 279              	.LC2:
- 280 0024 0D437572 		.ascii	"\015Current Couple Setting: \000"
- 280      72656E74 
- 280      20436F75 
- 280      706C6520 
- 280      53657474 
- 281 003e 0000     		.space	2
- 282              	.LC3:
- 283 0040 0D437572 		.ascii	"\015Current Vertical Position: \000"
- 283      72656E74 
- 283      20566572 
- 283      74696361 
- 283      6C20506F 
- 284 005d 000000   		.space	3
- 285              	.LC4:
- 286 0060 0D437572 		.ascii	"\015Current Time Base: \000"
- 286      72656E74 
- 286      2054696D 
- 286      65204261 
- 286      73653A20 
- 287 0075 000000   		.space	3
- 288              	.LC5:
- 289 0078 0D437572 		.ascii	"\015Current Horizontal Position: \000"
- 289      72656E74 
- 289      20486F72 
- 289      697A6F6E 
- 289      74616C20 
- 290 0097 00       		.space	1
- 291              	.LC6:
- 292 0098 0D437572 		.ascii	"\015Current Trigger Mode: \000"
- 292      72656E74 
- 292      20547269 
- 292      67676572 
- 292      204D6F64 
- 293              	.LC7:
- 294 00b0 0D437572 		.ascii	"\015Current Trigger Slope: \000"
- 294      72656E74 
- 294      20547269 
- 294      67676572 
- 294      20536C6F 
- 295 00c9 000000   		.space	3
- 296              	.LC8:
- 297 00cc 0D437572 		.ascii	"\015Current Trigger Level: \000"
- 297      72656E74 
- 297      20547269 
- 297      67676572 
- 297      204C6576 
- 298 00e5 000000   		.space	3
- 299              	.LC9:
- 300 00e8 0D437572 		.ascii	"\015Current Record Length: \000"
- 300      72656E74 
- 300      20526563 
- 300      6F726420 
- 300      4C656E67 
- 301 0101 000000   		.space	3
- 302              	.LC10:
- 303 0104 0D437572 		.ascii	"\015Current Position Offeset: \000"
- 303      72656E74 
- 303      20506F73 
- 303      6974696F 
- 303      6E204F66 
- 304              	.LC11:
- 305 0120 2D2D2D2D 		.ascii	"---------------------------------------------------"
- 305      2D2D2D2D 
- 305      2D2D2D2D 
- 305      2D2D2D2D 
- 305      2D2D2D2D 
- 306 0153 2D2D2D2D 		.ascii	"---------------------------------------------------"
- 306      2D2D2D2D 
- 306      2D2D2D2D 
- 306      2D2D2D2D 
- 306      2D2D2D2D 
- 307 0186 2D2D2D2D 		.ascii	"-----\000"
- 307      2D00
- 308              		.text
- 309              	.Letext0:
- 310              		.file 2 "Common.h"
- 311              		.file 3 "/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default
- 312              		.file 4 "/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
- 313              		.file 5 "./Libraries/CMSIS/CM3/CoreSupport/core_cm3.h"
- 314              		.file 6 "./Libraries/CMSIS/CM3/CoreSupport/system_stm32f10x.h"
- 315              		.file 7 "./Libraries/CMSIS/CM3/CoreSupport/stm32f10x.h"
- 316              		.file 8 "Board.h"
- 317              		.file 9 "UartInt.h"
- 318              		.file 10 "libdso138.h"
+ 211              		.loc 1 56 0
+ 212 00d0 2146     		mov	r1, r4
+ 213 00d2 3046     		mov	r0, r6
+ 214 00d4 A847     		blx	r5
+ 215              	.LVL39:
+  57:UserCode.c    ****    
+  58:UserCode.c    ****     //Current DSO Engine Status
+  59:UserCode.c    ****     uputs((U8 *)"\rCurrent DSO Engine Status: ", USART1);
+ 216              		.loc 1 59 0
+ 217 00d6 2146     		mov	r1, r4
+ 218 00d8 2748     		ldr	r0, .L4+100
+ 219 00da A847     		blx	r5
+ 220              	.LVL40:
+  60:UserCode.c    ****     uputDec(GetDsoStatus(), USART1);    
+ 221              		.loc 1 60 0
+ 222 00dc 274B     		ldr	r3, .L4+104
+ 223 00de 9847     		blx	r3
+ 224              	.LVL41:
+ 225 00e0 2146     		mov	r1, r4
+ 226 00e2 B847     		blx	r7
+ 227              	.LVL42:
+  61:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);   
+ 228              		.loc 1 61 0
+ 229 00e4 2146     		mov	r1, r4
+ 230 00e6 3046     		mov	r0, r6
+ 231 00e8 A847     		blx	r5
+ 232              	.LVL43:
+  62:UserCode.c    **** 
+  63:UserCode.c    ****     //Current Sample in Buffer only Rolling Mode
+  64:UserCode.c    ****     uputs((U8 *)"\rValue of Current Buffer: ", USART1);
+ 233              		.loc 1 64 0
+ 234 00ea 2146     		mov	r1, r4
+ 235 00ec 2448     		ldr	r0, .L4+108
+ 236 00ee A847     		blx	r5
+ 237              	.LVL44:
+  65:UserCode.c    ****     uputDec((*CurrentSample), USART1);    
+ 238              		.loc 1 65 0
+ 239 00f0 244B     		ldr	r3, .L4+112
+ 240 00f2 2146     		mov	r1, r4
+ 241 00f4 1B68     		ldr	r3, [r3]
+ 242 00f6 1888     		ldrh	r0, [r3]
+ 243 00f8 B847     		blx	r7
+ 244              	.LVL45:
+  66:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);   
+ 245              		.loc 1 66 0
+ 246 00fa 2146     		mov	r1, r4
+ 247 00fc 3046     		mov	r0, r6
+ 248 00fe A847     		blx	r5
+ 249              	.LVL46:
+  67:UserCode.c    **** 
+  68:UserCode.c    **** 
+  69:UserCode.c    ****     // extern	U16	*SampleBuf;
+  70:UserCode.c    ****     //extern	U16	*CurrentSample;
+  71:UserCode.c    **** 
+  72:UserCode.c    ****     //End Of Records
+  73:UserCode.c    ****     uputs((U8 *)"****************", USART1);
+ 250              		.loc 1 73 0
+ 251 0100 2146     		mov	r1, r4
+ 252 0102 2148     		ldr	r0, .L4+116
+ 253 0104 A847     		blx	r5
+ 254              	.LVL47:
+  74:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);         
+ 255              		.loc 1 74 0
+ 256 0106 2146     		mov	r1, r4
+ 257 0108 3046     		mov	r0, r6
+ 258 010a 2B46     		mov	r3, r5
+  75:UserCode.c    **** 
+  76:UserCode.c    **** }
+ 259              		.loc 1 76 0
+ 260 010c BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
+ 261              		.cfi_restore 14
+ 262              		.cfi_restore 8
+ 263              		.cfi_restore 7
+ 264              		.cfi_restore 6
+ 265              		.cfi_restore 5
+ 266              		.cfi_restore 4
+ 267              		.cfi_def_cfa_offset 0
+  74:UserCode.c    ****     uputs((U8 *) "\n\r", USART1);         
+ 268              		.loc 1 74 0
+ 269 0110 1847     		bx	r3	@ indirect register sibling call
+ 270              	.LVL48:
+ 271              	.L5:
+ 272 0112 00BF     		.align	2
+ 273              	.L4:
+ 274 0114 00380140 		.word	1073821696
+ 275 0118 00000000 		.word	uputs
+ 276 011c 00000000 		.word	.LC0
+ 277 0120 24000000 		.word	.LC1
+ 278 0124 00000000 		.word	GetVSen
+ 279 0128 00000000 		.word	uputHex
+ 280 012c 28000000 		.word	.LC2
+ 281 0130 00000000 		.word	GetCpl
+ 282 0134 00000000 		.word	uputDec
+ 283 0138 44000000 		.word	.LC3
+ 284 013c 00000000 		.word	GetVPos
+ 285 0140 64000000 		.word	.LC4
+ 286 0144 00000000 		.word	GetTimebase
+ 287 0148 7C000000 		.word	.LC5
+ 288 014c 00000000 		.word	GetHPos
+ 289 0150 9C000000 		.word	.LC6
+ 290 0154 00000000 		.word	GetTrigMode
+ 291 0158 B4000000 		.word	.LC7
+ 292 015c 00000000 		.word	GetTrigEdge
+ 293 0160 D0000000 		.word	.LC8
+ 294 0164 00000000 		.word	GetTrigLvl
+ 295 0168 EC000000 		.word	.LC9
+ 296 016c 00000000 		.word	GetRecLen
+ 297 0170 08010000 		.word	.LC10
+ 298 0174 00000000 		.word	GetVPosOfs
+ 299 0178 24010000 		.word	.LC11
+ 300 017c 00000000 		.word	GetDsoStatus
+ 301 0180 44010000 		.word	.LC12
+ 302 0184 00000000 		.word	CurrentSample
+ 303 0188 60010000 		.word	.LC13
+ 304              		.cfi_endproc
+ 305              	.LFE29:
+ 307              		.comm	deltaTickValue,4,4
+ 308              		.comm	previousTickVal,4,4
+ 309              		.comm	currentTickVal,4,4
+ 310              		.comm	int_buffer,32,4
+ 311              		.section	.rodata.UsrCode.str1.4,"aMS",%progbits,1
+ 312              		.align	2
+ 313              	.LC0:
+ 314 0000 0D437572 		.ascii	"\015Current Voltage Sensitivity: 0x\000"
+ 314      72656E74 
+ 314      20566F6C 
+ 314      74616765 
+ 314      2053656E 
+ 315 0021 000000   		.space	3
+ 316              	.LC1:
+ 317 0024 0A0D00   		.ascii	"\012\015\000"
+ 318 0027 00       		.space	1
+ 319              	.LC2:
+ 320 0028 0D437572 		.ascii	"\015Current Couple Setting: \000"
+ 320      72656E74 
+ 320      20436F75 
+ 320      706C6520 
+ 320      53657474 
+ 321 0042 0000     		.space	2
+ 322              	.LC3:
+ 323 0044 0D437572 		.ascii	"\015Current Vertical Position: \000"
+ 323      72656E74 
+ 323      20566572 
+ 323      74696361 
+ 323      6C20506F 
+ 324 0061 000000   		.space	3
+ 325              	.LC4:
+ 326 0064 0D437572 		.ascii	"\015Current Time Base: \000"
+ 326      72656E74 
+ 326      2054696D 
+ 326      65204261 
+ 326      73653A20 
+ 327 0079 000000   		.space	3
+ 328              	.LC5:
+ 329 007c 0D437572 		.ascii	"\015Current Horizontal Position: \000"
+ 329      72656E74 
+ 329      20486F72 
+ 329      697A6F6E 
+ 329      74616C20 
+ 330 009b 00       		.space	1
+ 331              	.LC6:
+ 332 009c 0D437572 		.ascii	"\015Current Trigger Mode: \000"
+ 332      72656E74 
+ 332      20547269 
+ 332      67676572 
+ 332      204D6F64 
+ 333              	.LC7:
+ 334 00b4 0D437572 		.ascii	"\015Current Trigger Slope: \000"
+ 334      72656E74 
+ 334      20547269 
+ 334      67676572 
+ 334      20536C6F 
+ 335 00cd 000000   		.space	3
+ 336              	.LC8:
+ 337 00d0 0D437572 		.ascii	"\015Current Trigger Level: \000"
+ 337      72656E74 
+ 337      20547269 
+ 337      67676572 
+ 337      204C6576 
+ 338 00e9 000000   		.space	3
+ 339              	.LC9:
+ 340 00ec 0D437572 		.ascii	"\015Current Record Length: \000"
+ 340      72656E74 
+ 340      20526563 
+ 340      6F726420 
+ 340      4C656E67 
+ 341 0105 000000   		.space	3
+ 342              	.LC10:
+ 343 0108 0D437572 		.ascii	"\015Current Position Offeset: \000"
+ 343      72656E74 
+ 343      20506F73 
+ 343      6974696F 
+ 343      6E204F66 
+ 344              	.LC11:
+ 345 0124 0D437572 		.ascii	"\015Current DSO Engine Status: \000"
+ 345      72656E74 
+ 345      2044534F 
+ 345      20456E67 
+ 345      696E6520 
+ 346 0141 000000   		.space	3
+ 347              	.LC12:
+ 348 0144 0D56616C 		.ascii	"\015Value of Current Buffer: \000"
+ 348      7565206F 
+ 348      66204375 
+ 348      7272656E 
+ 348      74204275 
+ 349 015f 00       		.space	1
+ 350              	.LC13:
+ 351 0160 2A2A2A2A 		.ascii	"****************\000"
+ 351      2A2A2A2A 
+ 351      2A2A2A2A 
+ 351      2A2A2A2A 
+ 351      00
+ 352              		.text
+ 353              	.Letext0:
+ 354              		.file 2 "Common.h"
+ 355              		.file 3 "/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default
+ 356              		.file 4 "/home/bot-10/opt/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 357              		.file 5 "./Libraries/CMSIS/CM3/CoreSupport/core_cm3.h"
+ 358              		.file 6 "./Libraries/CMSIS/CM3/CoreSupport/system_stm32f10x.h"
+ 359              		.file 7 "./Libraries/CMSIS/CM3/CoreSupport/stm32f10x.h"
+ 360              		.file 8 "Board.h"
+ 361              		.file 9 "UartInt.h"
+ 362              		.file 10 "libdso138.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 UserCode.c
-     /tmp/ccZMqTr4.s:16     .text.UsrCode:0000000000000000 $t
-     /tmp/ccZMqTr4.s:24     .text.UsrCode:0000000000000000 UsrCode
-     /tmp/ccZMqTr4.s:239    .text.UsrCode:00000000000000e8 $d
+     /tmp/cc2ZWce2.s:16     .text.UsrCode:0000000000000000 $t
+     /tmp/cc2ZWce2.s:24     .text.UsrCode:0000000000000000 UsrCode
+     /tmp/cc2ZWce2.s:274    .text.UsrCode:0000000000000114 $d
                             *COM*:0000000000000004 deltaTickValue
                             *COM*:0000000000000004 previousTickVal
                             *COM*:0000000000000004 currentTickVal
                             *COM*:0000000000000020 int_buffer
-     /tmp/ccZMqTr4.s:272    .rodata.UsrCode.str1.4:0000000000000000 $d
+     /tmp/cc2ZWce2.s:312    .rodata.UsrCode.str1.4:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 uputs
 GetVSen
-uputInt
+uputHex
 GetCpl
+uputDec
 GetVPos
 GetTimebase
 GetHPos
@@ -452,3 +514,5 @@ GetTrigEdge
 GetTrigLvl
 GetRecLen
 GetVPosOfs
+GetDsoStatus
+CurrentSample

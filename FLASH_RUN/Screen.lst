@@ -2584,25 +2584,25 @@
  2103              		.file 9 "Screen.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 Screen.c
-     /tmp/ccu7pyJg.s:16     .text.SetWindow:0000000000000000 $t
-     /tmp/ccu7pyJg.s:24     .text.SetWindow:0000000000000000 SetWindow
-     /tmp/ccu7pyJg.s:121    .text.SetWindow:0000000000000050 $d
-     /tmp/ccu7pyJg.s:127    .text.FillRect:0000000000000000 $t
-     /tmp/ccu7pyJg.s:135    .text.FillRect:0000000000000000 FillRect
-     /tmp/ccu7pyJg.s:235    .text.FillRect:0000000000000078 $d
-     /tmp/ccu7pyJg.s:242    .text.ClrScreen:0000000000000000 $t
-     /tmp/ccu7pyJg.s:250    .text.ClrScreen:0000000000000000 ClrScreen
-     /tmp/ccu7pyJg.s:281    .text.ClrScreen:0000000000000018 $d
-     /tmp/ccu7pyJg.s:286    .text.PutcGenic:0000000000000000 $t
-     /tmp/ccu7pyJg.s:294    .text.PutcGenic:0000000000000000 PutcGenic
-     /tmp/ccu7pyJg.s:441    .text.PutcGenic:00000000000000cc $d
-     /tmp/ccu7pyJg.s:448    .text.PutsGenic:0000000000000000 $t
-     /tmp/ccu7pyJg.s:456    .text.PutsGenic:0000000000000000 PutsGenic
-     /tmp/ccu7pyJg.s:534    .text.PutsGenic:000000000000004c $d
-     /tmp/ccu7pyJg.s:544    .data.ASC8X16:0000000000000000 ASC8X16
-     /tmp/ccu7pyJg.s:556    .rodata.Font_ASC8X16:0000000000000000 Font_ASC8X16
-     /tmp/ccu7pyJg.s:541    .data.ASC8X16:0000000000000000 $d
-     /tmp/ccu7pyJg.s:553    .rodata.Font_ASC8X16:0000000000000000 $d
+     /tmp/ccwvqQJJ.s:16     .text.SetWindow:0000000000000000 $t
+     /tmp/ccwvqQJJ.s:24     .text.SetWindow:0000000000000000 SetWindow
+     /tmp/ccwvqQJJ.s:121    .text.SetWindow:0000000000000050 $d
+     /tmp/ccwvqQJJ.s:127    .text.FillRect:0000000000000000 $t
+     /tmp/ccwvqQJJ.s:135    .text.FillRect:0000000000000000 FillRect
+     /tmp/ccwvqQJJ.s:235    .text.FillRect:0000000000000078 $d
+     /tmp/ccwvqQJJ.s:242    .text.ClrScreen:0000000000000000 $t
+     /tmp/ccwvqQJJ.s:250    .text.ClrScreen:0000000000000000 ClrScreen
+     /tmp/ccwvqQJJ.s:281    .text.ClrScreen:0000000000000018 $d
+     /tmp/ccwvqQJJ.s:286    .text.PutcGenic:0000000000000000 $t
+     /tmp/ccwvqQJJ.s:294    .text.PutcGenic:0000000000000000 PutcGenic
+     /tmp/ccwvqQJJ.s:441    .text.PutcGenic:00000000000000cc $d
+     /tmp/ccwvqQJJ.s:448    .text.PutsGenic:0000000000000000 $t
+     /tmp/ccwvqQJJ.s:456    .text.PutsGenic:0000000000000000 PutsGenic
+     /tmp/ccwvqQJJ.s:534    .text.PutsGenic:000000000000004c $d
+     /tmp/ccwvqQJJ.s:544    .data.ASC8X16:0000000000000000 ASC8X16
+     /tmp/ccwvqQJJ.s:556    .rodata.Font_ASC8X16:0000000000000000 Font_ASC8X16
+     /tmp/ccwvqQJJ.s:541    .data.ASC8X16:0000000000000000 $d
+     /tmp/ccwvqQJJ.s:553    .rodata.Font_ASC8X16:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 write_data

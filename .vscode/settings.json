@@ -1,0 +1,6 @@
+{
+    "C_Cpp.intelliSenseEngineFallback": "Disabled",
+    "files.associations": {
+        "stm32f10x.h": "c"
+    }
+}
