@@ -12164,7 +12164,7 @@ void twelveToSixten(U16 *raw_data, S16 *converted_data, U16 num_of_elements)
  8005b36:	3902      	subs	r1, #2
  8005b38:	3802      	subs	r0, #2
     {
-        //take 12 bit word, shift it by 4 bit to the left, then divide by 4 this should convert to 
+        //Shift 12 bit word by 4 bit to the left, then divide by 4 to set the MSB if value is negative. 
         converted_word = (S16) (*(raw_data+i) << 4 )/(1<<4);
  8005b3a:	f830 3f02 	ldrh.w	r3, [r0, #2]!
  8005b3e:	3102      	adds	r1, #2
