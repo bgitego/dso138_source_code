@@ -523,11 +523,11 @@
  339              		.file 15 "UserCode.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 113-13801.c
-     /tmp/cc7IUGFB.s:16     .text.startup.main:0000000000000000 $t
-     /tmp/cc7IUGFB.s:24     .text.startup.main:0000000000000000 main
-     /tmp/cc7IUGFB.s:274    .text.startup.main:0000000000000120 $d
+     /tmp/ccXu1i2r.s:16     .text.startup.main:0000000000000000 $t
+     /tmp/ccXu1i2r.s:24     .text.startup.main:0000000000000000 main
+     /tmp/ccXu1i2r.s:274    .text.startup.main:0000000000000120 $d
                             *COM*:0000000000000020 int_buffer
-     /tmp/cc7IUGFB.s:315    .rodata.main.str1.4:0000000000000000 $d
+     /tmp/ccXu1i2r.s:315    .rodata.main.str1.4:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 Clock_Init

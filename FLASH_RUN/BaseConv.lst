@@ -1,0 +1,95 @@
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 2
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"BaseConv.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.twelveToSixten,"ax",%progbits
+  16              		.align	1
+  17              		.p2align 2,,3
+  18              		.global	twelveToSixten
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	twelveToSixten:
+  25              	.LFB0:
+  26              		.file 1 "BaseConv.c"
+   1:BaseConv.c    **** #include "BaseConv.h"
+   2:BaseConv.c    **** #include "Common.h"
+   3:BaseConv.c    **** 
+   4:BaseConv.c    **** void twelveToSixten(U16 *raw_data, S16 *converted_data, U16 num_of_elements)
+   5:BaseConv.c    **** {
+  27              		.loc 1 5 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32              	.LVL0:
+  33              	.LBB2:
+   6:BaseConv.c    ****     S16 converted_word;
+   7:BaseConv.c    **** 
+   8:BaseConv.c    ****     for(U16 i = 0; i < num_of_elements; i++)
+  34              		.loc 1 8 0
+  35 0000 8AB1     		cbz	r2, .L1
+  36 0002 013A     		subs	r2, r2, #1
+  37              	.LVL1:
+  38 0004 92B2     		uxth	r2, r2
+  39 0006 00EB4202 		add	r2, r0, r2, lsl #1
+  40 000a 0239     		subs	r1, r1, #2
+  41              	.LVL2:
+  42 000c 0238     		subs	r0, r0, #2
+  43              	.LVL3:
+  44              	.L4:
+   9:BaseConv.c    ****     {
+  10:BaseConv.c    ****         //take 12 bit word, shift it by 4 bit to the left, then divide by 4 this should convert to 
+  11:BaseConv.c    ****         converted_word = (S16) (*(raw_data+i) << 4 )/(1<<4);
+  45              		.loc 1 11 0 discriminator 3
+  46 000e 30F8023F 		ldrh	r3, [r0, #2]!
+  47              	.LVL4:
+  48 0012 0231     		adds	r1, r1, #2
+  49 0014 1B01     		lsls	r3, r3, #4
+  50 0016 1BB2     		sxth	r3, r3
+  51 0018 002B     		cmp	r3, #0
+  52 001a B8BF     		it	lt
+  53 001c 0F33     		addlt	r3, r3, #15
+  54 001e 1B11     		asrs	r3, r3, #4
+   8:BaseConv.c    ****     {
+  55              		.loc 1 8 0 discriminator 3
+  56 0020 9042     		cmp	r0, r2
+  12:BaseConv.c    ****        *(converted_data+i) = converted_word;
+  57              		.loc 1 12 0 discriminator 3
+  58 0022 0B80     		strh	r3, [r1]	@ movhi
+  59              	.LVL5:
+   8:BaseConv.c    ****     {
+  60              		.loc 1 8 0 discriminator 3
+  61 0024 F3D1     		bne	.L4
+  62              	.L1:
+  63              	.LBE2:
+  13:BaseConv.c    ****     }
+  14:BaseConv.c    **** 
+  15:BaseConv.c    **** }
+  64              		.loc 1 15 0
+  65 0026 7047     		bx	lr
+  66              		.cfi_endproc
+  67              	.LFE0:
+  69              		.comm	conv_record_buffer,2048,4
+  70              		.text
+  71              	.Letext0:
+  72              		.file 2 "Common.h"
+  73              		.file 3 "BaseConv.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 BaseConv.c
+     /tmp/ccOEFqNa.s:16     .text.twelveToSixten:0000000000000000 $t
+     /tmp/ccOEFqNa.s:24     .text.twelveToSixten:0000000000000000 twelveToSixten
+                            *COM*:0000000000000800 conv_record_buffer
+
+NO UNDEFINED SYMBOLS

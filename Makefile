@@ -89,7 +89,7 @@ CMSISDIR  = $(STMLIBDIR)/CMSIS/CM3/CoreSupport
 # List C source files here. (C dependencies are automatically generated.)
 # use file-extension c for "c-only"-files
 ## Demo-Application:
-SRC = 113-13801.c Board.c Common.c Screen.c Command.c stm32f10x_it.c Eeprom.c UartInt.c UserCode.c
+SRC = 113-13801.c Board.c Common.c Screen.c Command.c stm32f10x_it.c Eeprom.c BaseConv.c UartInt.c UserCode.c
 
 ## compiler-specific sources
 #SRC += startup_stm32f10x_md_mthomas.c

@@ -1,12 +1,26 @@
 #include "UserCode.h"
 #include "libdso138.h"
+#include "BaseConv.h"
 
 volatile U32  currentTickVal,previousTickVal,deltaTickValue;
 
 void UsrCode()
 {
+    if(BitTest(GetDsoStatus(),DSO_CaptureDone))
+    {
+        twelveToSixten(&SampleBuf[0], &conv_record_buffer[0], GetRecLen());
+
+        for(U16 i = 0; i< RecLenMax; i++)
+        {
+         uputs((U8 *)"\rSample At Index: ", USART1);
+         uputDec(i, USART1);   
+         uputs((U8 *) " Is :", USART1);
+         uputDec(*(conv_record_buffer+i), USART1);   
+         uputs((U8 *) "\n\r", USART1);
+        }
+    }
     //Current Voltage Sensitivity
-    uputs((U8 *)"\rCurrent Voltage Sensitivity: 0x", USART1);
+   /* uputs((U8 *)"\rCurrent Voltage Sensitivity: 0x", USART1);
     uputHex(GetVSen(), USART1);    
     uputs((U8 *) "\n\r", USART1);
 
@@ -56,21 +70,21 @@ void UsrCode()
     uputs((U8 *) "\n\r", USART1);   
    
     //Current DSO Engine Status
-    uputs((U8 *)"\rCurrent DSO Engine Status: ", USART1);
-    uputDec(GetDsoStatus(), USART1);    
+    uputs((U8 *)"\rCurrent DSO Engine Status: 0x", USART1);
+    uputHex(GetDsoStatus(), USART1);    
     uputs((U8 *) "\n\r", USART1);   
 
     //Current Sample in Buffer only Rolling Mode
     uputs((U8 *)"\rValue of Current Buffer: ", USART1);
     uputDec((*CurrentSample), USART1);    
     uputs((U8 *) "\n\r", USART1);   
-
-
+    
+   
     // extern	U16	*SampleBuf;
     //extern	U16	*CurrentSample;
 
     //End Of Records
     uputs((U8 *)"****************", USART1);
     uputs((U8 *) "\n\r", USART1);         
-
+*/
 }

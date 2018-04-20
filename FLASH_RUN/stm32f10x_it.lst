@@ -399,25 +399,25 @@
  254              		.file 9 "libdso138.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f10x_it.c
-     /tmp/cchhf9h3.s:16     .text.NMI_Handler:0000000000000000 $t
-     /tmp/cchhf9h3.s:24     .text.NMI_Handler:0000000000000000 NMI_Handler
-     /tmp/cchhf9h3.s:38     .text.HardFault_Handler:0000000000000000 $t
-     /tmp/cchhf9h3.s:46     .text.HardFault_Handler:0000000000000000 HardFault_Handler
-     /tmp/cchhf9h3.s:60     .text.MemManage_Handler:0000000000000000 $t
-     /tmp/cchhf9h3.s:68     .text.MemManage_Handler:0000000000000000 MemManage_Handler
-     /tmp/cchhf9h3.s:82     .text.BusFault_Handler:0000000000000000 $t
-     /tmp/cchhf9h3.s:90     .text.BusFault_Handler:0000000000000000 BusFault_Handler
-     /tmp/cchhf9h3.s:104    .text.UsageFault_Handler:0000000000000000 $t
-     /tmp/cchhf9h3.s:112    .text.UsageFault_Handler:0000000000000000 UsageFault_Handler
-     /tmp/cchhf9h3.s:126    .text.SVC_Handler:0000000000000000 $t
-     /tmp/cchhf9h3.s:134    .text.SVC_Handler:0000000000000000 SVC_Handler
-     /tmp/cchhf9h3.s:145    .text.DebugMon_Handler:0000000000000000 $t
-     /tmp/cchhf9h3.s:153    .text.DebugMon_Handler:0000000000000000 DebugMon_Handler
-     /tmp/cchhf9h3.s:164    .text.PendSV_Handler:0000000000000000 $t
-     /tmp/cchhf9h3.s:172    .text.PendSV_Handler:0000000000000000 PendSV_Handler
-     /tmp/cchhf9h3.s:183    .text.SysTick_Handler:0000000000000000 $t
-     /tmp/cchhf9h3.s:191    .text.SysTick_Handler:0000000000000000 SysTick_Handler
-     /tmp/cchhf9h3.s:238    .text.SysTick_Handler:0000000000000034 $d
+     /tmp/ccHAtFIW.s:16     .text.NMI_Handler:0000000000000000 $t
+     /tmp/ccHAtFIW.s:24     .text.NMI_Handler:0000000000000000 NMI_Handler
+     /tmp/ccHAtFIW.s:38     .text.HardFault_Handler:0000000000000000 $t
+     /tmp/ccHAtFIW.s:46     .text.HardFault_Handler:0000000000000000 HardFault_Handler
+     /tmp/ccHAtFIW.s:60     .text.MemManage_Handler:0000000000000000 $t
+     /tmp/ccHAtFIW.s:68     .text.MemManage_Handler:0000000000000000 MemManage_Handler
+     /tmp/ccHAtFIW.s:82     .text.BusFault_Handler:0000000000000000 $t
+     /tmp/ccHAtFIW.s:90     .text.BusFault_Handler:0000000000000000 BusFault_Handler
+     /tmp/ccHAtFIW.s:104    .text.UsageFault_Handler:0000000000000000 $t
+     /tmp/ccHAtFIW.s:112    .text.UsageFault_Handler:0000000000000000 UsageFault_Handler
+     /tmp/ccHAtFIW.s:126    .text.SVC_Handler:0000000000000000 $t
+     /tmp/ccHAtFIW.s:134    .text.SVC_Handler:0000000000000000 SVC_Handler
+     /tmp/ccHAtFIW.s:145    .text.DebugMon_Handler:0000000000000000 $t
+     /tmp/ccHAtFIW.s:153    .text.DebugMon_Handler:0000000000000000 DebugMon_Handler
+     /tmp/ccHAtFIW.s:164    .text.PendSV_Handler:0000000000000000 $t
+     /tmp/ccHAtFIW.s:172    .text.PendSV_Handler:0000000000000000 PendSV_Handler
+     /tmp/ccHAtFIW.s:183    .text.SysTick_Handler:0000000000000000 $t
+     /tmp/ccHAtFIW.s:191    .text.SysTick_Handler:0000000000000000 SysTick_Handler
+     /tmp/ccHAtFIW.s:238    .text.SysTick_Handler:0000000000000034 $d
 
 UNDEFINED SYMBOLS
 TimerKeyScan

@@ -1396,15 +1396,15 @@
  359              		.file 6 "Libraries/CMSIS/CM3/CoreSupport/stm32f10x.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 system_stm32f10x.c
-     /tmp/ccffmikt.s:16     .text.SystemInit:0000000000000000 $t
-     /tmp/ccffmikt.s:24     .text.SystemInit:0000000000000000 SystemInit
-     /tmp/ccffmikt.s:225    .text.SystemInit:00000000000000f0 $d
-     /tmp/ccffmikt.s:232    .text.SystemCoreClockUpdate:0000000000000000 $t
-     /tmp/ccffmikt.s:240    .text.SystemCoreClockUpdate:0000000000000000 SystemCoreClockUpdate
-     /tmp/ccffmikt.s:314    .text.SystemCoreClockUpdate:0000000000000048 $d
-     /tmp/ccffmikt.s:329    .data.AHBPrescTable:0000000000000000 AHBPrescTable
-     /tmp/ccffmikt.s:351    .data.SystemCoreClock:0000000000000000 SystemCoreClock
-     /tmp/ccffmikt.s:325    .data.AHBPrescTable:0000000000000000 $d
-     /tmp/ccffmikt.s:347    .data.SystemCoreClock:0000000000000000 $d
+     /tmp/cc9Yuv7r.s:16     .text.SystemInit:0000000000000000 $t
+     /tmp/cc9Yuv7r.s:24     .text.SystemInit:0000000000000000 SystemInit
+     /tmp/cc9Yuv7r.s:225    .text.SystemInit:00000000000000f0 $d
+     /tmp/cc9Yuv7r.s:232    .text.SystemCoreClockUpdate:0000000000000000 $t
+     /tmp/cc9Yuv7r.s:240    .text.SystemCoreClockUpdate:0000000000000000 SystemCoreClockUpdate
+     /tmp/cc9Yuv7r.s:314    .text.SystemCoreClockUpdate:0000000000000048 $d
+     /tmp/cc9Yuv7r.s:329    .data.AHBPrescTable:0000000000000000 AHBPrescTable
+     /tmp/cc9Yuv7r.s:351    .data.SystemCoreClock:0000000000000000 SystemCoreClock
+     /tmp/cc9Yuv7r.s:325    .data.AHBPrescTable:0000000000000000 $d
+     /tmp/cc9Yuv7r.s:347    .data.SystemCoreClock:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS
