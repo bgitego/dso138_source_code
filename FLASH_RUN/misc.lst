@@ -690,22 +690,22 @@
  454              		.file 7 "./Libraries/STM32F10x_StdPeriph_Driver/inc/misc.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 misc.c
-     /tmp/cc22ePJx.s:16     .text.NVIC_PriorityGroupConfig:0000000000000000 $t
-     /tmp/cc22ePJx.s:24     .text.NVIC_PriorityGroupConfig:0000000000000000 NVIC_PriorityGroupConfig
-     /tmp/cc22ePJx.s:70     .text.NVIC_PriorityGroupConfig:0000000000000034 $d
-     /tmp/cc22ePJx.s:77     .text.NVIC_Init:0000000000000000 $t
-     /tmp/cc22ePJx.s:85     .text.NVIC_Init:0000000000000000 NVIC_Init
-     /tmp/cc22ePJx.s:207    .text.NVIC_Init:000000000000007c $d
-     /tmp/cc22ePJx.s:215    .text.NVIC_SetVectorTable:0000000000000000 $t
-     /tmp/cc22ePJx.s:223    .text.NVIC_SetVectorTable:0000000000000000 NVIC_SetVectorTable
-     /tmp/cc22ePJx.s:282    .text.NVIC_SetVectorTable:000000000000003c $d
-     /tmp/cc22ePJx.s:290    .text.NVIC_SystemLPConfig:0000000000000000 $t
-     /tmp/cc22ePJx.s:298    .text.NVIC_SystemLPConfig:0000000000000000 NVIC_SystemLPConfig
-     /tmp/cc22ePJx.s:367    .text.NVIC_SystemLPConfig:0000000000000040 $d
-     /tmp/cc22ePJx.s:375    .text.SysTick_CLKSourceConfig:0000000000000000 $t
-     /tmp/cc22ePJx.s:383    .text.SysTick_CLKSourceConfig:0000000000000000 SysTick_CLKSourceConfig
-     /tmp/cc22ePJx.s:437    .text.SysTick_CLKSourceConfig:0000000000000038 $d
-     /tmp/cc22ePJx.s:444    .rodata.NVIC_PriorityGroupConfig.str1.4:0000000000000000 $d
+     /tmp/ccbqKXEY.s:16     .text.NVIC_PriorityGroupConfig:0000000000000000 $t
+     /tmp/ccbqKXEY.s:24     .text.NVIC_PriorityGroupConfig:0000000000000000 NVIC_PriorityGroupConfig
+     /tmp/ccbqKXEY.s:70     .text.NVIC_PriorityGroupConfig:0000000000000034 $d
+     /tmp/ccbqKXEY.s:77     .text.NVIC_Init:0000000000000000 $t
+     /tmp/ccbqKXEY.s:85     .text.NVIC_Init:0000000000000000 NVIC_Init
+     /tmp/ccbqKXEY.s:207    .text.NVIC_Init:000000000000007c $d
+     /tmp/ccbqKXEY.s:215    .text.NVIC_SetVectorTable:0000000000000000 $t
+     /tmp/ccbqKXEY.s:223    .text.NVIC_SetVectorTable:0000000000000000 NVIC_SetVectorTable
+     /tmp/ccbqKXEY.s:282    .text.NVIC_SetVectorTable:000000000000003c $d
+     /tmp/ccbqKXEY.s:290    .text.NVIC_SystemLPConfig:0000000000000000 $t
+     /tmp/ccbqKXEY.s:298    .text.NVIC_SystemLPConfig:0000000000000000 NVIC_SystemLPConfig
+     /tmp/ccbqKXEY.s:367    .text.NVIC_SystemLPConfig:0000000000000040 $d
+     /tmp/ccbqKXEY.s:375    .text.SysTick_CLKSourceConfig:0000000000000000 $t
+     /tmp/ccbqKXEY.s:383    .text.SysTick_CLKSourceConfig:0000000000000000 SysTick_CLKSourceConfig
+     /tmp/ccbqKXEY.s:437    .text.SysTick_CLKSourceConfig:0000000000000038 $d
+     /tmp/ccbqKXEY.s:444    .rodata.NVIC_PriorityGroupConfig.str1.4:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 assert_failed

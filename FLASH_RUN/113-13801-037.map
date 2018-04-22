@@ -684,7 +684,7 @@ END GROUP
  *(.flashtext)
                 0x000000000800010c                . = ALIGN (0x4)
 
-.text           0x0000000008000110     0x7fe0
+.text           0x0000000008000110     0x7fbc
                 0x0000000008000110                . = ALIGN (0x4)
  *(.text)
  .text          0x0000000008000110     0x3270 ./libdso138.a(libdso138.o)
@@ -998,112 +998,112 @@ END GROUP
                 0x0000000008005b2c                twelveToSixten
  .text.uputDec  0x0000000008005b54       0xb4 FLASH_RUN/UartInt.o
                 0x0000000008005b54                uputDec
- .text.UsrCode  0x0000000008005c08       0x94 FLASH_RUN/UserCode.o
+ .text.UsrCode  0x0000000008005c08       0x88 FLASH_RUN/UserCode.o
                 0x0000000008005c08                UsrCode
  .text.SystemInit
-                0x0000000008005c9c       0xfc FLASH_RUN/system_stm32f10x.o
-                0x0000000008005c9c                SystemInit
+                0x0000000008005c90       0xfc FLASH_RUN/system_stm32f10x.o
+                0x0000000008005c90                SystemInit
  .text.NVIC_Init
-                0x0000000008005d98       0x8c FLASH_RUN/misc.o
-                0x0000000008005d98                NVIC_Init
+                0x0000000008005d8c       0x8c FLASH_RUN/misc.o
+                0x0000000008005d8c                NVIC_Init
  .text.NVIC_SetVectorTable
-                0x0000000008005e24       0x4c FLASH_RUN/misc.o
-                0x0000000008005e24                NVIC_SetVectorTable
+                0x0000000008005e18       0x4c FLASH_RUN/misc.o
+                0x0000000008005e18                NVIC_SetVectorTable
  .text.USART_Init
-                0x0000000008005e70      0x1a4 FLASH_RUN/stm32f10x_usart.o
-                0x0000000008005e70                USART_Init
+                0x0000000008005e64      0x1a4 FLASH_RUN/stm32f10x_usart.o
+                0x0000000008005e64                USART_Init
  .text.USART_Cmd
-                0x0000000008006014       0x6c FLASH_RUN/stm32f10x_usart.o
-                0x0000000008006014                USART_Cmd
+                0x0000000008006008       0x6c FLASH_RUN/stm32f10x_usart.o
+                0x0000000008006008                USART_Cmd
  .text.USART_SendData
-                0x0000000008006080       0x5c FLASH_RUN/stm32f10x_usart.o
-                0x0000000008006080                USART_SendData
+                0x0000000008006074       0x5c FLASH_RUN/stm32f10x_usart.o
+                0x0000000008006074                USART_SendData
  .text.USART_GetFlagStatus
-                0x00000000080060dc       0xb8 FLASH_RUN/stm32f10x_usart.o
-                0x00000000080060dc                USART_GetFlagStatus
+                0x00000000080060d0       0xb8 FLASH_RUN/stm32f10x_usart.o
+                0x00000000080060d0                USART_GetFlagStatus
  .text.RCC_GetClocksFreq
-                0x0000000008006194       0x90 FLASH_RUN/stm32f10x_rcc.o
-                0x0000000008006194                RCC_GetClocksFreq
+                0x0000000008006188       0x90 FLASH_RUN/stm32f10x_rcc.o
+                0x0000000008006188                RCC_GetClocksFreq
  .text.FLASH_Unlock
-                0x0000000008006224       0x18 FLASH_RUN/stm32f10x_flash.o
-                0x0000000008006224                FLASH_Unlock
+                0x0000000008006218       0x18 FLASH_RUN/stm32f10x_flash.o
+                0x0000000008006218                FLASH_Unlock
  .text.FLASH_GetBank1Status
-                0x000000000800623c       0x28 FLASH_RUN/stm32f10x_flash.o
-                0x000000000800623c                FLASH_GetBank1Status
+                0x0000000008006230       0x28 FLASH_RUN/stm32f10x_flash.o
+                0x0000000008006230                FLASH_GetBank1Status
  .text.FLASH_WaitForLastOperation
-                0x0000000008006264       0x24 FLASH_RUN/stm32f10x_flash.o
-                0x0000000008006264                FLASH_WaitForLastOperation
+                0x0000000008006258       0x24 FLASH_RUN/stm32f10x_flash.o
+                0x0000000008006258                FLASH_WaitForLastOperation
  .text.FLASH_ErasePage
-                0x0000000008006288       0x68 FLASH_RUN/stm32f10x_flash.o
-                0x0000000008006288                FLASH_ErasePage
+                0x000000000800627c       0x68 FLASH_RUN/stm32f10x_flash.o
+                0x000000000800627c                FLASH_ErasePage
  .text.FLASH_ProgramHalfWord
-                0x00000000080062f0       0x60 FLASH_RUN/stm32f10x_flash.o
-                0x00000000080062f0                FLASH_ProgramHalfWord
+                0x00000000080062e4       0x60 FLASH_RUN/stm32f10x_flash.o
+                0x00000000080062e4                FLASH_ProgramHalfWord
  .text.DMA_DeInit
-                0x0000000008006350      0x1a0 FLASH_RUN/stm32f10x_dma.o
-                0x0000000008006350                DMA_DeInit
+                0x0000000008006344      0x1a0 FLASH_RUN/stm32f10x_dma.o
+                0x0000000008006344                DMA_DeInit
  *(.rodata)
- .rodata        0x00000000080064f0      0xab0 ./libdso138.a(libdso138.o)
-                0x00000000080064f0                Logo
-                0x0000000008006710                Jinyuedianzi_font
-                0x0000000008006878                Jyetech_font
-                0x0000000008006968                Web_font
-                0x0000000008006a78                DSO138_font
-                0x0000000008006c94                DSO138a_font
-                0x0000000008006d00                ByJyetech_font
-                0x0000000008006d78                Jinyue_font
-                0x0000000008006df0                Web1_font
-                0x0000000008006e7c                VsenString
-                0x0000000008006eac                TLvlRate
-                0x0000000008006ed0                CplString
-                0x0000000008006edc                TBString
-                0x0000000008006f74                TMString
+ .rodata        0x00000000080064e4      0xab0 ./libdso138.a(libdso138.o)
+                0x00000000080064e4                Logo
+                0x0000000008006704                Jinyuedianzi_font
+                0x000000000800686c                Jyetech_font
+                0x000000000800695c                Web_font
+                0x0000000008006a6c                DSO138_font
+                0x0000000008006c88                DSO138a_font
+                0x0000000008006cf4                ByJyetech_font
+                0x0000000008006d6c                Jinyue_font
+                0x0000000008006de4                Web1_font
+                0x0000000008006e70                VsenString
+                0x0000000008006ea0                TLvlRate
+                0x0000000008006ec4                CplString
+                0x0000000008006ed0                TBString
+                0x0000000008006f68                TMString
  *(.rodata*)
  .rodata.main.str1.4
-                0x0000000008006fa0       0x2b FLASH_RUN/113-13801.o
- *fill*         0x0000000008006fcb        0x1 
+                0x0000000008006f94       0x2b FLASH_RUN/113-13801.o
+ *fill*         0x0000000008006fbf        0x1 
  .rodata.Font_ASC8X16
-                0x0000000008006fcc     0x1000 FLASH_RUN/Screen.o
-                0x0000000008006fcc                Font_ASC8X16
+                0x0000000008006fc0     0x1000 FLASH_RUN/Screen.o
+                0x0000000008006fc0                Font_ASC8X16
  .rodata.KScanCodeTab
-                0x0000000008007fcc       0x24 FLASH_RUN/Command.o
-                0x0000000008007fcc                KScanCodeTab
+                0x0000000008007fc0       0x24 FLASH_RUN/Command.o
+                0x0000000008007fc0                KScanCodeTab
  .rodata.UsrCode.str1.4
-                0x0000000008007ff0       0x1a FLASH_RUN/UserCode.o
-                                         0x1f (size before relaxing)
- *fill*         0x000000000800800a        0x2 
+                0x0000000008007fe4        0x2 FLASH_RUN/UserCode.o
+                                          0x7 (size before relaxing)
+ *fill*         0x0000000008007fe6        0x2 
  .rodata.NVIC_PriorityGroupConfig.str1.4
-                0x000000000800800c       0x30 FLASH_RUN/misc.o
+                0x0000000008007fe8       0x30 FLASH_RUN/misc.o
  .rodata.USART_DeInit.str1.4
-                0x000000000800803c       0x3b FLASH_RUN/stm32f10x_usart.o
- *fill*         0x0000000008008077        0x1 
+                0x0000000008008018       0x3b FLASH_RUN/stm32f10x_usart.o
+ *fill*         0x0000000008008053        0x1 
  .rodata.FLASH_SetLatency.str1.4
-                0x0000000008008078       0x3b FLASH_RUN/stm32f10x_flash.o
- *fill*         0x00000000080080b3        0x1 
+                0x0000000008008054       0x3b FLASH_RUN/stm32f10x_flash.o
+ *fill*         0x000000000800808f        0x1 
  .rodata.DMA_DeInit.str1.4
-                0x00000000080080b4       0x3c FLASH_RUN/stm32f10x_dma.o
+                0x0000000008008090       0x3c FLASH_RUN/stm32f10x_dma.o
                                          0x39 (size before relaxing)
  *(.glue_7)
- .glue_7        0x00000000080080f0        0x0 linker stubs
+ .glue_7        0x00000000080080cc        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x00000000080080f0        0x0 linker stubs
-                0x00000000080080f0                . = ALIGN (0x4)
-                0x00000000080080f0                _etext = .
-                0x00000000080080f0                _sidata = _etext
+ .glue_7t       0x00000000080080cc        0x0 linker stubs
+                0x00000000080080cc                . = ALIGN (0x4)
+                0x00000000080080cc                _etext = .
+                0x00000000080080cc                _sidata = _etext
 
-.vfp11_veneer   0x00000000080080f0        0x0
- .vfp11_veneer  0x00000000080080f0        0x0 linker stubs
+.vfp11_veneer   0x00000000080080cc        0x0
+ .vfp11_veneer  0x00000000080080cc        0x0 linker stubs
 
-.v4_bx          0x00000000080080f0        0x0
- .v4_bx         0x00000000080080f0        0x0 linker stubs
+.v4_bx          0x00000000080080cc        0x0
+ .v4_bx         0x00000000080080cc        0x0 linker stubs
 
-.iplt           0x00000000080080f0        0x0
- .iplt          0x00000000080080f0        0x0 FLASH_RUN/startup_stm32f10x_md.o
+.iplt           0x00000000080080cc        0x0
+ .iplt          0x00000000080080cc        0x0 FLASH_RUN/startup_stm32f10x_md.o
 
-.rel.dyn        0x00000000080080f0        0x0
- .rel.iplt      0x00000000080080f0        0x0 FLASH_RUN/startup_stm32f10x_md.o
+.rel.dyn        0x00000000080080cc        0x0
+ .rel.iplt      0x00000000080080cc        0x0 FLASH_RUN/startup_stm32f10x_md.o
 
-.data           0x0000000020000000      0x180 load address 0x00000000080080f0
+.data           0x0000000020000000      0x180 load address 0x00000000080080cc
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
@@ -1138,10 +1138,10 @@ END GROUP
                 0x0000000020000180                . = ALIGN (0x4)
                 0x0000000020000180                _edata = .
 
-.igot.plt       0x0000000020000180        0x0 load address 0x0000000008008270
+.igot.plt       0x0000000020000180        0x0 load address 0x000000000800824c
  .igot.plt      0x0000000020000180        0x0 FLASH_RUN/startup_stm32f10x_md.o
 
-.bss            0x0000000020000180     0x2570 load address 0x0000000008008270
+.bss            0x0000000020000180     0x2570 load address 0x000000000800824c
                 0x0000000020000180                . = ALIGN (0x4)
                 0x0000000020000180                _sbss = .
  *(.bss)
@@ -1188,11 +1188,11 @@ END GROUP
                 [!provide]                        PROVIDE (end, _ebss)
                 [!provide]                        PROVIDE (_end, _ebss)
 
-.bss.DataVar    0x00000000200026f0        0x2 load address 0x000000000800a7e0
+.bss.DataVar    0x00000000200026f0        0x2 load address 0x000000000800a7bc
  .bss.DataVar   0x00000000200026f0        0x2 FLASH_RUN/Eeprom.o
                 0x00000000200026f0                DataVar
 
-._usrstack      0x00000000200026f2      0x102 load address 0x000000000800a7e2
+._usrstack      0x00000000200026f2      0x102 load address 0x000000000800a7be
                 0x00000000200026f4                . = ALIGN (0x4)
  *fill*         0x00000000200026f2        0x2 
                 0x00000000200026f4                _susrstack = .
@@ -1380,7 +1380,7 @@ DISCARD
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x0000000000000000     0x904c
+.debug_info     0x0000000000000000     0x902f
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x0000000000000000       0x22 FLASH_RUN/startup_stm32f10x_md.o
  .debug_info    0x0000000000000022      0x959 FLASH_RUN/113-13801.o
@@ -1392,13 +1392,13 @@ DISCARD
  .debug_info    0x0000000000004037      0x799 FLASH_RUN/Eeprom.o
  .debug_info    0x00000000000047d0      0x104 FLASH_RUN/BaseConv.o
  .debug_info    0x00000000000048d4      0x2d3 FLASH_RUN/UartInt.o
- .debug_info    0x0000000000004ba7      0x3d5 FLASH_RUN/UserCode.o
- .debug_info    0x0000000000004f7c      0x306 FLASH_RUN/system_stm32f10x.o
- .debug_info    0x0000000000005282      0x642 FLASH_RUN/misc.o
- .debug_info    0x00000000000058c4     0x146a FLASH_RUN/stm32f10x_usart.o
- .debug_info    0x0000000000006d2e      0xed0 FLASH_RUN/stm32f10x_rcc.o
- .debug_info    0x0000000000007bfe      0xcc6 FLASH_RUN/stm32f10x_flash.o
- .debug_info    0x00000000000088c4      0x788 FLASH_RUN/stm32f10x_dma.o
+ .debug_info    0x0000000000004ba7      0x3b8 FLASH_RUN/UserCode.o
+ .debug_info    0x0000000000004f5f      0x306 FLASH_RUN/system_stm32f10x.o
+ .debug_info    0x0000000000005265      0x642 FLASH_RUN/misc.o
+ .debug_info    0x00000000000058a7     0x146a FLASH_RUN/stm32f10x_usart.o
+ .debug_info    0x0000000000006d11      0xed0 FLASH_RUN/stm32f10x_rcc.o
+ .debug_info    0x0000000000007be1      0xcc6 FLASH_RUN/stm32f10x_flash.o
+ .debug_info    0x00000000000088a7      0x788 FLASH_RUN/stm32f10x_dma.o
 
 .debug_abbrev   0x0000000000000000     0x1d08
  *(.debug_abbrev)
@@ -1420,7 +1420,7 @@ DISCARD
  .debug_abbrev  0x00000000000018bb      0x285 FLASH_RUN/stm32f10x_flash.o
  .debug_abbrev  0x0000000000001b40      0x1c8 FLASH_RUN/stm32f10x_dma.o
 
-.debug_line     0x0000000000000000     0x3b5c
+.debug_line     0x0000000000000000     0x3b56
  *(.debug_line)
  .debug_line    0x0000000000000000       0x72 FLASH_RUN/startup_stm32f10x_md.o
  .debug_line    0x0000000000000072      0x240 FLASH_RUN/113-13801.o
@@ -1432,13 +1432,13 @@ DISCARD
  .debug_line    0x0000000000001266      0x2f6 FLASH_RUN/Eeprom.o
  .debug_line    0x000000000000155c       0x68 FLASH_RUN/BaseConv.o
  .debug_line    0x00000000000015c4      0x1d2 FLASH_RUN/UartInt.o
- .debug_line    0x0000000000001796      0x1be FLASH_RUN/UserCode.o
- .debug_line    0x0000000000001954      0x1d4 FLASH_RUN/system_stm32f10x.o
- .debug_line    0x0000000000001b28      0x285 FLASH_RUN/misc.o
- .debug_line    0x0000000000001dad      0x9fe FLASH_RUN/stm32f10x_usart.o
- .debug_line    0x00000000000027ab      0x729 FLASH_RUN/stm32f10x_rcc.o
- .debug_line    0x0000000000002ed4      0x598 FLASH_RUN/stm32f10x_flash.o
- .debug_line    0x000000000000346c      0x6f0 FLASH_RUN/stm32f10x_dma.o
+ .debug_line    0x0000000000001796      0x1b8 FLASH_RUN/UserCode.o
+ .debug_line    0x000000000000194e      0x1d4 FLASH_RUN/system_stm32f10x.o
+ .debug_line    0x0000000000001b22      0x285 FLASH_RUN/misc.o
+ .debug_line    0x0000000000001da7      0x9fe FLASH_RUN/stm32f10x_usart.o
+ .debug_line    0x00000000000027a5      0x729 FLASH_RUN/stm32f10x_rcc.o
+ .debug_line    0x0000000000002ece      0x598 FLASH_RUN/stm32f10x_flash.o
+ .debug_line    0x0000000000003466      0x6f0 FLASH_RUN/stm32f10x_dma.o
 
 .debug_frame    0x0000000000000000     0x17ec
  *(.debug_frame)

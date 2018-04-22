@@ -12,9 +12,8 @@ void UsrCode()
 
         for(U16 i = 0; i< RecLenMax; i++)
         {
-         uputs((U8 *)"\rSample At Index: ", USART1);
          uputDec(i, USART1);   
-         uputs((U8 *) " Is :", USART1);
+         uputs((U8 *) ":", USART1);
          uputDec(*(conv_record_buffer+i), USART1);   
          uputs((U8 *) "\n\r", USART1);
         }
@@ -68,7 +67,7 @@ void UsrCode()
     uputs((U8 *)"\rCurrent Position Offeset: ", USART1);
     uputDec(GetVPosOfs(), USART1);    
     uputs((U8 *) "\n\r", USART1);   
-   
+  
     //Current DSO Engine Status
     uputs((U8 *)"\rCurrent DSO Engine Status: 0x", USART1);
     uputHex(GetDsoStatus(), USART1);    
